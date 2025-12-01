@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# Env
+.env
+
+# Editor
+.vscode/
+
+# Local backups
+*.bak
+*~
+
+# Ignore other workspace HTML backups if present
+*/single-page-sites/
