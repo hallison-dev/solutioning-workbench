@@ -89,6 +89,9 @@
         .row-item:active { cursor: grabbing; }
         .drag-zone { transition: all 0.2s ease; }
         .drag-zone.drag-over { background-color: #eff6ff; border-color: #3b82f6; }
+        /* Master Spec column styling: truncate long dotted keys and show full on hover */
+        .spec-key { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
+        .spec-key:hover { cursor: help; }
     </style>
 </head>
 <body class="bg-stone-50 text-slate-800 h-screen flex overflow-hidden">
@@ -175,62 +178,7 @@
                         <div class="flex-1">
                             <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Unassigned Rows (Staging)</h4>
                             <div id="unassigned-staging" class="border border-slate-200 rounded-lg h-64 overflow-y-auto bg-white p-2 space-y-2 shadow-inner">
-                                <!-- Row 4: Work of Date -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Work of Date">Row 4: Work of Date</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                                    </div>
-                                </div>
-                                <!-- Row 5: Record Type 00 -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Record Type 00">Row 5: Record Type "00"</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                                    </div>
-                                </div>
-                                <!-- Row 12: Payee ID -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Payee ID">Row 12: Payee ID</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                                    </div>
-                                </div>
-                                <!-- Row 14: Payee Name -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Payee Name">Row 14: Payee Name</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                                    </div>
-                                </div>
-                                <!-- Row 38: Check Amount -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Check Amount">Row 38: Check Amount</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                                    </div>
-                                </div>
-                                <!-- Row 45: Delivery Method -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Delivery Method">Row 45: Delivery Method</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
-                                    </div>
-                                </div>
-                                <!-- Row 48: Freeform 1 -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Freeform 1">Row 48: Freeform 1</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
-                                    </div>
-                                </div>
-                                <!-- Row 52: Householding Master Flag -->
-                                <div class="flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row">
-                                    <span class="text-xs font-mono text-slate-700 truncate max-w-[180px]" title="Householding Master Flag">Row 52: Householding Master Flag</span>
-                                    <div class="flex gap-1 opacity-50 group-hover/row:opacity-100 transition">
-                                        <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                                    </div>
-                                </div>
+                                <p class="text-xs text-slate-500 p-3">No unassigned rows.</p>
                             </div>
                         </div>
                     </div>
@@ -309,8 +257,7 @@
                                 <tr><th class="p-3 border-b bg-slate-100 w-1/3">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100">Status</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
                             </thead>
                             <tbody id="erp-native-body" class="divide-y divide-slate-100">
-                                <tr><td class="p-3">Vendor Name</td><td class="p-3">entity.companyName</td><td class="p-3"><span class="status-badge mapped">mapped</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
-                                <tr><td class="p-3">Vendor Address</td><td class="p-3">entity.addressBook</td><td class="p-3"><span class="status-badge mapped">mapped</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
+                                <!-- empty by default; restored from local state or user assignments -->
                             </tbody>
                         </table>
                         <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('erp-native-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Native Mapping</button></div>
@@ -331,8 +278,7 @@
                                 <tr><th class="p-3 border-b bg-slate-100 w-1/3">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100">Status</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
                             </thead>
                             <tbody id="erp-plugin-body" class="divide-y divide-slate-100">
-                                <tr><td class="p-3">Check Memo</td><td class="p-3">Runtime Text Input</td><td class="p-3"><span class="status-badge pending">pending</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
-                                <tr><td class="p-3">Handling Code</td><td class="p-3">Dropdown Selection</td><td class="p-3"><span class="status-badge pending">pending</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
+                                <!-- empty by default; restored from local state or user assignments -->
                             </tbody>
                         </table>
                         <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('erp-plugin-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Plugin Mapping</button></div>
@@ -372,8 +318,7 @@
                                 <tr><th class="p-3 border-b bg-slate-100 w-1/2">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/2">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
                             </thead>
                             <tbody id="platform-workbench-body" class="divide-y divide-slate-100">
-                                <tr><td class="p-3">File Naming (YYYYMMDD)</td><td class="p-3">Standard Lib</td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
-                                <tr><td class="p-3">PGP Encryption</td><td class="p-3">Standard Lib</td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
+                                <!-- empty by default; restored from local state or user assignments -->
                             </tbody>
                         </table>
                         <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('platform-workbench-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Logic Rule</button></div>
@@ -423,7 +368,17 @@
                         </div>
                         <!-- VIEW 2: FULL SPEC -->
                         <div id="view-full" class="hidden">
-                            <table class="w-full text-left text-sm border-collapse"><tbody id="full-spec-body" class="divide-y divide-slate-100"></tbody></table>
+                            <table class="w-full text-left text-sm border-collapse">
+                                <thead class="bg-slate-50 text-slate-700 font-bold">
+                                    <tr>
+                                        <th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Constant</th>
+                                        <th class="p-3 border-b bg-slate-100 w-1/6">Value Type</th>
+                                        <th class="p-3 border-b bg-slate-100">Mapped Spec</th>
+                                        <th class="p-3 border-b bg-slate-100">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="full-spec-body" class="divide-y divide-slate-100"></tbody>
+                            </table>
                         </div>
                         <!-- VIEW 3: VISUALIZER -->
                         <div id="view-visualizer" class="hidden">
@@ -554,22 +509,7 @@
             <div class="mt-6">
                 <h4 class="text-xs font-bold text-slate-500 uppercase mb-3">Unassigned Rows (Preview)</h4>
                 <div id="unassigned-preview" class="border border-slate-200 rounded-lg h-48 overflow-y-auto bg-slate-50 p-2 space-y-2">
-                    <div class="flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300">
-                        <span class="text-sm font-mono text-slate-700">Vendor Email Address</span>
-                        <div class="flex gap-2">
-                            <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">Native ERP</button>
-                            <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">Plugin</button>
-                            <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">Platform</button>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300">
-                        <span class="text-sm font-mono text-slate-700">Signature Image Rule</span>
-                        <div class="flex gap-2">
-                            <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">Native ERP</button>
-                            <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">Plugin</button>
-                            <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">Platform</button>
-                        </div>
-                    </div>
+                    <p class="text-xs text-slate-500 p-3">No preview rows. Upload a CSV or paste rows to start.</p>
                 </div>
             </div>
         </div>
@@ -578,16 +518,10 @@
     <!-- Logic Script -->
     <script>
         // --- DATA ---
-        const specRows = [
-            { bank: "Record Type '00'", fispan: "CONSTANT", context: "Start of Check", q: "", print: false },
-            { bank: "Payee Name", fispan: "payee.name", context: "Vendor Name (Max 50)", q: "", print: true },
-            { bank: "Check Amount", fispan: "payment.amount", context: "Transaction Value", q: "", print: true },
-            { bank: "Bank Name", fispan: "payer.bankName", context: "Bank Name", q: "", print: true },
-        ];
-
-    // Master mappings for FISPAN constants -> spec variable
-    // key => { key, valueType, description, spec, status }
-    const masterMappings = {};
+        // NOTE: removed initial "specRows" dummy dataset so pages load with a clean slate.
+        // Master mappings for FISPAN constants -> spec variable
+        // key => { key, valueType, description, spec, status }
+        const masterMappings = {};
 
         // --- RENDER FUNCTIONS ---
         function renderFullSpec() {
@@ -613,10 +547,11 @@
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
                 const specDisplay = m.spec ? `<span class="master-spec" data-const="${m.key}">${escapeHtml(m.spec)}</span>` : `<em class="text-xs text-slate-400">(unmatched)</em>`;
+                // first column uses a truncated inline element with a title so long dotted keys don't break layout
                 tr.innerHTML = `
-                    <td class="p-3 font-mono text-xs text-blue-600">${escapeHtml(m.key)}</td>
+                    <td class="p-3 font-mono text-xs text-blue-600"><span class="spec-key" title="${escapeHtml(m.key)}">${escapeHtml(m.key)}</span></td>
                     <td class="p-3 text-xs text-slate-500">${escapeHtml(m.valueType || '')}</td>
-                    <td class="p-3 text-sm text-slate-700">${specDisplay} <button class="ml-2 text-[10px] px-2 py-1 bg-slate-100 rounded master-attach" data-const="${m.key}">Attach</button></td>
+                    <td class="p-3 text-sm text-slate-700">${specDisplay} <button class="ml-2 text-[10px] px-2 py-1 bg-slate-100 rounded master-attach" data-const="${escapeHtml(m.key)}">Attach</button></td>
                     <td class="p-3">${statusHtml(m)}</td>
                 `;
                 tbody.appendChild(tr);
@@ -1478,7 +1413,7 @@
                 const constants = await res.json();
                 // merge constants into specRows for master spec and initialize masterMappings
                 constants.forEach(c => {
-                    specRows.push({ bank: c.key, fispan: c.key, context: c.description || '', q: '', print: true, meta: c });
+                    // initialize master mapping for each constant (no default spec assigned)
                     masterMappings[c.key] = {
                         key: c.key,
                         valueType: c.valueType || '',
