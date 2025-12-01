@@ -1,82 +1,670 @@
-[
-  {
-    "key": "payerExternalId",
-    "sampleValue": "1234",
-    "valueType": "string",
-    "description": "Top-level payer external id",
-    "candidatePhases": ["phase-2-plugin","phase-4"],
-    "railsCovered": ["ACH","WIRE","RTP"]
-  },
-  {
-    "key": "clientTxId",
-    "sampleValue": "bill-payment-7165",
-    "valueType": "string",
-    "description": "Client transaction id",
-    "candidatePhases": ["phase-2-plugin","phase-4"],
-    "railsCovered": []
-  },
-  {
-    "key": "payee.externalId",
-    "sampleValue": "VEN-000012",
-    "valueType": "string",
-    "description": "Payee external identifier",
-    "candidatePhases": ["phase-2-erp","phase-4"],
-    "railsCovered": []
-  },
-  {
-    "key": "payee.name",
-    "sampleValue": "Verizon-Network Services",
-    "valueType": "string",
-    "description": "Payee display name",
-    "candidatePhases": ["phase-2-erp","phase-4"],
-    "railsCovered": []
-  },
-  {
-    "key": "payee.address.line1",
-    "sampleValue": "627 State Street",
-    "valueType": "string",
-    "description": "Payee address line1",
-    "candidatePhases": ["phase-2-erp","phase-4"],
-    "railsCovered": []
-  },
-  {
-    "key": "payee.registeredPaymentMethods.bankAccount.routingNumber",
-    "sampleValue": "123456789",
-    "valueType": "string",
-    "description": "Routing number for payee bank account",
-    "candidatePhases": ["phase-2-erp","phase-4"],
-    "railsCovered": ["ACH","WIRE","RTP"]
-  },
-  {
-    "key": "clientBankAccount.routingNumber",
-    "sampleValue": "123456789",
-    "valueType": "string",
-    "description": "Client / payer bank routing number",
-    "candidatePhases": ["phase-2-erp","phase-4"],
-    "railsCovered": ["ACH","WIRE","RTP"]
-  },
-  {
-    "key": "paymentType",
-    "sampleValue": "ach",
-    "valueType": "string",
-    "description": "Type of payment (ach, wire, rtp)",
-    "candidatePhases": ["phase-2-plugin","phase-4"],
-    "railsCovered": ["ACH","WIRE","RTP"]
-  },
-  {
-    "key": "amount",
-    "sampleValue": 374.75,
-    "valueType": "number",
-    "description": "Payment amount",
-    "candidatePhases": ["phase-2-plugin","phase-4"],
-    "railsCovered": []
-  },
-  {
-    "key": "invoices.remittedAmount.amount",
-    "sampleValue": 374.75,
-    "valueType": "number",
-    "description": "Remitted amount on invoice",
-    "candidatePhases": ["phase-2-plugin","phase-4"],
-    "railsCovered": []
-  }
-]
+{
+    "payerExternalId": "1234",
+    "clientTxId": "bill-payment-7165",
+    "payeeId": "9fce2470-193c-4c44-a074-3ca82ee605dc",
+    "payeeExternalId": "VEN-000012",
+    "payee": {
+        "externalId": "VEN-000012",
+        "type": "COMPANY",
+        "name": "Verizon-Network Services",
+        "firstName": null,
+        "lastName": null,
+        "email": null,
+        "phoneNumber": null,
+        "address": {
+            "externalId": null,
+            "line1": "627 State Street",
+            "streetNumber": null,
+            "streetName": null,
+            "line2": null,
+            "city": "Anytown",
+            "stateProvince": "CA",
+            "country": "US",
+            "postalCode": "95113",
+            "types": [],
+            "defaultFor": []
+        },
+        "taxId": null,
+        "principleOfficerDoB": null,
+        "ssn": null,
+        "registeredPaymentMethods": [
+            {
+                "achInfo": {
+                    "id": null,
+                    "externalId": null,
+                    "createdAt": null,
+                    "updatedAt": null,
+                    "erpIds": [],
+                    "accountLabel": null,
+                    "accountHolderName": null,
+                    "bankName": null,
+                    "institutionNumber": null,
+                    "enabledProducts": [
+                        "BANK_ACCOUNT_INFO",
+                        "RECEIVABLES",
+                        "PAYMENT"
+                    ],
+                    "iban": null,
+                    "transitNumber": null,
+                    "routingNumber": "123456789",
+                    "accountNumber": "*****5432",
+                    "ifscCode": null,
+                    "sortCode": null,
+                    "bankCode": null,
+                    "localBranchCode": null,
+                    "bic": null,
+                    "cnapsCode": null,
+                    "bsbCode": null,
+                    "bikCode": null,
+                    "kodCode": null,
+                    "kbeCode": null,
+                    "nubanCode": null,
+                    "ribCode": null,
+                    "address": {
+                        "externalId": null,
+                        "line1": null,
+                        "streetNumber": null,
+                        "streetName": null,
+                        "line2": null,
+                        "city": null,
+                        "stateProvince": null,
+                        "country": "US",
+                        "postalCode": null,
+                        "types": [],
+                        "defaultFor": []
+                    },
+                    "countryCode": "US",
+                    "currencyCode": "USD",
+                    "accountType": "CHECKING",
+                    "balanceInfo": null,
+                    "checkTemplateCodes": [],
+                    "usageProfileIds": [],
+                    "extraDetails": [],
+                    "vccAccountPoolId": null,
+                    "defaultAccount": true,
+                    "defaultFor": [
+                        "WIRE",
+                        "RTP",
+                        "ACH",
+                        "ACH_NEXT_DAY"
+                    ],
+                    "paymentDefaults": {
+                        "purposeMessage": null,
+                        "purposeCode": null,
+                        "residentialStatus": null,
+                        "paymentCodeword": null,
+                        "paymentIsoCode": null,
+                        "paymentPartyType": null,
+                        "checkDeliveryMethod": null
+                    },
+                    "bankExternalId": null,
+                    "accountNumberLastFourDigits": "5432",
+                    "maskedAccountNumber": "*****5432",
+                    "autoSyncFeatures": true,
+                    "excludeFromAutoSync": false,
+                    "checkEntitlements": null,
+                    "userFeatures": {},
+                    "deleted": null,
+                    "deletedDateTime": null,
+                    "bankAccountFeatureConfigs": [],
+                    "intermediaryBankAccounts": []
+                },
+                "default": false,
+                "type": "ach",
+                "bankAccount": {
+                    "id": null,
+                    "externalId": null,
+                    "createdAt": null,
+                    "updatedAt": null,
+                    "erpIds": [],
+                    "accountLabel": null,
+                    "accountHolderName": null,
+                    "bankName": null,
+                    "institutionNumber": null,
+                    "enabledProducts": [
+                        "BANK_ACCOUNT_INFO",
+                        "RECEIVABLES",
+                        "PAYMENT"
+                    ],
+                    "iban": null,
+                    "transitNumber": null,
+                    "routingNumber": "123456789",
+                    "accountNumber": "*****5432",
+                    "ifscCode": null,
+                    "sortCode": null,
+                    "bankCode": null,
+                    "localBranchCode": null,
+                    "bic": null,
+                    "cnapsCode": null,
+                    "bsbCode": null,
+                    "bikCode": null,
+                    "kodCode": null,
+                    "kbeCode": null,
+                    "nubanCode": null,
+                    "ribCode": null,
+                    "address": {
+                        "externalId": null,
+                        "line1": null,
+                        "streetNumber": null,
+                        "streetName": null,
+                        "line2": null,
+                        "city": null,
+                        "stateProvince": null,
+                        "country": "US",
+                        "postalCode": null,
+                        "types": [],
+                        "defaultFor": []
+                    },
+                    "countryCode": "US",
+                    "currencyCode": "USD",
+                    "accountType": "CHECKING",
+                    "balanceInfo": null,
+                    "checkTemplateCodes": [],
+                    "usageProfileIds": [],
+                    "extraDetails": [],
+                    "vccAccountPoolId": null,
+                    "defaultAccount": true,
+                    "defaultFor": [
+                        "WIRE",
+                        "RTP",
+                        "ACH",
+                        "ACH_NEXT_DAY"
+                    ],
+                    "paymentDefaults": {
+                        "purposeMessage": null,
+                        "purposeCode": null,
+                        "residentialStatus": null,
+                        "paymentCodeword": null,
+                        "paymentIsoCode": null,
+                        "paymentPartyType": null,
+                        "checkDeliveryMethod": null
+                    },
+                    "bankExternalId": null,
+                    "accountNumberLastFourDigits": "5432",
+                    "maskedAccountNumber": "*****5432",
+                    "autoSyncFeatures": true,
+                    "excludeFromAutoSync": false,
+                    "checkEntitlements": null,
+                    "userFeatures": {},
+                    "deleted": null,
+                    "deletedDateTime": null,
+                    "bankAccountFeatureConfigs": [],
+                    "intermediaryBankAccounts": []
+                }
+            }
+        ],
+        "bankAccounts": [
+            {
+                "id": null,
+                "externalId": null,
+                "createdAt": null,
+                "updatedAt": null,
+                "erpIds": [],
+                "accountLabel": null,
+                "accountHolderName": null,
+                "bankName": null,
+                "institutionNumber": null,
+                "enabledProducts": [
+                    "BANK_ACCOUNT_INFO",
+                    "RECEIVABLES",
+                    "PAYMENT"
+                ],
+                "iban": null,
+                "transitNumber": null,
+                "routingNumber": "123456789",
+                "accountNumber": "*****5432",
+                "ifscCode": null,
+                "sortCode": null,
+                "bankCode": null,
+                "localBranchCode": null,
+                "bic": null,
+                "cnapsCode": null,
+                "bsbCode": null,
+                "bikCode": null,
+                "kodCode": null,
+                "kbeCode": null,
+                "nubanCode": null,
+                "ribCode": null,
+                "address": {
+                    "externalId": null,
+                    "line1": null,
+                    "streetNumber": null,
+                    "streetName": null,
+                    "line2": null,
+                    "city": null,
+                    "stateProvince": null,
+                    "country": "US",
+                    "postalCode": null,
+                    "types": [],
+                    "defaultFor": []
+                },
+                "countryCode": "US",
+                "currencyCode": "USD",
+                "accountType": "CHECKING",
+                "balanceInfo": null,
+                "checkTemplateCodes": [],
+                "usageProfileIds": [],
+                "extraDetails": [],
+                "vccAccountPoolId": null,
+                "defaultAccount": true,
+                "defaultFor": [
+                    "WIRE",
+                    "RTP",
+                    "ACH",
+                    "ACH_NEXT_DAY"
+                ],
+                "paymentDefaults": {
+                    "purposeMessage": null,
+                    "purposeCode": null,
+                    "residentialStatus": null,
+                    "paymentCodeword": null,
+                    "paymentIsoCode": null,
+                    "paymentPartyType": null,
+                    "checkDeliveryMethod": null
+                },
+                "bankExternalId": null,
+                "accountNumberLastFourDigits": "5432",
+                "maskedAccountNumber": "*****5432",
+                "autoSyncFeatures": true,
+                "excludeFromAutoSync": false,
+                "checkEntitlements": null,
+                "userFeatures": {},
+                "deleted": null,
+                "deletedDateTime": null,
+                "bankAccountFeatureConfigs": [],
+                "intermediaryBankAccounts": []
+            }
+        ],
+        "emails": [],
+        "availablePaymentMethods": [
+            "WIRE",
+            "RTP",
+            "ACH",
+            "ACH_NEXT_DAY"
+        ],
+        "preferredPaymentType": null,
+        "serviceProviderId": null,
+        "addresses": [
+            {
+                "externalId": null,
+                "line1": "627 State Street",
+                "streetNumber": null,
+                "streetName": null,
+                "line2": null,
+                "city": "Anytown",
+                "stateProvince": "CA",
+                "country": "US",
+                "postalCode": "95113",
+                "types": [],
+                "defaultFor": []
+            }
+        ],
+        "phoneNumbers": [
+            {
+                "types": []
+            }
+        ],
+        "lastUpdated": "2025-11-01T08:25:14Z",
+        "syncErrors": [],
+        "vendorAccountNumber": "5225632",
+        "extraDetails": [],
+        "paymentDefaults": {
+            "purposeMessage": null,
+            "purposeCode": null,
+            "residentialStatus": null,
+            "paymentCodeword": null,
+            "paymentIsoCode": null,
+            "paymentPartyType": null,
+            "checkDeliveryMethod": null
+        },
+        "nameOrFullContactName": "Verizon-Network Services",
+        "fullContactName": null
+    },
+    "payer": {
+        "externalId": null,
+        "type": null,
+        "name": "JP Tire Shop",
+        "firstName": "John",
+        "lastName": "Park",
+        "email": null,
+        "phoneNumber": null,
+        "address": {
+            "externalId": null,
+            "line1": null,
+            "streetNumber": null,
+            "streetName": null,
+            "line2": null,
+            "city": null,
+            "stateProvince": null,
+            "country": "US",
+            "postalCode": null,
+            "types": [],
+            "defaultFor": []
+        },
+        "taxId": null,
+        "principleOfficerDoB": null,
+        "ssn": null,
+        "registeredPaymentMethods": [],
+        "bankAccounts": [
+            {
+                "id": "4b6df531-ab09-4598-917e-fe0f8c757361",
+                "externalId": null,
+                "createdAt": "2025-08-06T20:37:16.5251997Z",
+                "updatedAt": "2025-11-17T19:46:26.743584592Z",
+                "erpIds": [
+                    {
+                        "id": "Checking A",
+                        "erpProvider": "INTACCT",
+                        "subsidiaryId": null
+                    }
+                ],
+                "accountLabel": "JP Bank Account",
+                "accountHolderName": null,
+                "bankName": null,
+                "institutionNumber": null,
+                "enabledProducts": [
+                    "BANK_ACCOUNT_INFO",
+                    "RECEIVABLES",
+                    "PAYMENT"
+                ],
+                "iban": null,
+                "transitNumber": null,
+                "routingNumber": "123456789",
+                "accountNumber": "*****1357",
+                "ifscCode": null,
+                "sortCode": null,
+                "bankCode": null,
+                "localBranchCode": null,
+                "bic": null,
+                "cnapsCode": null,
+                "bsbCode": null,
+                "bikCode": null,
+                "kodCode": null,
+                "kbeCode": null,
+                "nubanCode": null,
+                "ribCode": null,
+                "address": {
+                    "externalId": null,
+                    "line1": null,
+                    "streetNumber": null,
+                    "streetName": null,
+                    "line2": null,
+                    "city": null,
+                    "stateProvince": null,
+                    "country": "US",
+                    "postalCode": null,
+                    "types": [],
+                    "defaultFor": []
+                },
+                "countryCode": "US",
+                "currencyCode": "USD",
+                "accountType": "BUSINESS",
+                "balanceInfo": {
+                    "bankAccountId": "4b6df531-ab09-4598-917e-fe0f8c757361",
+                    "overdraftLimit": 294374.14,
+                    "lastUpdated": "2025-08-06T20:38:17.274914Z",
+                    "clientId": "4b60d948-99bd-4443-b4e8-1882a2830ffe",
+                    "clientName": null,
+                    "balances": {
+                        "currentDay": {
+                            "requestId": null,
+                            "ledgerBalance": 156347.91,
+                            "availableBalance": 560298.15,
+                            "lastUpdatedLedgerBalance": "2025-08-06T20:38:17.2257574Z",
+                            "lastUpdatedAvailableBalance": "2025-08-06T20:38:17.2257566Z"
+                        },
+                        "previousDay": {
+                            "requestId": null,
+                            "ledgerBalance": 389102.08,
+                            "availableBalance": 572794.94,
+                            "lastUpdatedLedgerBalance": "2025-08-06T20:38:17.2257595Z",
+                            "lastUpdatedAvailableBalance": "2025-08-06T20:38:17.2257593Z"
+                        }
+                    },
+                    "accountNumber": null,
+                    "accountDetails": []
+                },
+                "checkTemplateCodes": [],
+                "usageProfileIds": [],
+                "extraDetails": [],
+                "vccAccountPoolId": null,
+                "defaultAccount": true,
+                "defaultFor": [],
+                "paymentDefaults": null,
+                "bankExternalId": null,
+                "accountNumberLastFourDigits": "1357",
+                "maskedAccountNumber": "*****1357",
+                "autoSyncFeatures": null,
+                "excludeFromAutoSync": false,
+                "checkEntitlements": null,
+                "userFeatures": {
+                    "default": [
+                        {
+                            "enabled": true,
+                            "featureType": "PAYABLES",
+                            "featureSubType": "POSITIVE_PAY",
+                            "featureOwner": "FISPAN",
+                            "config": null
+                        }
+                    ]
+                },
+                "deleted": false,
+                "deletedDateTime": null,
+                "bankAccountFeatureConfigs": null,
+                "intermediaryBankAccounts": null
+            }
+        ],
+        "emails": [
+            {
+                "email": "johnpark@fispan.com",
+                "name": "John Park",
+                "types": [
+                    "ERP_ADMIN"
+                ],
+                "defaultFor": []
+            },
+            {
+                "email": "johnpark+66@fispan.com",
+                "types": [
+                    "ERP_ADMIN"
+                ],
+                "defaultFor": []
+            }
+        ],
+        "availablePaymentMethods": [],
+        "preferredPaymentType": null,
+        "serviceProviderId": "d8251a94-9af9-46e2-b957-0ff18914f497",
+        "addresses": [],
+        "phoneNumbers": null,
+        "lastUpdated": null,
+        "syncErrors": [],
+        "vendorAccountNumber": null,
+        "extraDetails": [],
+        "paymentDefaults": null,
+        "nameOrFullContactName": "JP Tire Shop",
+        "fullContactName": "John Park"
+    },
+    "clientBankAccount": {
+        "id": "4b6df531-ab09-4598-917e-fe0f8c757361",
+        "externalId": null,
+        "createdAt": "2025-08-06T20:37:16.5251997Z",
+        "updatedAt": "2025-11-17T19:46:26.743584592Z",
+        "erpIds": [
+            {
+                "id": "Checking A",
+                "erpProvider": "INTACCT",
+                "subsidiaryId": null
+            }
+        ],
+        "accountLabel": "JP Bank Account",
+        "accountHolderName": null,
+        "bankName": null,
+        "institutionNumber": null,
+        "enabledProducts": [
+            "BANK_ACCOUNT_INFO",
+            "RECEIVABLES",
+            "PAYMENT"
+        ],
+        "iban": null,
+        "transitNumber": null,
+        "routingNumber": "123456789",
+        "accountNumber": "*****1357",
+        "ifscCode": null,
+        "sortCode": null,
+        "bankCode": null,
+        "localBranchCode": null,
+        "bic": null,
+        "cnapsCode": null,
+        "bsbCode": null,
+        "bikCode": null,
+        "kodCode": null,
+        "kbeCode": null,
+        "nubanCode": null,
+        "ribCode": null,
+        "address": {
+            "externalId": null,
+            "line1": null,
+            "streetNumber": null,
+            "streetName": null,
+            "line2": null,
+            "city": null,
+            "stateProvince": null,
+            "country": "US",
+            "postalCode": null,
+            "types": [],
+            "defaultFor": []
+        },
+        "countryCode": "US",
+        "currencyCode": "USD",
+        "accountType": "BUSINESS",
+        "balanceInfo": {
+            "bankAccountId": "4b6df531-ab09-4598-917e-fe0f8c757361",
+            "overdraftLimit": 294374.14,
+            "lastUpdated": "2025-08-06T20:38:17.274914Z",
+            "clientId": "4b60d948-99bd-4443-b4e8-1882a2830ffe",
+            "clientName": null,
+            "balances": {
+                "currentDay": {
+                    "requestId": null,
+                    "ledgerBalance": 156347.91,
+                    "availableBalance": 560298.15,
+                    "lastUpdatedLedgerBalance": "2025-08-06T20:38:17.2257574Z",
+                    "lastUpdatedAvailableBalance": "2025-08-06T20:38:17.2257566Z"
+                },
+                "previousDay": {
+                    "requestId": null,
+                    "ledgerBalance": 389102.08,
+                    "availableBalance": 572794.94,
+                    "lastUpdatedLedgerBalance": "2025-08-06T20:38:17.2257595Z",
+                    "lastUpdatedAvailableBalance": "2025-08-06T20:38:17.2257593Z"
+                }
+            },
+            "accountNumber": null,
+            "accountDetails": []
+        },
+        "checkTemplateCodes": [],
+        "usageProfileIds": [],
+        "extraDetails": [],
+        "vccAccountPoolId": null,
+        "defaultAccount": true,
+        "defaultFor": [],
+        "paymentDefaults": null,
+        "bankExternalId": null,
+        "accountNumberLastFourDigits": "1357",
+        "maskedAccountNumber": "*****1357",
+        "autoSyncFeatures": null,
+        "excludeFromAutoSync": false,
+        "checkEntitlements": null,
+        "userFeatures": {
+            "default": [
+                {
+                    "enabled": true,
+                    "featureType": "PAYABLES",
+                    "featureSubType": "POSITIVE_PAY",
+                    "featureOwner": "FISPAN",
+                    "config": null
+                }
+            ]
+        },
+        "deleted": false,
+        "deletedDateTime": null,
+        "bankAccountFeatureConfigs": null,
+        "intermediaryBankAccounts": null
+    },
+    "sourceBankAccountUsageProfileId": "",
+    "createdDate": null,
+    "paymentType": "ach",
+    "fulfillmentStartDate": "2025-11-17T19:50:21.161+0000",
+    "currency": "USD",
+    "amount": 374.75,
+    "paymentRequestId": "ab314526-a69f-4389-a726-1b39459deedf",
+    "meta": {
+        "payer": "249",
+        "payerEmail": "johnpark@fispan.com",
+        "payerName": "Park, John",
+        "pluginVersion": "2025.15",
+        "timestamp": "2025-11-17T19:50:15.361Z"
+    },
+    "erpProvider": "INTACCT",
+    "purpose": null,
+    "invoices": [
+        {
+            "invoiceId": null,
+            "billId": "7150",
+            "postingDate": "2025-11-01",
+            "dueDate": "2025-12-01",
+            "purpose": null,
+            "invoicedAmount": {
+                "currencyCode": "USD",
+                "amount": 374.75
+            },
+            "discountAppliedAmount": {
+                "currencyCode": "USD",
+                "amount": 0
+            },
+            "discountDate": null,
+            "billCredits": null,
+            "apAdjustmentsApplied": {
+                "currencyCode": "USD",
+                "amount": 0
+            },
+            "remittedAmount": {
+                "currencyCode": "USD",
+                "amount": 374.75
+            },
+            "dueAmount": {
+                "currencyCode": "USD",
+                "amount": 374.75
+            },
+            "purchaseOrders": [],
+            "name": null,
+            "grossAmount": null,
+            "excluded": null,
+            "commission": null,
+            "percentage": null,
+            "billingAddress": null,
+            "paymentExternalId": "7165"
+        }
+    ],
+    "paymentDirection": "CREDIT",
+    "vendorPaymentMethod": null,
+    "fx": null,
+    "vendorAddressId": null,
+    "vendorBankAccountId": "69dbd9df-9c31-47fc-8cab-f4c885900692",
+    "destinationAccountId": null,
+    "sourceAccountId": "4b6df531-ab09-4598-917e-fe0f8c757361",
+    "payeeRole": null,
+    "paymentRequestDate": "2025-11-17T19:50:15.878+0000",
+    "scheduledTimestamp": null,
+    "forScheduling": false,
+    "details": {
+        "billIds": "c084b9a4-0152-405f-8251-9072b4ce2215",
+        "billPaymentId": "7165",
+        "hasERPPartialPayments": "true",
+        "ERPPartiallyPaidBills": "c084b9a4-0152-405f-8251-9072b4ce2215",
+        "numberOfERPPartiallyPaidBills": "1"
+    },
+    "hasAttachments": false,
+    "safetyHoldApplied": false,
+    "fxEmpty": true
+}

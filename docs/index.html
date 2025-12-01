@@ -44,6 +44,10 @@
     .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
     .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
 
+    /* Category tag */
+    .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
+    .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
+
     /* Toast */
     #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
     .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
@@ -405,6 +409,7 @@
                         <button onclick="switchTab('summary')" id="btn-summary" class="tab-btn active px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm">⚠️ Gaps</button>
                         <button onclick="switchTab('full')" id="btn-full" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm">📄 Master Spec</button>
                         <button onclick="switchTab('visualizer')" id="btn-visualizer" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm border-blue-200 text-blue-700 bg-blue-50">🖨️ Visualizer</button>
+                        <button onclick="switchTab('tags')" id="btn-tags" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm">🏷️ Tags</button>
                     </div>
                     
                     <div class="p-6">
@@ -437,6 +442,10 @@
                                     <div class="p-2 bg-slate-50 border rounded check-field" data-tooltip="Row 45: Delivery">Method: Mail</div>
                                 </div>
                             </div>
+                        </div>
+                        <!-- VIEW 4: TAGS -->
+                        <div id="view-tags" class="hidden">
+                            <p class="text-xs text-slate-500">No assigned rows yet.</p>
                         </div>
                     </div>
 
@@ -580,14 +589,38 @@
         function renderFullSpec() {
             const tbody = document.getElementById('full-spec-body');
             tbody.innerHTML = '';
-            specRows.forEach(row => {
+            // Collect paired mappings from assigned tables
+            const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
+            const paired = [];
+            const unpaired = [];
+            targets.forEach(id => {
+                const t = document.getElementById(id);
+                if (!t) return;
+                Array.from(t.querySelectorAll('tr')).forEach(tr => {
+                    const specCell = tr.children[0];
+                    const mapCell = tr.children[1];
+                    const spec = specCell ? specCell.innerText.trim() : '';
+                    let mapping = '';
+                    if (mapCell) {
+                        const input = mapCell.querySelector('input');
+                        if (input) mapping = input.value.trim();
+                        else mapping = mapCell.innerText.trim();
+                    }
+                    if (mapping) paired.push({ mapping, spec });
+                    else unpaired.push({ mapping: '', spec });
+                });
+            });
+            // Sort paired by spec for easy lookup, then unpaired
+            paired.sort((a,b) => a.spec.localeCompare(b.spec));
+            unpaired.sort((a,b) => a.spec.localeCompare(b.spec));
+            const combined = paired.concat(unpaired);
+            // render two-column table: left = fispan/mapping, right = spec requirement
+            combined.forEach(r => {
                 const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+                tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
                 tr.innerHTML = `
-                    <td class="p-3"><span class="code-snippet font-semibold text-slate-700">${row.bank}</span> ${row.print ? '<span class="ml-1 text-[10px] bg-emerald-100 text-emerald-700 px-1 rounded">🖨️</span>' : ''}</td>
-                    <td class="p-3 font-mono text-xs text-blue-600">${row.fispan}</td>
-                    <td class="p-3 text-xs text-slate-500">${row.context}</td>
-                    <td class="p-3 text-xs text-amber-600 font-medium">${row.q}</td>
+                    <td class="p-3 font-mono text-xs text-blue-600">${r.mapping || ''}</td>
+                    <td class="p-3 text-sm text-slate-700">${r.spec || ''}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -773,19 +806,38 @@
             rows.forEach(r => {
                 const div = document.createElement('div');
                 div.className = 'flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300';
+                const left = document.createElement('div');
+                left.className = 'flex items-center gap-2';
+                // compact tag toggle: button that reveals a small select
+                const tagBtn = document.createElement('button');
+                tagBtn.className = 'text-[10px] tag-toggle px-2 py-1 rounded bg-slate-100 text-slate-700 hover:bg-slate-200';
+                tagBtn.title = 'Tag';
+                tagBtn.innerText = '🏷';
+                const sel = document.createElement('select');
+                sel.className = 'category-select hidden text-xs rounded bg-white border px-1 py-0';
+                sel.innerHTML = '<option value="">-</option><option value="payer">payer</option><option value="payee">payee</option><option value="bill">bill</option>';
+                sel.addEventListener('change', function() {
+                    // store category on the row container
+                    if (sel.value) div.dataset.category = sel.value; else delete div.dataset.category;
+                });
                 const span = document.createElement('span');
                 span.className = 'text-sm font-mono text-slate-700';
-                span.innerText = `Row ${r.row}: ${r.first}`;
+                span.innerText = 'Row ' + r.row + ': ' + r.first;
+                left.appendChild(tagBtn);
+                left.appendChild(sel);
+                left.appendChild(span);
                 const btns = document.createElement('div');
                 btns.className = 'flex gap-2';
-                btns.innerHTML = `
-                    <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">Native ERP</button>
-                    <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">Plugin</button>
-                    <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">Platform</button>
-                `;
-                div.appendChild(span);
+                btns.innerHTML = '\n                    <button onclick="assignRow(this, \'erp-native-body\')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">Native ERP</button>\n                    <button onclick="assignRow(this, \'erp-plugin-body\')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">Plugin</button>\n                    <button onclick="assignRow(this, \'platform-workbench-body\')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">Platform</button>\n                ';
+                div.appendChild(left);
                 div.appendChild(btns);
                 preview.appendChild(div);
+                // toggle select visibility when clicking the tag button
+                tagBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sel.classList.toggle('hidden');
+                    if (!sel.classList.contains('hidden')) sel.focus();
+                });
             });
         }
 
@@ -799,12 +851,17 @@
                 // create staging-style element
                 const span = item.querySelector('span');
                 const text = span ? span.innerText : '';
+                const category = item.dataset && item.dataset.category ? item.dataset.category : '';
                 const div = document.createElement('div');
                 div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
+                if (category) div.dataset.category = category;
                 const s = document.createElement('span');
                 s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
                 s.title = text;
                 s.innerText = text;
+                if (category) {
+                    const badge = document.createElement('span'); badge.className = 'tag-badge ml-2'; badge.innerText = category; s.appendChild(badge);
+                }
                 const btnDiv = document.createElement('div');
                 btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
                 btnDiv.innerHTML = `
@@ -842,8 +899,12 @@
                 return;
             }
             const tr = document.createElement('tr');
+            // include category badge if present on source row
+            let category = '';
+            if (rowEl && rowEl.dataset && rowEl.dataset.category) category = rowEl.dataset.category;
+            const catHtml = category ? `<span class="tag-badge">${category}</span>` : '';
             tr.innerHTML = `
-                <td class="p-3 text-sm font-medium text-slate-700">${rowText}</td>
+                <td class="p-3 text-sm font-medium text-slate-700">${rowText} ${catHtml}</td>
                 <td class="p-3"><input type="text" placeholder="Map to..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
                 <td class="p-3">
                     <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
@@ -854,6 +915,7 @@
                 </td>
                 <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
             `;
+            if (category) tr.dataset.category = category;
             targetBody.appendChild(tr);
             // Convert status select to badge UI
             const sel = tr.querySelector('select');
@@ -940,6 +1002,53 @@
             }
         });
 
+        // --- Editable tag badges ---
+        // Clicking a tag badge replaces it with a select so user can change category.
+        function makeTagEditable(badge) {
+            if (!badge || !badge.parentElement) return;
+            const current = badge.innerText.trim();
+            const select = document.createElement('select');
+            select.className = 'text-sm rounded px-2 py-1';
+            select.innerHTML = '<option value="">-</option><option value="payer">payer</option><option value="payee">payee</option><option value="bill">bill</option>';
+            select.value = current || '';
+            // replace the badge element with the select so spec text remains
+            badge.replaceWith(select);
+            select.focus();
+            select.onchange = function() {
+                const tr = select.closest('tr');
+                if (tr) {
+                    if (select.value) tr.dataset.category = select.value;
+                    else delete tr.dataset.category;
+                }
+                if (select.value) {
+                    const nb = document.createElement('span'); nb.className = 'tag-badge'; nb.innerText = select.value;
+                    select.replaceWith(nb);
+                } else {
+                    // remove select and leave no badge
+                    const empty = document.createTextNode('');
+                    select.replaceWith(empty);
+                }
+                saveState();
+            };
+            // if user clicks away without changing, restore original badge
+            select.onblur = function() {
+                if (!select.parentElement) return;
+                const val = select.value;
+                if (val) {
+                    const nb = document.createElement('span'); nb.className = 'tag-badge'; nb.innerText = val;
+                    select.replaceWith(nb);
+                } else {
+                    const nb = document.createElement('span'); nb.className = 'tag-badge'; nb.innerText = '';
+                    select.replaceWith(nb);
+                }
+            };
+        }
+
+        document.addEventListener('click', (e) => {
+            const tb = e.target && e.target.closest && e.target.closest('.tag-badge');
+            if (tb) makeTagEditable(tb);
+        });
+
         // small style for marked unassign rows
         (function addUnassignStyle(){
             const s = document.createElement('style');
@@ -976,13 +1085,19 @@
                                 if (badge) status = badge.innerText.trim();
                             }
                         }
-                        rows.push({spec,mapping,status});
+                        const category = tr.dataset && tr.dataset.category ? tr.dataset.category : '';
+                        rows.push({spec,mapping,status,category});
                     });
                     state.targets[id] = rows;
                 });
                 const staging = document.getElementById('unassigned-staging');
                 if (staging) {
-                    Array.from(staging.querySelectorAll('span')).forEach(s => state.staging.push(s.innerText));
+                    Array.from(staging.querySelectorAll('div')).forEach(d => {
+                        const span = d.querySelector('span');
+                        const text = span ? span.innerText : '';
+                        const category = d.dataset && d.dataset.category ? d.dataset.category : '';
+                        state.staging.push({ text, category });
+                    });
                 }
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             } catch (e) { console.warn('saveState failed', e); }
@@ -1005,66 +1120,6 @@
                 console.warn('resetState failed', e);
                 showToast('Reset failed', 'error', 1800);
             }
-        }
-
-        function loadState() {
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (!raw) return;
-                const state = JSON.parse(raw);
-                const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
-                targets.forEach(id => {
-                    const tbody = document.getElementById(id);
-                    if (!tbody) return;
-                    tbody.innerHTML = '';
-                    const rows = (state.targets && state.targets[id]) || [];
-                    rows.forEach(r => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td class="p-3 text-sm font-medium text-slate-700">${r.spec}</td>
-                            <td class="p-3"><input type="text" placeholder="Map to..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
-                            <td class="p-3">
-                                <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
-                                    <option value="mapped">mapped</option>
-                                    <option value="pending">pending</option>
-                                    <option value="gap">gap</option>
-                                </select>
-                            </td>
-                            <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
-                        `;
-                        tbody.appendChild(tr);
-                        if (r.mapping) {
-                            const input = tr.querySelector('td:nth-child(2) input');
-                            if (input) input.value = r.mapping;
-                        }
-                        const sel = tr.querySelector('select');
-                        if (sel) {
-                            sel.value = r.status || 'pending';
-                            updateStatusClass(sel);
-                        }
-                    });
-                });
-                const staging = document.getElementById('unassigned-staging');
-                if (staging) {
-                    staging.innerHTML = '';
-                    (state.staging || []).forEach(text => {
-                        const div = document.createElement('div');
-                        div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
-                        const s = document.createElement('span');
-                        s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
-                        s.title = text; s.innerText = text;
-                        const btnDiv = document.createElement('div');
-                        btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
-                        btnDiv.innerHTML = `
-                            <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                            <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                            <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
-                        `;
-                        div.appendChild(s); div.appendChild(btnDiv); staging.appendChild(div);
-                    });
-                }
-                renderGaps();
-            } catch (e) { console.warn('loadState failed', e); }
         }
 
         // --- Gaps detection & rendering ---
@@ -1249,7 +1304,8 @@
 
         async function loadFispanConstants() {
             try {
-                const res = await fetch('../data/fispan-constants.json');
+                // docs site sits in /docs, constants are in ../data
+                const res = await fetch('../data/fispan-constants.flat.json');
                 if (!res.ok) throw new Error('Failed to fetch constants');
                 const constants = await res.json();
                 // merge constants into specRows for master spec
@@ -1280,12 +1336,48 @@
         });
         
         function switchTab(view) {
-            ['summary', 'full', 'visualizer'].forEach(v => {
-                document.getElementById('view-' + v).classList.add('hidden');
-                document.getElementById('btn-' + v).classList.remove('active');
+            ['summary', 'full', 'visualizer', 'tags'].forEach(v => {
+                const viewEl = document.getElementById('view-' + v);
+                const btnEl = document.getElementById('btn-' + v);
+                if (viewEl) viewEl.classList.add('hidden');
+                if (btnEl) btnEl.classList.remove('active');
             });
-            document.getElementById('view-' + view).classList.remove('hidden');
-            document.getElementById('btn-' + view).classList.add('active');
+            const targetView = document.getElementById('view-' + view);
+            const targetBtn = document.getElementById('btn-' + view);
+            if (targetView) targetView.classList.remove('hidden');
+            if (targetBtn) targetBtn.classList.add('active');
+            // If switching to Tags view populate it
+            if (view === 'tags' && typeof renderTagsView === 'function') renderTagsView();
+        }
+
+        // Render assigned rows grouped by category (payer/payee/bill/untagged)
+        function renderTagsView() {
+            const groups = { payer: [], payee: [], bill: [], untagged: [] };
+            const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
+            targets.forEach(id => {
+                const tbody = document.getElementById(id);
+                if (!tbody) return;
+                Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
+                    const spec = tr.children[0] ? tr.children[0].innerText.trim() : '';
+                    const category = tr.dataset && tr.dataset.category ? tr.dataset.category : '';
+                    if (category === 'payer') groups.payer.push(spec);
+                    else if (category === 'payee') groups.payee.push(spec);
+                    else if (category === 'bill') groups.bill.push(spec);
+                    else groups.untagged.push(spec);
+                });
+            });
+            const el = document.getElementById('view-tags');
+            if (!el) return;
+            let html = '';
+            ['payer','payee','bill','untagged'].forEach(k => {
+                const title = k === 'untagged' ? 'Untagged' : k.charAt(0).toUpperCase() + k.slice(1);
+                html += `<div class="mb-4 p-3 bg-white rounded border">`;
+                html += `<div class="font-bold text-sm mb-2">${title} (${groups[k].length})</div>`;
+                html += '<ul class="text-sm list-disc pl-5">';
+                groups[k].forEach(s => html += `<li>${s}</li>`);
+                html += '</ul></div>';
+            });
+            el.innerHTML = html || '<p class="text-xs text-slate-500">No assigned rows yet.</p>';
         }
 
         const contextToggle = document.getElementById('toggle-feed-context');
