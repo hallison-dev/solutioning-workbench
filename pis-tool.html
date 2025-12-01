@@ -38,6 +38,21 @@
         .tab-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .tab-btn { background-color: white; color: #64748b; border: 1px solid #cbd5e1; }
 
+    /* Status badges */
+    .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; }
+    .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
+    .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
+    .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    /* Toast */
+    #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
+    .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: #059669; }
+    .toast.info { background: #2563eb; }
+    .toast.warn { background: #d97706; }
+    .toast.error { background: #b91c1c; }
+
         /* Story Feed */
         .feed-item { position: relative; padding-left: 1.5rem; padding-bottom: 1.5rem; border-left: 2px solid #e2e8f0; transition: all 0.3s ease; opacity: 0.5; cursor: pointer; }
         .feed-item.active { opacity: 1; border-left-color: #3b82f6; }
@@ -285,11 +300,11 @@
                     <div class="border border-slate-200 rounded-lg overflow-hidden mb-4">
                         <table class="w-full text-sm text-left">
                             <thead class="bg-slate-50 text-slate-700 font-bold">
-                                <tr><th class="p-3 border-b bg-slate-100 w-1/2">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/2">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
+                                <tr><th class="p-3 border-b bg-slate-100 w-1/3">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100">Status</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
                             </thead>
                             <tbody id="erp-native-body" class="divide-y divide-slate-100">
-                                <tr><td class="p-3">Vendor Name</td><td class="p-3">entity.companyName</td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
-                                <tr><td class="p-3">Vendor Address</td><td class="p-3">entity.addressBook</td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
+                                <tr><td class="p-3">Vendor Name</td><td class="p-3">entity.companyName</td><td class="p-3"><span class="status-badge mapped">mapped</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
+                                <tr><td class="p-3">Vendor Address</td><td class="p-3">entity.addressBook</td><td class="p-3"><span class="status-badge mapped">mapped</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
                             </tbody>
                         </table>
                         <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('erp-native-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Native Mapping</button></div>
@@ -307,11 +322,11 @@
                     <div class="border border-slate-200 rounded-lg overflow-hidden mb-4">
                         <table class="w-full text-sm text-left">
                             <thead class="bg-slate-50 text-slate-700 font-bold">
-                                <tr><th class="p-3 border-b bg-slate-100 w-1/2">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/2">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
+                                <tr><th class="p-3 border-b bg-slate-100 w-1/3">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100">Status</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
                             </thead>
                             <tbody id="erp-plugin-body" class="divide-y divide-slate-100">
-                                <tr><td class="p-3">Check Memo</td><td class="p-3">Runtime Text Input</td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
-                                <tr><td class="p-3">Handling Code</td><td class="p-3">Dropdown Selection</td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
+                                <tr><td class="p-3">Check Memo</td><td class="p-3">Runtime Text Input</td><td class="p-3"><span class="status-badge pending">pending</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
+                                <tr><td class="p-3">Handling Code</td><td class="p-3">Dropdown Selection</td><td class="p-3"><span class="status-badge pending">pending</span></td><td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td></tr>
                             </tbody>
                         </table>
                         <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('erp-plugin-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Plugin Mapping</button></div>
@@ -394,7 +409,10 @@
                         <!-- VIEW 1: SUMMARY -->
                         <div id="view-summary" class="block">
                             <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-4"><h4 class="font-bold text-amber-900 text-sm">Automated Gaps Detected</h4></div>
-                            <table class="w-full text-sm text-left"><tbody class="divide-y divide-slate-100"><tr><td class="p-3 font-semibold">Householding</td><td class="p-3">Master/Child flag logic?</td></tr></tbody></table>
+                            <div id="gaps-list" class="text-sm">
+                                <!-- Gaps will be rendered here by JS -->
+                                <p class="text-xs text-slate-500">No gaps detected yet.</p>
+                            </div>
                         </div>
                         <!-- VIEW 2: FULL SPEC -->
                         <div id="view-full" class="hidden">
@@ -454,36 +472,36 @@
         </div>
         <div class="flex-1 overflow-y-auto p-6 space-y-0 relative feed-container" id="feed-container">
             <!-- Feed Items (Phase 2) -->
-            <div class="feed-item active" data-phase="phase-2">
+            <div class="feed-item" data-phase="phase-2">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">User Accesses Plugin</h4>
                 <p class="text-xs text-slate-500 mt-1">Requests latest open bills from ERP GL.</p>
                 <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Technical Context</h5><p class="text-xs text-slate-600 leading-relaxed">Plugin initiates `GET /vendor-bills` call to ERP API.</p></div>
             </div>
-            <div class="feed-item active" data-phase="phase-2">
+            <div class="feed-item" data-phase="phase-2">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Method Selection</h4>
                 <p class="text-xs text-slate-500 mt-1">User selects "Check" via Dropdown.</p>
                 <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Configuration</h5><p class="text-xs text-slate-600 leading-relaxed">Mapped to Bank Code: `CHK`.</p></div>
             </div>
-            <!-- Feed Items (Phase 3) -->
-            <div class="feed-item" data-phase="phase-3">
+            <!-- Feed Items (Phase 2) -->
+            <div class="feed-item" data-phase="phase-2">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Submission & Auth</h4>
                 <p class="text-xs text-slate-500 mt-1">Plugin creates record. FISPAN authenticates.</p>
             </div>
+            <!-- Feed Items (Phase 3) -->
             <div class="feed-item" data-phase="phase-3">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Platform Validation</h4>
                 <p class="text-xs text-slate-500 mt-1">Checks data against Customer File Spec.</p>
             </div>
-            <!-- Feed Items (Phase 4) -->
-            <div class="feed-item" data-phase="phase-4">
+            <div class="feed-item" data-phase="phase-3">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Transformation</h4>
                 <p class="text-xs text-slate-500 mt-1">Formats valid requests into Bank CSV Format.</p>
             </div>
-            <div class="feed-item" data-phase="phase-4">
+            <div class="feed-item" data-phase="phase-3">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Transmission</h4>
                 <p class="text-xs text-slate-500 mt-1">Sends to Endpoint (SFTP/API).</p>
@@ -573,14 +591,24 @@
             tr.innerHTML = `
                 <td class="p-3"><input type="text" placeholder="Spec Requirement..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
                 <td class="p-3"><input type="text" placeholder="FISPAN Source..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
+                <td class="p-3">
+                    <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
+                        <option value="mapped">mapped</option>
+                        <option value="pending" selected>pending</option>
+                        <option value="gap">gap</option>
+                    </select>
+                </td>
                 <td class="p-3 text-right"><button class="text-xs text-red-500 hover:underline" onclick="this.closest('tr').remove()">Remove</button></td>
             `;
             tbody.appendChild(tr);
+            // New rows may be gaps until mapped
+            renderGaps();
         }
         
         function editRow(btn) {
             const tr = btn.closest('tr');
-            const cells = tr.querySelectorAll('td:not(:last-child)');
+            // Only edit the first two columns (Spec Requirement and FISPAN Source)
+            const cells = tr.querySelectorAll('td:nth-child(1), td:nth-child(2)');
             cells.forEach(td => {
                 const text = td.innerText;
                 td.innerHTML = `<input type="text" value="${text}" class="w-full bg-white border border-blue-300 rounded px-2 py-1 text-sm focus:outline-none">`;
@@ -591,13 +619,16 @@
 
         function saveRow(btn) {
             const tr = btn.closest('tr');
-            const inputs = tr.querySelectorAll('input');
+            // Only save first two columns
+            const inputs = tr.querySelectorAll('td:nth-child(1) input, td:nth-child(2) input');
             inputs.forEach(input => {
                 const td = input.closest('td');
                 td.innerText = input.value;
             });
             btn.innerText = "Edit";
             btn.onclick = function() { editRow(this); };
+            // Update gaps after saving
+            renderGaps();
         }
 
         // --- UPLOADER LOGIC ---
@@ -723,6 +754,10 @@
                 staging.appendChild(div);
                 item.remove();
             });
+            if (items.length) {
+                showToast(`${items.length} rows moved to staging`, 'info');
+                renderGaps();
+            }
         }
         function assignRow(btn, targetId) {
             // Robustly find the row container (markup varies between templates)
@@ -746,10 +781,109 @@
             tr.innerHTML = `
                 <td class="p-3 text-sm font-medium text-slate-700">${rowText}</td>
                 <td class="p-3"><input type="text" placeholder="Map to..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
+                <td class="p-3">
+                    <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
+                        <option value="mapped">mapped</option>
+                        <option value="pending" selected>pending</option>
+                        <option value="gap">gap</option>
+                    </select>
+                </td>
                 <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
             `;
             targetBody.appendChild(tr);
+            // Convert status select to badge UI
+            const sel = tr.querySelector('select');
+            if (sel) updateStatusClass(sel);
+            // Show confirmation toast
+            showToast('Assigned: ' + rowText, 'success');
+            // Update gaps list
+            renderGaps();
             rowEl.remove();
+        }
+
+        // --- Toast helper ---
+        function showToast(message, type = 'info', ms = 2500) {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerText = message;
+            container.appendChild(t);
+            // allow CSS transition
+            requestAnimationFrame(() => t.classList.add('show'));
+            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 250); }, ms);
+        }
+
+        // --- Status helper ---
+        function updateStatusClass(select) {
+            const val = select.value;
+            // replace select with a visually styled badge to keep table compact
+            const td = select.closest('td');
+            const badge = document.createElement('span');
+            badge.className = `status-badge ${val}`;
+            badge.innerText = val;
+            // keep a hidden input to store status if needed
+            const hidden = document.createElement('input');
+            hidden.type = 'hidden'; hidden.name = 'status'; hidden.value = val;
+            td.innerHTML = '';
+            td.appendChild(badge);
+            td.appendChild(hidden);
+            // small feedback
+            showToast('Status set to ' + val, val === 'mapped' ? 'success' : (val === 'gap' ? 'error' : 'info'));
+            renderGaps();
+        }
+
+        // Initialize any existing selects to badges on load
+        function initStatusSelects() {
+            document.querySelectorAll('select').forEach(s => {
+                if (s.closest && s.closest('tbody')) {
+                    updateStatusClass(s);
+                }
+            });
+        }
+
+        // --- Gaps detection & rendering ---
+        function renderGaps() {
+            const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
+            const gaps = [];
+            targets.forEach(id => {
+                const tbody = document.getElementById(id);
+                if (!tbody) return;
+                Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
+                    const spec = tr.children[0] ? tr.children[0].innerText.trim() : '';
+                    const mappingCell = tr.children[1];
+                    let mapped = false;
+                    if (mappingCell) {
+                        const input = mappingCell.querySelector('input');
+                        if (input) mapped = input.value.trim() !== '';
+                        else mapped = mappingCell.innerText.trim() !== '' && mappingCell.innerText.trim().toLowerCase() !== 'map to...';
+                    }
+                    if (!mapped) gaps.push({target: id, spec});
+                });
+            });
+            const container = document.getElementById('gaps-list');
+            if (!container) return;
+            if (!gaps.length) {
+                container.innerHTML = '<p class="text-xs text-slate-500">No gaps detected.</p>';
+                return;
+            }
+            // Render gaps as a small list grouped by target
+            const grouped = {};
+            gaps.forEach(g => { grouped[g.target] = grouped[g.target] || []; grouped[g.target].push(g.spec); });
+            let html = '<div class="space-y-3">';
+            Object.keys(grouped).forEach(k => {
+                html += `<div class="p-3 bg-white rounded border">`;
+                html += `<div class="font-bold text-sm mb-2">${k.replace(/-/g,' ')} (${grouped[k].length})</div>`;
+                html += '<ul class="text-sm list-disc pl-5">';
+                grouped[k].forEach(s => html += `<li>${s}</li>`);
+                html += '</ul></div>';
+            });
+            html += '</div>';
+            container.innerHTML = html;
         }
 
         // --- DYNAMIC CONTEXT & QUESTIONS ---
@@ -878,9 +1012,16 @@
             });
 
             feedItems.forEach(item => {
-                const itemPhase = parseInt(item.getAttribute('data-phase'), 10) || 0;
+                const attr = item.getAttribute('data-phase') || '';
+                let itemPhaseIndex = 0;
+                const m = String(attr).match(/phase-(\d+)/i);
+                if (m) itemPhaseIndex = parseInt(m[1], 10);
+                else itemPhaseIndex = parseInt(attr, 10) || 0;
                 const currentPhaseIndex = parseInt(String(currentPhase).split('-').pop(), 10) || 0;
-                if (itemPhase <= currentPhaseIndex) item.classList.add('active');
+                // Activate only items that belong to the current phase exactly.
+                // This follows the mapping: when in phase N, highlight only phase-N feed items
+                // (so phase 2 shows plugin steps, phase 3 shows validation/transmission, etc.).
+                if (itemPhaseIndex === currentPhaseIndex) item.classList.add('active');
                 else item.classList.remove('active');
             });
         });
@@ -888,6 +1029,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderFullSpec();
             addPresetQuestion('q-phase-1', 'Does the SFTP server require IP Allowlisting?');
+            initStatusSelects();
+            renderGaps();
+            // ensure feed state matches current scroll on load (in case some items had static 'active' classes)
+            if (mainScroll) mainScroll.dispatchEvent(new Event('scroll'));
         });
         
         function switchTab(view) {
