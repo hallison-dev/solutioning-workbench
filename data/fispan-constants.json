@@ -1,0 +1,82 @@
+[
+  {
+    "key": "payerExternalId",
+    "sampleValue": "1234",
+    "valueType": "string",
+    "description": "Top-level payer external id",
+    "candidatePhases": ["phase-2-plugin","phase-4"],
+    "railsCovered": ["ACH","WIRE","RTP"]
+  },
+  {
+    "key": "clientTxId",
+    "sampleValue": "bill-payment-7165",
+    "valueType": "string",
+    "description": "Client transaction id",
+    "candidatePhases": ["phase-2-plugin","phase-4"],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.externalId",
+    "sampleValue": "VEN-000012",
+    "valueType": "string",
+    "description": "Payee external identifier",
+    "candidatePhases": ["phase-2-erp","phase-4"],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.name",
+    "sampleValue": "Verizon-Network Services",
+    "valueType": "string",
+    "description": "Payee display name",
+    "candidatePhases": ["phase-2-erp","phase-4"],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.address.line1",
+    "sampleValue": "627 State Street",
+    "valueType": "string",
+    "description": "Payee address line1",
+    "candidatePhases": ["phase-2-erp","phase-4"],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.routingNumber",
+    "sampleValue": "123456789",
+    "valueType": "string",
+    "description": "Routing number for payee bank account",
+    "candidatePhases": ["phase-2-erp","phase-4"],
+    "railsCovered": ["ACH","WIRE","RTP"]
+  },
+  {
+    "key": "clientBankAccount.routingNumber",
+    "sampleValue": "123456789",
+    "valueType": "string",
+    "description": "Client / payer bank routing number",
+    "candidatePhases": ["phase-2-erp","phase-4"],
+    "railsCovered": ["ACH","WIRE","RTP"]
+  },
+  {
+    "key": "paymentType",
+    "sampleValue": "ach",
+    "valueType": "string",
+    "description": "Type of payment (ach, wire, rtp)",
+    "candidatePhases": ["phase-2-plugin","phase-4"],
+    "railsCovered": ["ACH","WIRE","RTP"]
+  },
+  {
+    "key": "amount",
+    "sampleValue": 374.75,
+    "valueType": "number",
+    "description": "Payment amount",
+    "candidatePhases": ["phase-2-plugin","phase-4"],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.remittedAmount.amount",
+    "sampleValue": 374.75,
+    "valueType": "number",
+    "description": "Remitted amount on invoice",
+    "candidatePhases": ["phase-2-plugin","phase-4"],
+    "railsCovered": []
+  }
+]

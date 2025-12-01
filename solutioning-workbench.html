@@ -1247,15 +1247,36 @@
             });
         });
 
+        async function loadFispanConstants() {
+            try {
+                const res = await fetch('data/fispan-constants.json');
+                if (!res.ok) throw new Error('Failed to fetch constants');
+                const constants = await res.json();
+                // merge constants into specRows for master spec
+                constants.forEach(c => {
+                    specRows.push({ bank: c.key, fispan: c.key, context: c.description || '', q: '', print: true, meta: c });
+                });
+                renderFullSpec();
+                return constants;
+            } catch (e) {
+                console.warn('loadFispanConstants error', e);
+                // still render whatever we have
+                renderFullSpec();
+                return [];
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            renderFullSpec();
-            addPresetQuestion('q-phase-1', 'Does the SFTP server require IP Allowlisting?');
-            // load persisted state (if any) before initializing selects
-            loadState();
-            initStatusSelects();
-            renderGaps();
-            // ensure feed state matches current scroll on load (in case some items had static 'active' classes)
-            if (mainScroll) mainScroll.dispatchEvent(new Event('scroll'));
+            // load FISPAN constants (from data/fispan-constants.json) then initialize UI
+            loadFispanConstants().then(() => {
+                addPresetQuestion('q-phase-1', 'Does the SFTP server require IP Allowlisting?');
+                // load persisted state (if any) before initializing selects
+                loadState();
+                initStatusSelects();
+                renderGaps();
+                // ensure feed state matches current scroll on load (in case some items had static 'active' classes)
+                if (mainScroll) mainScroll.dispatchEvent(new Event('scroll'));
+            });
         });
         
         function switchTab(view) {
