@@ -585,45 +585,92 @@
             { bank: "Bank Name", fispan: "payer.bankName", context: "Bank Name", q: "", print: true },
         ];
 
+    // Master mappings for FISPAN constants -> spec variable
+    // key => { key, valueType, description, spec, status }
+    const masterMappings = {};
+
         // --- RENDER FUNCTIONS ---
         function renderFullSpec() {
             const tbody = document.getElementById('full-spec-body');
+            if (!tbody) return;
             tbody.innerHTML = '';
-            // Collect paired mappings from assigned tables
-            const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
-            const paired = [];
-            const unpaired = [];
-            targets.forEach(id => {
-                const t = document.getElementById(id);
-                if (!t) return;
-                Array.from(t.querySelectorAll('tr')).forEach(tr => {
-                    const specCell = tr.children[0];
-                    const mapCell = tr.children[1];
-                    const spec = specCell ? specCell.innerText.trim() : '';
-                    let mapping = '';
-                    if (mapCell) {
-                        const input = mapCell.querySelector('input');
-                        if (input) mapping = input.value.trim();
-                        else mapping = mapCell.innerText.trim();
-                    }
-                    if (mapping) paired.push({ mapping, spec });
-                    else unpaired.push({ mapping: '', spec });
-                });
+            // Build array from masterMappings
+            const rows = Object.keys(masterMappings).map(k => Object.assign({}, masterMappings[k]));
+            // sort: entries with non-empty spec first, then alphabetically by key
+            rows.sort((a,b) => {
+                if ((a.spec && !b.spec)) return -1;
+                if ((!a.spec && b.spec)) return 1;
+                return a.key.localeCompare(b.key);
             });
-            // Sort paired by spec for easy lookup, then unpaired
-            paired.sort((a,b) => a.spec.localeCompare(b.spec));
-            unpaired.sort((a,b) => a.spec.localeCompare(b.spec));
-            const combined = paired.concat(unpaired);
-            // render two-column table: left = fispan/mapping, right = spec requirement
-            combined.forEach(r => {
+
+            // helper to create status badge
+            function statusHtml(m) {
+                const s = m.status || 'pending';
+                return `<span class="status-badge master-status ${s}" data-const="${m.key}">${s}</span>`;
+            }
+
+            rows.forEach(m => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
+                const specDisplay = m.spec ? `<span class="master-spec" data-const="${m.key}">${escapeHtml(m.spec)}</span>` : `<em class="text-xs text-slate-400">(unmatched)</em>`;
                 tr.innerHTML = `
-                    <td class="p-3 font-mono text-xs text-blue-600">${r.mapping || ''}</td>
-                    <td class="p-3 text-sm text-slate-700">${r.spec || ''}</td>
+                    <td class="p-3 font-mono text-xs text-blue-600">${escapeHtml(m.key)}</td>
+                    <td class="p-3 text-xs text-slate-500">${escapeHtml(m.valueType || '')}</td>
+                    <td class="p-3 text-sm text-slate-700">${specDisplay} <button class="ml-2 text-[10px] px-2 py-1 bg-slate-100 rounded master-attach" data-const="${m.key}">Attach</button></td>
+                    <td class="p-3">${statusHtml(m)}</td>
                 `;
                 tbody.appendChild(tr);
             });
+        }
+
+        // Escape helper for safe text insertion
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; });
+        }
+
+        // Collect available spec strings from staging and assigned tables
+        function getAllSpecPool() {
+            const set = new Set();
+            // staging
+            const staging = document.getElementById('unassigned-staging');
+            if (staging) Array.from(staging.querySelectorAll('span')).forEach(s => set.add(s.innerText.trim()));
+            // assigned tables
+            ['erp-native-body','erp-plugin-body','platform-workbench-body'].forEach(id => {
+                const tb = document.getElementById(id);
+                if (!tb) return;
+                Array.from(tb.querySelectorAll('tr')).forEach(tr => {
+                    const txt = tr.children[0] ? tr.children[0].innerText.trim() : '';
+                    if (txt) set.add(txt);
+                });
+            });
+            return Array.from(set).filter(s => s && s.length);
+        }
+
+        // Attach a spec string to a constant; if spec was attached to another constant, swap
+        function assignSpecToConstant(constKey, specText) {
+            // find other constant that has this spec
+            let other = null;
+            Object.keys(masterMappings).forEach(k => { if (masterMappings[k].spec === specText) other = k; });
+            const prevSpec = masterMappings[constKey].spec || '';
+            if (other && other !== constKey) {
+                // swap
+                masterMappings[other].spec = prevSpec || '';
+            }
+            masterMappings[constKey].spec = specText || '';
+            // update statuses: if spec assigned set to mapped
+            if (specText) masterMappings[constKey].status = 'mapped';
+            if (other && other !== constKey && !masterMappings[other].spec) masterMappings[other].status = 'pending';
+            renderFullSpec();
+            saveState();
+        }
+
+        // Update master mapping status
+        function updateMasterStatus(constKey, newStatus) {
+            if (!masterMappings[constKey]) return;
+            masterMappings[constKey].status = newStatus;
+            renderFullSpec();
+            saveState();
         }
 
         // --- WORKBENCH LOGIC (Add & Edit) ---
@@ -997,7 +1044,7 @@
         // Delegate clicks on badges to enable editing
         document.addEventListener('click', (e) => {
             const b = e.target && e.target.closest && e.target.closest('.status-badge');
-            if (b) {
+            if (b && !b.classList.contains('master-status')) {
                 makeStatusEditable(b);
             }
         });
@@ -1047,6 +1094,40 @@
         document.addEventListener('click', (e) => {
             const tb = e.target && e.target.closest && e.target.closest('.tag-badge');
             if (tb) makeTagEditable(tb);
+        });
+
+        // Delegate Attach and master status interactions
+        document.addEventListener('click', (e) => {
+            const attachBtn = e.target && e.target.closest && e.target.closest('.master-attach');
+            if (attachBtn) {
+                const constKey = attachBtn.dataset.const;
+                const pool = getAllSpecPool();
+                // create inline select
+                const sel = document.createElement('select');
+                sel.className = 'text-sm rounded px-2 py-1';
+                const emptyOpt = document.createElement('option'); emptyOpt.value = ''; emptyOpt.text = '(none)'; sel.appendChild(emptyOpt);
+                pool.forEach(p => { const o = document.createElement('option'); o.value = p; o.text = p; sel.appendChild(o); });
+                attachBtn.replaceWith(sel);
+                sel.focus();
+                sel.onchange = function() {
+                    assignSpecToConstant(constKey, sel.value);
+                };
+                sel.onblur = function() { renderFullSpec(); };
+                return;
+            }
+            const statusBadge = e.target && e.target.closest && e.target.closest('.master-status');
+            if (statusBadge) {
+                const constKey = statusBadge.dataset.const;
+                const select = document.createElement('select');
+                select.className = 'text-sm rounded px-2 py-1';
+                select.innerHTML = `\n                    <option value="mapped">mapped</option>\n                    <option value="pending">pending</option>\n                    <option value="gap">gap</option>\n                `;
+                select.value = masterMappings[constKey] ? masterMappings[constKey].status : 'pending';
+                statusBadge.replaceWith(select);
+                select.focus();
+                select.onchange = function() { updateMasterStatus(constKey, select.value); };
+                select.onblur = function() { renderFullSpec(); };
+                return;
+            }
         });
 
         // small style for marked unassign rows
@@ -1100,6 +1181,8 @@
                     });
                 }
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                // persist master mappings as well
+                try { localStorage.setItem(STORAGE_KEY + ':master', JSON.stringify(masterMappings)); } catch(e) {}
             } catch (e) { console.warn('saveState failed', e); }
         }
 
@@ -1120,6 +1203,91 @@
                 console.warn('resetState failed', e);
                 showToast('Reset failed', 'error', 1800);
             }
+        }
+
+        // --- Load persisted state ---
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) {
+                    // try to load master mappings only
+                    const mm = localStorage.getItem(STORAGE_KEY + ':master');
+                    if (mm) {
+                        const parsed = JSON.parse(mm);
+                        Object.keys(parsed).forEach(k => masterMappings[k] = parsed[k]);
+                        renderFullSpec();
+                    }
+                    return;
+                }
+                const state = JSON.parse(raw);
+                const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
+                targets.forEach(id => {
+                    const tbody = document.getElementById(id);
+                    if (!tbody) return;
+                    tbody.innerHTML = '';
+                    const rows = (state.targets && state.targets[id]) || [];
+                    rows.forEach(r => {
+                        const tr = document.createElement('tr');
+                        const catHtml = r.category ? `<span class="tag-badge">${r.category}</span>` : '';
+                        tr.innerHTML = `
+                            <td class="p-3 text-sm font-medium text-slate-700">${escapeHtml(r.spec)} ${catHtml}</td>
+                            <td class="p-3"><input type="text" placeholder="Map to..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
+                            <td class="p-3">
+                                <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
+                                    <option value="mapped">mapped</option>
+                                    <option value="pending">pending</option>
+                                    <option value="gap">gap</option>
+                                </select>
+                            </td>
+                            <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
+                        `;
+                        if (r.category) tr.dataset.category = r.category;
+                        tbody.appendChild(tr);
+                        if (r.mapping) {
+                            const input = tr.querySelector('td:nth-child(2) input');
+                            if (input) input.value = r.mapping;
+                        }
+                        const sel = tr.querySelector('select');
+                        if (sel) {
+                            sel.value = r.status || 'pending';
+                            updateStatusClass(sel);
+                        }
+                    });
+                });
+                const staging = document.getElementById('unassigned-staging');
+                if (staging) {
+                    staging.innerHTML = '';
+                    (state.staging || []).forEach(entry => {
+                        let text = '';
+                        let category = '';
+                        if (typeof entry === 'string') text = entry; else { text = entry.text || ''; category = entry.category || ''; }
+                        const div = document.createElement('div');
+                        div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
+                        if (category) div.dataset.category = category;
+                        const s = document.createElement('span');
+                        s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
+                        s.title = text; s.innerText = text;
+                        if (category) { const badge = document.createElement('span'); badge.className = 'tag-badge ml-2'; badge.innerText = category; s.appendChild(badge); }
+                        const btnDiv = document.createElement('div');
+                        btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
+                        btnDiv.innerHTML = `
+                            <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
+                            <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
+                            <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
+                        `;
+                        div.appendChild(s); div.appendChild(btnDiv); staging.appendChild(div);
+                    });
+                }
+
+                // restore master mappings if present
+                const mmRaw = localStorage.getItem(STORAGE_KEY + ':master');
+                if (mmRaw) {
+                    const mm = JSON.parse(mmRaw);
+                    Object.keys(mm).forEach(k => masterMappings[k] = mm[k]);
+                }
+                renderGaps();
+                renderFullSpec();
+            } catch (e) { console.warn('loadState failed', e); }
         }
 
         // --- Gaps detection & rendering ---
@@ -1308,9 +1476,16 @@
                 const res = await fetch('../data/fispan-constants.flat.json');
                 if (!res.ok) throw new Error('Failed to fetch constants');
                 const constants = await res.json();
-                // merge constants into specRows for master spec
+                // merge constants into specRows for master spec and initialize masterMappings
                 constants.forEach(c => {
                     specRows.push({ bank: c.key, fispan: c.key, context: c.description || '', q: '', print: true, meta: c });
+                    masterMappings[c.key] = {
+                        key: c.key,
+                        valueType: c.valueType || '',
+                        description: c.description || '',
+                        spec: '',
+                        status: 'pending'
+                    };
                 });
                 renderFullSpec();
                 return constants;
