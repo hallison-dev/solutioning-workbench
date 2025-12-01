@@ -1,16 +1,16 @@
 
-# PIS Tool — Solutioning Builder
+# Solutioning Workbench — Solutioning Builder
 
-Small internal tool to map bank file spec rows to FISPAN constants and solution phases. This repository is intended to live inside your development workspace at `/Users/hakeemallison/Dev/Gemini-site/pis-tool`.
+Small internal tool to map bank file spec rows to FISPAN constants and solution phases. This repository is intended to live inside your development workspace at `/Users/hakeemallison/Dev/Gemini-site/solutioning-workbench`.
 
 ## Quick start
 
 - Install Live Server in VS Code (recommended) or run a simple static server:
 
 ```bash
-cd /Users/hakeemallison/Dev/Gemini-site/pis-tool
+cd /Users/hakeemallison/Dev/Gemini-site/solutioning-workbench
 python3 -m http.server 8000
-# then open http://localhost:8000/pis-tool.html
+# then open http://localhost:8000/solutioning-workbench.html
 ```
 
 ## Overview
