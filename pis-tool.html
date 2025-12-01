@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIS Tool: Solutioning Builder</title>
+    <title>Solutioning Workbench: Solutioning Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Design System -->
@@ -92,7 +92,7 @@
     <!-- 1. LEFT NAVIGATION -->
     <aside class="w-64 bg-slate-900 flex-shrink-0 flex flex-col h-full shadow-xl z-20 hidden md:flex">
         <div class="p-6 border-b border-slate-800">
-            <h1 class="text-white font-bold text-lg tracking-tight">PIS Tool <span class="text-blue-500 text-xs uppercase align-top">Beta</span></h1>
+            <h1 class="text-white font-bold text-lg tracking-tight">Solutioning Workbench <span class="text-blue-500 text-xs uppercase align-top">Beta</span></h1>
             <p class="text-slate-400 text-xs mt-1">Solutioning Builder v2.7</p>
         </div>
         
@@ -948,7 +948,7 @@
         })();
 
         // --- Persistence (localStorage) ---
-        const STORAGE_KEY = 'pis-tool-state-v1';
+    const STORAGE_KEY = 'solutioning-workbench-state-v1';
         function saveState() {
             try {
                 const state = { targets: {}, staging: [] };
