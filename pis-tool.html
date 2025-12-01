@@ -513,8 +513,15 @@
             </div>
             <div class="feed-item" data-phase="phase-4">
                 <div class="feed-dot"></div>
+                <h4 class="text-sm font-bold text-slate-800">Status Updates (Webhooks / ACKs)</h4>
+                <p class="text-xs text-slate-500 mt-1">Bank sends webhooks/ACKs back to FISPAN; these update payment status and push acknowledgements to ERP.</p>
+                <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Webhook Payload</h5><p class="text-xs text-slate-600 leading-relaxed">Example payload: <code class="font-mono">{ paymentId, status, bankRef, errorCode, settledAt }</code> — used to reconcile and notify ERP.</p></div>
+            </div>
+            <div class="feed-item" data-phase="phase-4">
+                <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Reconciliation</h4>
-                <p class="text-xs text-slate-500 mt-1">Webhooks/ACKs update FISPAN -> ERP.</p>
+                <p class="text-xs text-slate-500 mt-1">Bank feeds & settlement files are used to reconcile transactions and update ledgers in ERP.</p>
+                <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Reconciliation Data</h5><p class="text-xs text-slate-600 leading-relaxed">Includes bank statement lines, settlement references, clearing timestamps and status codes for matching and closing transactions.</p></div>
             </div>
         </div>
     </aside>
