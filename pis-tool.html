@@ -143,6 +143,8 @@
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-sm hover:bg-blue-700">
                         Export Doc
                     </button>
+                    <button onclick="saveNow()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-sm hover:bg-emerald-700">Save</button>
+                    <button onclick="resetState()" class="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm font-semibold shadow-sm hover:bg-red-200">Reset</button>
                 </div>
             </div>
 
@@ -924,6 +926,25 @@
                 }
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
             } catch (e) { console.warn('saveState failed', e); }
+        }
+
+        // Explicit Save button handler (calls saveState and give feedback)
+        function saveNow() {
+            saveState();
+            showToast('Saved locally', 'success', 1800);
+        }
+
+        // Reset handler: confirm, clear localStorage key and reload
+        function resetState() {
+            if (!confirm('Reset local progress? This will clear saved mappings in this browser.')) return;
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+                showToast('Progress cleared — reloading', 'info', 1200);
+                setTimeout(() => location.reload(), 600);
+            } catch (e) {
+                console.warn('resetState failed', e);
+                showToast('Reset failed', 'error', 1800);
+            }
         }
 
         function loadState() {
