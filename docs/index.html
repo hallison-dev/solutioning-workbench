@@ -1108,7 +1108,9 @@
                 });
                 const staging = document.getElementById('unassigned-staging');
                 if (staging) {
-                    Array.from(staging.querySelectorAll('div')).forEach(d => {
+                    // Only consider immediate child rows; avoid nested divs (buttons/containers)
+                    Array.from(staging.children).forEach(d => {
+                        if (!(d instanceof HTMLElement)) return;
                         const span = d.querySelector('span');
                         const text = span ? span.innerText : '';
                         const category = d.dataset && d.dataset.category ? d.dataset.category : '';
