@@ -39,24 +39,24 @@
         .tab-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .tab-btn { background-color: white; color: #64748b; border: 1px solid #cbd5e1; }
 
-        /* Status badges */
-        .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; }
-        .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
-        .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
-        .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+    /* Status badges */
+    .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; }
+    .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
+    .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
+    .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
 
-        /* Category tag */
-        .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
-        .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
+    /* Category tag */
+    .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
+    .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
 
-        /* Toast */
-        #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
-        .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.success { background: #059669; }
-        .toast.info { background: #2563eb; }
-        .toast.warn { background: #d97706; }
-        .toast.error { background: #b91c1c; }
+    /* Toast */
+    #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
+    .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: #059669; }
+    .toast.info { background: #2563eb; }
+    .toast.warn { background: #d97706; }
+    .toast.error { background: #b91c1c; }
 
         /* Story Feed */
         .feed-item { position: relative; padding-left: 1.5rem; padding-bottom: 1.5rem; border-left: 2px solid #e2e8f0; transition: all 0.3s ease; opacity: 0.5; cursor: pointer; }
@@ -115,7 +115,7 @@
     <aside class="w-64 bg-slate-900 flex-shrink-0 flex flex-col h-full shadow-xl z-20 hidden md:flex">
         <div class="p-6 border-b border-slate-800">
             <h1 class="text-white font-bold text-lg tracking-tight">Solutioning Workbench <span class="text-blue-500 text-xs uppercase align-top">Beta</span></h1>
-            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v3.2</p>
+            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v3.6</p>
         </div>
         
         <nav class="flex-1 overflow-y-auto py-6 space-y-1" id="main-nav">
@@ -499,9 +499,9 @@
         };
 
         // --- MODE LOGIC ---
-        function switchMode(mode) {
+        function switchMode(mode, saveFirst = true) {
             if (!MODE_CONFIG[mode]) return;
-            saveState(); 
+            if (saveFirst) saveState(); 
             currentMode = mode;
             // UI Update
             document.querySelectorAll('.mode-toggle-btn').forEach(b => {
@@ -695,7 +695,7 @@
             const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
             tr.innerHTML = `
                 <td class="p-3 text-sm font-medium text-slate-700">${data.spec} ${catHtml}</td>
-                <td class="p-3"><input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
+                <td class="p-3"><input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm" oninput="saveState()"></td>
                 <td class="p-3"></td>
                 <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
             `;
@@ -810,9 +810,9 @@
              div.innerHTML = `
                 <div class="flex items-start w-full">
                     <div class="flex-shrink-0 pt-0.5 cursor-pointer mr-3 text-slate-300 hover:text-emerald-500 transition" onclick="toggleConfirm(this.closest('.question-row'))"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                    <input type="text" placeholder="Type your custom question..." class="q-text w-full text-sm outline-none bg-transparent font-medium text-slate-700" onblur="this.parentElement.parentElement.classList.remove('animate-pulse')">
+                    <input type="text" placeholder="Type your custom question..." class="q-text w-full text-sm outline-none bg-transparent font-medium text-slate-700" onblur="this.parentElement.parentElement.classList.remove('animate-pulse')" oninput="saveState()">
                 </div>
-                <div class="mt-2 w-full pl-8"><button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">+ Add Answer</button><div class="answer-box hidden"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer..."></textarea></div></div>
+                <div class="mt-2 w-full pl-8"><button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">+ Add Answer</button><div class="answer-box hidden"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer..." oninput="saveState()"></textarea></div></div>
              `;
              c.appendChild(div);
              div.querySelector('input').focus();
@@ -827,7 +827,7 @@
                 </div>
                 <div class="mt-2 w-full pl-8">
                     <button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">${ans ? '- Hide Answer' : '+ Add Answer'}</button>
-                    <div class="answer-box ${ans ? 'visible' : 'hidden'}"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer...">${ans||''}</textarea></div>
+                    <div class="answer-box ${ans ? 'visible' : 'hidden'}"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer..." oninput="saveState()">${ans||''}</textarea></div>
                 </div>
              `;
              container.appendChild(div);
@@ -851,7 +851,7 @@
              let note = c.querySelector('.note-area');
              if(!note) {
                  note = document.createElement('div'); note.className = "mt-4 border-t border-slate-100 pt-3 note-area";
-                 note.innerHTML = `<h6 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Notes</h6><textarea class="w-full text-sm bg-yellow-50 border border-yellow-100 rounded p-2 text-slate-700 focus:outline-none focus:border-yellow-300 shadow-sm" rows="3" placeholder="Add context...">${initialValue}</textarea>`;
+                 note.innerHTML = `<h6 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Notes</h6><textarea class="w-full text-sm bg-yellow-50 border border-yellow-100 rounded p-2 text-slate-700 focus:outline-none focus:border-yellow-300 shadow-sm" rows="3" placeholder="Add context..." oninput="saveState()">${initialValue}</textarea>`;
                  c.appendChild(note);
              }
              if(!initialValue) note.querySelector('textarea').focus();
@@ -934,7 +934,12 @@
         function toggleUploader(){ const m = document.getElementById('uploader-modal'); if(!m.classList.contains('hidden')) movePreviewToStaging(); m.classList.toggle('hidden'); }
         async function loadFispanConstants() {
             try {
-                const res = await fetch('docs/data/fispan-constants.flat.json'); 
+                // Modified to fetch from docs/data based on user instruction
+                // Also smart check for paths
+                const paths = ['docs/data/fispan-constants.flat.json', 'data/fispan-constants.flat.json', './data/fispan-constants.flat.json'];
+                let res;
+                for(let p of paths) { try { res = await fetch(p); if(res.ok) break; } catch(e){} }
+                
                 const constants = await res.json();
                 constants.forEach(c => { if (!masterMappings[c.key]) masterMappings[c.key] = { key: c.key, valueType: c.valueType||'', description: c.description||'', spec: '', status: 'pending' }; });
                 renderFullSpec();
@@ -965,14 +970,32 @@
             const r = new FileReader(); r.onload = (e) => {
                 const text = e.target.result;
                 const rows = [];
-                const lines = text.split(/\r?\n/);
-                lines.forEach((l,i) => {
-                     // Robust quoted CSV splitting
-                     if (!l.trim()) return;
-                     const matches = l.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-                     // Fallback if match fails on simple lines
-                     const first = matches ? matches[0].replace(/^"|"$/g, '') : l.split(',')[0];
-                     if(first && first.trim()) rows.push({row:i+1, first: first.trim()});
+                const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+                lines.forEach((line, idx) => {
+                    // Manual parser to handle quotes, identical to your original request
+                    const cells = [];
+                    let cur = '';
+                    let inQuotes = false;
+                    for (let i = 0; i < line.length; i++) {
+                        const ch = line[i];
+                        if (ch === '"') {
+                            if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
+                            else inQuotes = !inQuotes;
+                        } else if (ch === ',' && !inQuotes) {
+                            cells.push(cur); cur = '';
+                        } else {
+                            cur += ch;
+                        }
+                    }
+                    cells.push(cur);
+                    
+                    // Logic: Use Col 1 (cells[0]) as the Row Text
+                    const firstVal = (cells[0] || '').trim().replace(/^"|"$/g, '');
+                    
+                    // We simply grab the FIRST column value
+                    const rowText = firstVal; 
+                    
+                    if(rowText) rows.push({ row: idx + 1, first: rowText });
                 });
                 renderPreview(rows);
             };
@@ -982,6 +1005,7 @@
              const preview = document.getElementById('unassigned-preview'); preview.innerHTML = '';
              rows.forEach(r => {
                  const div = document.createElement('div'); div.className = 'flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300';
+                 // Rendering: Row X: Value (where Value is Col 1)
                  div.innerHTML = `<span class="text-sm font-mono text-slate-700">Row ${r.row}: ${r.first}</span>`;
                  const btnDiv = document.createElement('div'); btnDiv.className = 'flex gap-1';
                  MODE_CONFIG[currentMode].targets.forEach(t => { const btn = document.createElement('button'); btn.className = `text-[10px] bg-${t.color}-100 text-${t.color}-700 px-2 py-1 rounded`; btn.innerText = t.label; btn.onclick = () => { const tbody = document.getElementById(t.id); if(tbody) { createTableRow(tbody, { spec: `Row ${r.row}: ${r.first}`, mapping: '', status: 'pending' }); div.remove(); saveState(); renderGaps(); } }; btnDiv.appendChild(btn); });
@@ -1016,7 +1040,8 @@
             loadFispanConstants(); 
             const savedMode = localStorage.getItem(STORAGE_KEY + ':mode');
             if(savedMode && MODE_CONFIG[savedMode]) currentMode = savedMode;
-            switchMode(currentMode);
+            // Prevent race condition: don't save empty state on load!
+            switchMode(currentMode, false);
             // Scroll Spy
             const mainScroll = document.getElementById('main-scroll');
             mainScroll.addEventListener('scroll', () => {
@@ -1050,4 +1075,3 @@
     </script>
 </body>
 </html>
-```
