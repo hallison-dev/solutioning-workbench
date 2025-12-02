@@ -1543,8 +1543,9 @@
 
         async function loadFispanConstants() {
             try {
-                // docs site sits in /docs, constants are in ../data
-                const res = await fetch('../data/fispan-constants.flat.json');
+                // when site is published from the `docs` folder the JSON should live
+                // inside `docs/data` so fetch from the local `./data` path
+                const res = await fetch('./data/fispan-constants.flat.json');
                 if (!res.ok) throw new Error('Failed to fetch constants');
                 const constants = await res.json();
                 // merge constants into specRows for master spec and initialize masterMappings
