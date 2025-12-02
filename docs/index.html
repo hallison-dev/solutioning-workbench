@@ -22,16 +22,9 @@
         .badge-red { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
         .badge-indigo { background-color: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
         .badge-slate { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-        .badge-emerald { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
         
-        /* Visualizer Styles */
-        .check-face { background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 10px 10px; font-family: 'Georgia', serif; }
-        .micr-font { font-family: 'Courier New', Courier, monospace; letter-spacing: 2px; font-weight: bold; }
-        .handwriting { font-family: 'Brush Script MT', cursive; color: #1e3a8a; }
-        .check-field { position: relative; cursor: help; border: 1px dashed transparent; transition: all 0.2s; }
-        .check-field:hover { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
-        .check-field::after { content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background-color: #1e293b; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 50; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .check-field:hover::after { opacity: 1; bottom: 110%; }
+        /* Row ID Badge (NEW) */
+        .row-id-badge { font-size: 0.65rem; font-family: 'Courier New', monospace; background: #f8fafc; color: #64748b; padding: 2px 6px; border-radius: 4px; margin-right: 8px; border: 1px solid #e2e8f0; vertical-align: middle; }
 
         /* Navigation */
         .nav-item.active { background-color: #1e293b; border-left: 4px solid #3b82f6; color: white; }
@@ -39,24 +32,24 @@
         .tab-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .tab-btn { background-color: white; color: #64748b; border: 1px solid #cbd5e1; }
 
-    /* Status badges */
-    .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; }
-    .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
-    .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
-    .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+        /* Status badges */
+        .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; cursor: pointer; user-select: none; }
+        .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
+        .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
+        .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
 
-    /* Category tag */
-    .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
-    .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
+        /* Category tag */
+        .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
+        .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
 
-    /* Toast */
-    #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
-    .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { background: #059669; }
-    .toast.info { background: #2563eb; }
-    .toast.warn { background: #d97706; }
-    .toast.error { background: #b91c1c; }
+        /* Toast */
+        #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
+        .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: #059669; }
+        .toast.info { background: #2563eb; }
+        .toast.warn { background: #d97706; }
+        .toast.error { background: #b91c1c; }
 
         /* Story Feed */
         .feed-item { position: relative; padding-left: 1.5rem; padding-bottom: 1.5rem; border-left: 2px solid #e2e8f0; transition: all 0.3s ease; opacity: 0.5; cursor: pointer; }
@@ -91,10 +84,9 @@
         .drag-zone { transition: all 0.2s ease; }
         .drag-zone.drag-over { background-color: #eff6ff; border-color: #3b82f6; }
         
-        /* Master Spec column styling: truncate long dotted keys and show full on hover */
+        /* Master Spec column styling */
         .spec-key { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
         .spec-key:hover { cursor: help; }
-        /* wrap mode for long keys */
         .spec-key.wrap { white-space: normal; word-break: break-word; max-width: none; }
         /* master spec search & attach widgets */
         .master-search { width: 100%; max-width: 480px; padding: 8px 10px; border: 1px solid #e6eef8; border-radius: 8px; }
@@ -106,7 +98,7 @@
         .spec-action { margin-left: 8px; font-size: 12px; color: #2563eb; cursor: pointer; }
         .unassign-mark { background: #fff7f5; border-color: #fecaca !important; } .unassign-mark td { color: #9f1239; }
 
-        /* Autocomplete Styles (NEW) */
+        /* Autocomplete Styles */
         .autocomplete-wrapper { position: relative; width: 100%; }
         .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; max-height: 220px; overflow-y: auto; background: white; border: 1px solid #cbd5e1; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 50; display: none; }
         .autocomplete-item { padding: 8px 12px; font-size: 0.8rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
@@ -115,8 +107,19 @@
         .autocomplete-item strong { color: #1e40af; font-family: 'Courier New', monospace; font-weight: bold; }
         .autocomplete-desc { display: block; font-size: 0.7rem; color: #64748b; margin-top: 2px; }
 
+        /* Highlight Flash Animation for Gaps Deep-Link */
+        @keyframes highlight-row { 0% { background: #fef9c3; } 100% { background: transparent; } }
+        .highlight-flash { animation: highlight-row 2s ease-out; }
+
         /* Toggle Mode Styles */
         .mode-toggle-btn { transition: all 0.3s; }
+        
+        /* Visualizer */
+        .check-face { background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 10px 10px; font-family: 'Georgia', serif; }
+        .check-field { position: relative; cursor: help; border: 1px dashed transparent; transition: all 0.2s; }
+        .check-field:hover { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
+        .check-field::after { content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background-color: #1e293b; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 50; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .check-field:hover::after { opacity: 1; bottom: 110%; }
     </style>
 </head>
 <body class="bg-stone-50 text-slate-800 h-screen flex overflow-hidden">
@@ -124,7 +127,7 @@
     <aside class="w-64 bg-slate-900 flex-shrink-0 flex flex-col h-full shadow-xl z-20 hidden md:flex">
         <div class="p-6 border-b border-slate-800">
             <h1 class="text-white font-bold text-lg tracking-tight">Solutioning Workbench <span class="text-blue-500 text-xs uppercase align-top">Beta</span></h1>
-            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v3.5</p>
+            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v3.6</p>
         </div>
         
         <nav class="flex-1 overflow-y-auto py-6 space-y-1" id="main-nav">
@@ -690,7 +693,14 @@
         }
 
         function extractRowData(tr) {
+            // Get raw HTML or text from first cell, need to strip badge HTML if saving raw text
+            // But we reconstruct the badge on load from data.spec string. 
+            // The regex parser expects "Row X: Value" or similar.
+            // If we modified HTML, innerText usually strips tags but keeps text "Row 15 Payee Name".
+            // Let's rely on data.spec property if stored, or parse innerText carefully.
+            // Actually, best to just grab innerText. The badge adds a space.
             const spec = tr.children[0].innerText.replace(tr.children[0].querySelector('.tag-badge')?.innerText || '', '').trim();
+            
             const mapInput = tr.children[1].querySelector('input');
             const mapping = mapInput ? mapInput.value : tr.children[1].innerText;
             const statusBadge = tr.children[2].querySelector('.status-badge') || tr.children[2].querySelector('select');
@@ -702,16 +712,28 @@
         function createTableRow(tbody, data) {
             const tr = document.createElement('tr');
             const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
+            
+            // Visual Split Logic
+            let specDisplay = data.spec;
+            // Matches "Row 123: Some Value" or "Row 123 Some Value"
+            // The CSV parser outputs "Row X: Value"
+            const match = data.spec.match(/^Row\s+(\d+)[:\s]+(.*)/i);
+            if (match) {
+                specDisplay = `<span class="row-id-badge">Row ${match[1]}</span><span class="font-bold text-slate-700 text-sm">${match[2]}</span>`;
+            } else {
+                specDisplay = `<span class="text-sm font-medium text-slate-700">${data.spec}</span>`;
+            }
+
             tr.innerHTML = `
-                <td class="p-3 text-sm font-medium text-slate-700">${data.spec} ${catHtml}</td>
+                <td class="p-3 align-middle">${specDisplay} ${catHtml}</td>
                 <td class="p-3">
                     <div class="autocomplete-wrapper">
                         <input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm" onchange="saveState()" autocomplete="off">
                         <div class="autocomplete-list"></div>
                     </div>
                 </td>
-                <td class="p-3"></td>
-                <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
+                <td class="p-3 align-middle"></td>
+                <td class="p-3 text-right align-middle"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
             `;
             if(data.category) tr.dataset.category = data.category;
             tbody.appendChild(tr);
@@ -733,11 +755,10 @@
                 const matches = Object.values(masterMappings).filter(m => 
                     m.key.toLowerCase().includes(val) || (m.description && m.description.toLowerCase().includes(val))
                 );
-                
                 list.innerHTML = '';
                 if(matches.length > 0) {
                     list.style.display = 'block';
-                    matches.slice(0, 10).forEach(m => { // limit to 10 results
+                    matches.slice(0, 10).forEach(m => { 
                         const div = document.createElement('div');
                         div.className = 'autocomplete-item';
                         div.innerHTML = `<strong>${m.key}</strong><span class="autocomplete-desc">${m.description || ''}</span>`;
@@ -745,7 +766,7 @@
                             input.value = m.key;
                             list.style.display = 'none';
                             saveState();
-                            renderGaps(); // Update gaps if mapped
+                            renderGaps(); 
                         };
                         list.appendChild(div);
                     });
@@ -753,9 +774,7 @@
                     list.style.display = 'none';
                 }
             });
-            // Hide list on blur (delayed to allow click)
             input.addEventListener('blur', () => setTimeout(() => list.style.display = 'none', 200));
-            // Show list on focus if content exists
             input.addEventListener('focus', (e) => { if(e.target.value) e.target.dispatchEvent(new Event('input')); });
         }
 
@@ -831,7 +850,6 @@
         }
         function saveRowBtn(btn) {
             const tr = btn.closest('tr');
-            // If marked for unassign, execute removal
             if(tr.dataset.unassign === '1') {
                 const spec = tr.children[0].innerText.replace(tr.dataset.category || '', '').trim();
                 const cat = tr.dataset.category;
@@ -851,6 +869,24 @@
             } else {
                 tr.dataset.unassign = '1'; tr.classList.add('unassign-mark'); btn.innerText = 'Undo';
             }
+        }
+
+        // --- Deep Linking for Gaps (Scroll To Row) ---
+        function scrollToRow(specText) {
+            const cells = document.querySelectorAll('td:first-child');
+            for(let td of cells) {
+                // Check if innerText contains the text (ignoring badges)
+                if(td.innerText.includes(specText)) {
+                    const tr = td.parentElement;
+                    tr.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    tr.classList.add('highlight-flash');
+                    setTimeout(()=>tr.classList.remove('highlight-flash'), 2000);
+                    const input = tr.querySelector('input');
+                    if(input) input.focus();
+                    return;
+                }
+            }
+            showToast('Row not found in current view', 'error');
         }
 
         // --- Question Builder Logic (Restored) ---
@@ -985,8 +1021,7 @@
         function toggleUploader(){ const m = document.getElementById('uploader-modal'); if(!m.classList.contains('hidden')) movePreviewToStaging(); m.classList.toggle('hidden'); }
         async function loadFispanConstants() {
             try {
-                // Modified to fetch from docs/data based on user instruction
-                // Also smart check for paths
+                // Smart path check
                 const paths = ['docs/data/fispan-constants.flat.json', 'data/fispan-constants.flat.json', './data/fispan-constants.flat.json'];
                 let res;
                 for(let p of paths) { try { res = await fetch(p); if(res.ok) break; } catch(e){} }
@@ -1023,7 +1058,7 @@
                 const rows = [];
                 const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
                 lines.forEach((line, idx) => {
-                    // Manual parser to handle quotes, identical to your original request
+                    // Manual parser to handle quotes
                     const cells = [];
                     let cur = '';
                     let inQuotes = false;
@@ -1042,8 +1077,6 @@
                     
                     // Logic: Use Col 1 (cells[0]) as the Row Text
                     const firstVal = (cells[0] || '').trim().replace(/^"|"$/g, '');
-                    
-                    // We only want the first column value
                     const rowText = firstVal; 
                     
                     if(rowText) rows.push({ row: idx + 1, first: rowText });
@@ -1056,7 +1089,6 @@
              const preview = document.getElementById('unassigned-preview'); preview.innerHTML = '';
              rows.forEach(r => {
                  const div = document.createElement('div'); div.className = 'flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300';
-                 // Rendering: Row X: Value (where Value is Col 1)
                  div.innerHTML = `<span class="text-sm font-mono text-slate-700">Row ${r.row}: ${r.first}</span>`;
                  const btnDiv = document.createElement('div'); btnDiv.className = 'flex gap-1';
                  MODE_CONFIG[currentMode].targets.forEach(t => { const btn = document.createElement('button'); btn.className = `text-[10px] bg-${t.color}-100 text-${t.color}-700 px-2 py-1 rounded`; btn.innerText = t.label; btn.onclick = () => { const tbody = document.getElementById(t.id); if(tbody) { createTableRow(tbody, { spec: `Row ${r.row}: ${r.first}`, mapping: '', status: 'pending' }); div.remove(); saveState(); renderGaps(); } }; btnDiv.appendChild(btn); });
@@ -1120,7 +1152,22 @@
              const c = document.getElementById('gaps-list');
              if(!gaps.length) { c.innerHTML = '<p class="text-xs text-slate-500">No gaps detected.</p>'; return; }
              const grp = {}; gaps.forEach(g => { grp[g.target] = grp[g.target] || []; grp[g.target].push(g.spec); });
-             let html = '<div class="space-y-3">'; Object.keys(grp).forEach(k => html += `<div class="p-3 bg-white rounded border"><div class="font-bold text-sm mb-2">${k}</div><ul class="list-disc pl-5 text-xs">${grp[k].map(s=>`<li>${s}</li>`).join('')}</ul></div>`); c.innerHTML = html + '</div>';
+             // Updated render logic for Quick Wins: Deep Linking and Icons
+             let html = '<div class="space-y-3">'; 
+             const icons = {'Control Headers/Trailers':'📂','Payer & Payee Fields':'👤','Instruction Fields':'💸','Remittance Fields':'🧾','Native ERP Data':'🖥️','Plugin Enrichment':'🔌','Transformation Rules':'⚙️'};
+             Object.keys(grp).forEach(k => {
+                 const icon = icons[k] || '🔹';
+                 html += `<div class="p-3 bg-white rounded border border-slate-200">
+                    <div class="font-bold text-sm mb-2 text-slate-700">${icon} ${k}</div>
+                    <ul class="space-y-1">
+                        ${grp[k].map(s => {
+                            // Strip "Row X:" part for cleaner gap text if possible, or just keep it
+                            return `<li><button onclick="scrollToRow('${s.replace(/'/g,"\\'")}')" class="text-xs text-blue-600 hover:underline hover:text-blue-800 text-left w-full truncate block transition-colors">● ${s}</button></li>`
+                        }).join('')}
+                    </ul>
+                 </div>`; 
+             }); 
+             c.innerHTML = html + '</div>';
         }
     </script>
 </body>
