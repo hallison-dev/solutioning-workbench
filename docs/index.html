@@ -91,7 +91,9 @@
         .drag-zone.drag-over { background-color: #eff6ff; border-color: #3b82f6; }
         /* Master Spec column styling: truncate long dotted keys and show full on hover */
         .spec-key { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
-        .spec-key:hover { cursor: help; }
+    .spec-key:hover { cursor: help; }
+    /* wrap mode for long keys */
+    .spec-key.wrap { white-space: normal; word-break: break-word; max-width: none; }
     /* master spec search & attach widgets */
     .master-search { width: 100%; max-width: 480px; padding: 8px 10px; border: 1px solid #e6eef8; border-radius: 8px; }
     .attach-widget { position: relative; display: inline-block; }
@@ -377,7 +379,10 @@
                         <!-- VIEW 2: FULL SPEC -->
                         <div id="view-full" class="hidden">
                             <div class="flex items-center justify-between mb-3">
-                                <input id="master-search" class="master-search" placeholder="Search FISPAN constant, value type, or mapped spec..." />
+                                <div class="flex items-center gap-3">
+                                    <input id="master-search" class="master-search" placeholder="Search FISPAN constant, value type, or mapped spec..." />
+                                    <button id="master-toggle-wrap" class="text-sm px-3 py-1 border rounded text-slate-600">Wrap: <span id="master-wrap-state">off</span></button>
+                                </div>
                                 <div class="text-sm text-slate-500 ml-4">Total: <span id="master-count">0</span></div>
                             </div>
                             <table class="w-full text-left text-sm border-collapse">
@@ -527,6 +532,25 @@
         </div>
     </div>
 
+    <!-- CONSTANT DETAILS MODAL -->
+    <div id="const-modal" class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4" role="dialog" aria-modal="true">
+            <div class="p-4 border-b flex justify-between items-start">
+                <div>
+                    <h4 id="const-modal-title" class="font-bold text-slate-800">Constant</h4>
+                    <p id="const-modal-sub" class="text-xs text-slate-500 mt-1">Value Type</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="const-copy-key" class="text-sm text-blue-600">Copy Key</button>
+                    <button onclick="closeConstModal()" class="text-sm text-slate-500">Close</button>
+                </div>
+            </div>
+            <div class="p-4">
+                <div id="const-modal-desc" class="text-sm text-slate-700 leading-relaxed"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Logic Script -->
     <script>
         // --- DATA ---
@@ -570,7 +594,7 @@
                 // first column uses a truncated inline element with a title so long dotted keys don't break layout
                 tr.innerHTML = `
                     <td class="p-3 font-mono text-xs text-blue-600">
-                        <span class="spec-key" title="${escapeHtml(m.key)}">${escapeHtml(m.key)}</span>
+                        <span class="spec-key" data-const="${escapeHtml(m.key)}" title="${escapeHtml(m.key)}">${escapeHtml(m.key)}</span>
                         <span class="spec-action master-copy" data-const="${escapeHtml(m.key)}">📋</span>
                     </td>
                     <td class="p-3 text-xs text-slate-500">${escapeHtml(m.valueType || '')}</td>
@@ -1062,12 +1086,19 @@
         // Delegate Attach and master status interactions
         document.addEventListener('click', (e) => {
             // copy action
-            const copyBtn = e.target && e.target.closest && e.target.closest('.master-copy');
-            if (copyBtn) {
-                const constKey = copyBtn.dataset.const;
-                copyMasterKey(constKey);
-                return;
-            }
+                const copyBtn = e.target && e.target.closest && e.target.closest('.master-copy');
+                if (copyBtn) {
+                    const constKey = copyBtn.dataset.const;
+                    copyMasterKey(constKey);
+                    return;
+                }
+                // click on spec-key opens details modal
+                const specKeyEl = e.target && e.target.closest && e.target.closest('.spec-key');
+                if (specKeyEl) {
+                    const constKey = specKeyEl.dataset.const || specKeyEl.title || specKeyEl.innerText;
+                    openConstModal(constKey);
+                    return;
+                }
             // clear action
             const clearBtn = e.target && e.target.closest && e.target.closest('.master-clear');
             if (clearBtn) {
@@ -1150,6 +1181,29 @@
             saveState();
         }
 
+        // Open constant details modal and wire copy button
+        function openConstModal(constKey) {
+            const m = masterMappings[constKey];
+            const modal = document.getElementById('const-modal');
+            if (!modal) return;
+            const title = document.getElementById('const-modal-title');
+            const sub = document.getElementById('const-modal-sub');
+            const desc = document.getElementById('const-modal-desc');
+            if (title) title.innerText = m ? m.key : constKey;
+            if (sub) sub.innerText = m ? (m.valueType || '') : '';
+            if (desc) desc.innerText = m ? (m.description || '') : '';
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            const copyBtn = document.getElementById('const-copy-key');
+            if (copyBtn) {
+                copyBtn.onclick = function() { copyMasterKey(m ? m.key : constKey); };
+            }
+        }
+
+        function closeConstModal() {
+            const modal = document.getElementById('const-modal');
+            if (!modal) return; modal.classList.remove('flex'); modal.classList.add('hidden');
+        }
+
         // --- Persistence (localStorage) ---
     const STORAGE_KEY = 'solutioning-workbench-state-v1';
         function saveState() {
@@ -1192,6 +1246,7 @@
                         const span = d.querySelector('span');
                         const text = span ? span.innerText : '';
                         const category = d.dataset && d.dataset.category ? d.dataset.category : '';
+                        if (!text || !String(text).trim()) return; // skip empty rows
                         state.staging.push({ text, category });
                     });
                 }
@@ -1273,25 +1328,26 @@
                 if (staging) {
                     staging.innerHTML = '';
                     (state.staging || []).forEach(entry => {
-                        let text = '';
-                        let category = '';
-                        if (typeof entry === 'string') text = entry; else { text = entry.text || ''; category = entry.category || ''; }
-                        const div = document.createElement('div');
-                        div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
-                        if (category) div.dataset.category = category;
-                        const s = document.createElement('span');
-                        s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
-                        s.title = text; s.innerText = text;
-                        if (category) { const badge = document.createElement('span'); badge.className = 'tag-badge ml-2'; badge.innerText = category; s.appendChild(badge); }
-                        const btnDiv = document.createElement('div');
-                        btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
-                        btnDiv.innerHTML = `
-                            <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                            <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                            <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
-                        `;
-                        div.appendChild(s); div.appendChild(btnDiv); staging.appendChild(div);
-                    });
+                            let text = '';
+                            let category = '';
+                            if (typeof entry === 'string') text = entry; else { text = entry.text || ''; category = entry.category || ''; }
+                            if (!text || !String(text).trim()) return; // sanitize: skip empty entries from older saves
+                            const div = document.createElement('div');
+                            div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
+                            if (category) div.dataset.category = category;
+                            const s = document.createElement('span');
+                            s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
+                            s.title = text; s.innerText = text;
+                            if (category) { const badge = document.createElement('span'); badge.className = 'tag-badge ml-2'; badge.innerText = category; s.appendChild(badge); }
+                            const btnDiv = document.createElement('div');
+                            btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
+                            btnDiv.innerHTML = `
+                                <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
+                                <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
+                                <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
+                            `;
+                            div.appendChild(s); div.appendChild(btnDiv); staging.appendChild(div);
+                        });
                 }
 
                 // restore master mappings if present
@@ -1528,6 +1584,25 @@
                     window.__masterFilter = '';
                     ms.addEventListener('input', function(){ window.__masterFilter = ms.value || ''; renderFullSpec(); });
                 }
+                // restore wrap preference and wire toggle
+                try {
+                    const prefsRaw = localStorage.getItem(STORAGE_KEY + ':prefs');
+                    const prefs = prefsRaw ? JSON.parse(prefsRaw) : {};
+                    let wrap = !!prefs.wrapKeys;
+                    const wrapEl = document.getElementById('master-toggle-wrap');
+                    const wrapState = document.getElementById('master-wrap-state');
+                    function applyWrap() {
+                        document.querySelectorAll('.spec-key').forEach(s => {
+                            if (wrap) s.classList.add('wrap'); else s.classList.remove('wrap');
+                        });
+                        if (wrapState) wrapState.innerText = wrap ? 'on' : 'off';
+                    }
+                    if (wrapEl) {
+                        wrapEl.addEventListener('click', function(){ wrap = !wrap; applyWrap(); localStorage.setItem(STORAGE_KEY + ':prefs', JSON.stringify({ wrapKeys: wrap })); });
+                    }
+                    // apply current state after initial render
+                    window.requestAnimationFrame(() => { applyWrap(); });
+                } catch (e) { console.warn('prefs parse failed', e); }
             });
         });
         
