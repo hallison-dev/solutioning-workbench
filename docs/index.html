@@ -108,7 +108,7 @@
         .autocomplete-item strong { color: #1e40af; font-family: 'Courier New', monospace; font-weight: bold; }
         .autocomplete-desc { display: block; font-size: 0.7rem; color: #64748b; margin-top: 2px; }
 
-        /* Highlight Flash Animation for Gaps Deep-Link */
+        /* Highlight Flash Animation */
         @keyframes highlight-row { 0% { background: #fef9c3; } 100% { background: transparent; } }
         .highlight-flash { animation: highlight-row 2s ease-out; }
 
@@ -128,7 +128,7 @@
     <aside class="w-64 bg-slate-900 flex-shrink-0 flex flex-col h-full shadow-xl z-20 hidden md:flex">
         <div class="p-6 border-b border-slate-800">
             <h1 class="text-white font-bold text-lg tracking-tight">Solutioning Workbench <span class="text-blue-500 text-xs uppercase align-top">Beta</span></h1>
-            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v3.6</p>
+            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v3.7</p>
         </div>
         
         <nav class="flex-1 overflow-y-auto py-6 space-y-1" id="main-nav">
@@ -264,7 +264,10 @@
                     
                     <div class="p-6">
                         <div id="view-summary" class="block">
-                            <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-4"><h4 class="font-bold text-amber-900 text-sm">Automated Gaps Detected</h4></div>
+                            <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-4 flex justify-between items-center">
+                                <h4 class="font-bold text-amber-900 text-sm">Automated Gaps Detected</h4>
+                                <span class="text-amber-800 text-xs" id="gap-count"></span>
+                            </div>
                             <div id="gaps-list" class="text-sm">
                                 <p class="text-xs text-slate-500">No gaps detected yet.</p>
                             </div>
@@ -397,26 +400,18 @@
             <button onclick="toggleExport()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Export Solution</h3>
             <p class="text-sm text-slate-500 mb-6">Choose an export format for your current mapping configuration.</p>
-            
             <div class="space-y-4">
                 <div class="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer flex items-center justify-between group" onclick="copyToClipboardHTML()">
                     <div class="flex items-center gap-3">
                         <div class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">📋</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800">Copy to Clipboard</h4>
-                            <p class="text-xs text-slate-500">Best for pasting into Confluence, Excel, or Google Sheets.</p>
-                        </div>
+                        <div><h4 class="font-bold text-slate-800">Copy to Clipboard</h4><p class="text-xs text-slate-500">Best for pasting into Confluence, Excel, or Google Sheets.</p></div>
                     </div>
                     <span class="text-blue-600 opacity-0 group-hover:opacity-100 transition font-bold text-sm">Copy &rarr;</span>
                 </div>
-
                 <div class="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer flex items-center justify-between group" onclick="downloadCSV()">
                     <div class="flex items-center gap-3">
                         <div class="bg-emerald-100 text-emerald-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">📊</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800">Download CSV</h4>
-                            <p class="text-xs text-slate-500">Raw data file for data analysis or migration.</p>
-                        </div>
+                        <div><h4 class="font-bold text-slate-800">Download CSV</h4><p class="text-xs text-slate-500">Raw data file for data analysis or migration.</p></div>
                     </div>
                     <span class="text-emerald-600 opacity-0 group-hover:opacity-100 transition font-bold text-sm">Download &rarr;</span>
                 </div>
@@ -547,9 +542,9 @@
         };
 
         // --- MODE LOGIC ---
-        function switchMode(mode) {
+        function switchMode(mode, skipSave = false) {
             if (!MODE_CONFIG[mode]) return;
-            saveState(); 
+            if(!skipSave) saveState(); 
             currentMode = mode;
             // UI Update
             document.querySelectorAll('.mode-toggle-btn').forEach(b => {
@@ -742,7 +737,7 @@
             const tr = document.createElement('tr');
             const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
             
-            // Visual Split Logic
+            // Visual Split Logic (Robust)
             let specDisplay = data.spec;
             const match = data.spec.match(/^Row\s+(\d+)[:\s]+(.*)/i);
             if (match) {
@@ -755,7 +750,7 @@
                 <td class="p-3 align-middle">${specDisplay} ${catHtml}</td>
                 <td class="p-3">
                     <div class="autocomplete-wrapper">
-                        <input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm" onchange="saveState()" autocomplete="off">
+                        <input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm" oninput="saveState()" autocomplete="off">
                         <div class="autocomplete-list"></div>
                     </div>
                 </td>
@@ -897,7 +892,7 @@
             }
         }
 
-        // --- Deep Linking for Gaps (Scroll To Row) ---
+        // --- Deep Linking for Gaps ---
         function scrollToRow(specText) {
             const cells = document.querySelectorAll('td:first-child');
             for(let td of cells) {
@@ -914,7 +909,7 @@
             showToast('Row not found in current view', 'error');
         }
 
-        // --- Question Builder Logic (Restored) ---
+        // --- Question Builder Logic ---
         function addCustomQuestion(containerId) {
              const c = document.getElementById(containerId);
              const div = document.createElement('div');
@@ -969,7 +964,7 @@
              if(!initialValue) note.querySelector('textarea').focus();
         }
 
-        // --- Master Spec Features (Restored) ---
+        // --- Master Spec Features ---
         function renderFullSpec() {
             const tbody = document.getElementById('full-spec-body');
             tbody.innerHTML = '';
@@ -1208,7 +1203,12 @@
             loadFispanConstants(); 
             const savedMode = localStorage.getItem(STORAGE_KEY + ':mode');
             if(savedMode && MODE_CONFIG[savedMode]) currentMode = savedMode;
-            switchMode(currentMode);
+            // INIT FIX: Pass 'true' to skip initial save so we don't wipe data
+            switchMode(currentMode, true);
+            
+            // Safety Net: Save on unload (refresh/close)
+            window.addEventListener('beforeunload', () => saveState());
+
             // Scroll Spy
             const mainScroll = document.getElementById('main-scroll');
             mainScroll.addEventListener('scroll', () => {
@@ -1253,6 +1253,9 @@
                  </div>`; 
              }); 
              c.innerHTML = html + '</div>';
+             // Update Count Badge
+             const countEl = document.getElementById('gap-count');
+             if(countEl) countEl.innerText = gaps.length > 0 ? `${gaps.length} items` : '';
         }
     </script>
 </body>
