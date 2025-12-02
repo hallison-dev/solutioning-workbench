@@ -92,6 +92,14 @@
         /* Master Spec column styling: truncate long dotted keys and show full on hover */
         .spec-key { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
         .spec-key:hover { cursor: help; }
+    /* master spec search & attach widgets */
+    .master-search { width: 100%; max-width: 480px; padding: 8px 10px; border: 1px solid #e6eef8; border-radius: 8px; }
+    .attach-widget { position: relative; display: inline-block; }
+    .attach-input { width: 260px; padding: 6px 8px; border: 1px solid #e6eef8; border-radius: 6px; }
+    .attach-list { position: absolute; top: 36px; left: 0; right: 0; max-height: 180px; overflow-y: auto; background: white; border: 1px solid #e6eef8; box-shadow: 0 8px 18px rgba(2,6,23,0.06); z-index: 60; }
+    .attach-item { padding: 6px 8px; font-size: 13px; cursor: pointer; }
+    .attach-item:hover { background: #f1f5f9; }
+    .spec-action { margin-left: 8px; font-size: 12px; color: #2563eb; cursor: pointer; }
     </style>
 </head>
 <body class="bg-stone-50 text-slate-800 h-screen flex overflow-hidden">
@@ -368,6 +376,10 @@
                         </div>
                         <!-- VIEW 2: FULL SPEC -->
                         <div id="view-full" class="hidden">
+                            <div class="flex items-center justify-between mb-3">
+                                <input id="master-search" class="master-search" placeholder="Search FISPAN constant, value type, or mapped spec..." />
+                                <div class="text-sm text-slate-500 ml-4">Total: <span id="master-count">0</span></div>
+                            </div>
                             <table class="w-full text-left text-sm border-collapse">
                                 <thead class="bg-slate-50 text-slate-700 font-bold">
                                     <tr>
@@ -528,6 +540,7 @@
             const tbody = document.getElementById('full-spec-body');
             if (!tbody) return;
             tbody.innerHTML = '';
+            const filter = (window.__masterFilter || '').toLowerCase().trim();
             // Build array from masterMappings
             const rows = Object.keys(masterMappings).map(k => Object.assign({}, masterMappings[k]));
             // sort: entries with non-empty spec first, then alphabetically by key
@@ -543,19 +556,34 @@
                 return `<span class="status-badge master-status ${s}" data-const="${m.key}">${s}</span>`;
             }
 
+            let visibleCount = 0;
             rows.forEach(m => {
+                // apply filter
+                if (filter) {
+                    const hay = (m.key + ' ' + (m.valueType||'') + ' ' + (m.spec||'')).toLowerCase();
+                    if (!hay.includes(filter)) return; // skip non-matching
+                }
+                visibleCount++;
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
                 const specDisplay = m.spec ? `<span class="master-spec" data-const="${m.key}">${escapeHtml(m.spec)}</span>` : `<em class="text-xs text-slate-400">(unmatched)</em>`;
                 // first column uses a truncated inline element with a title so long dotted keys don't break layout
                 tr.innerHTML = `
-                    <td class="p-3 font-mono text-xs text-blue-600"><span class="spec-key" title="${escapeHtml(m.key)}">${escapeHtml(m.key)}</span></td>
+                    <td class="p-3 font-mono text-xs text-blue-600">
+                        <span class="spec-key" title="${escapeHtml(m.key)}">${escapeHtml(m.key)}</span>
+                        <span class="spec-action master-copy" data-const="${escapeHtml(m.key)}">📋</span>
+                    </td>
                     <td class="p-3 text-xs text-slate-500">${escapeHtml(m.valueType || '')}</td>
-                    <td class="p-3 text-sm text-slate-700">${specDisplay} <button class="ml-2 text-[10px] px-2 py-1 bg-slate-100 rounded master-attach" data-const="${escapeHtml(m.key)}">Attach</button></td>
+                    <td class="p-3 text-sm text-slate-700">
+                        ${specDisplay}
+                        <button class="ml-2 text-[10px] px-2 py-1 bg-slate-100 rounded master-attach" data-const="${escapeHtml(m.key)}">Attach</button>
+                        ${m.spec ? `<span class="spec-action master-clear" data-const="${escapeHtml(m.key)}">clear</span>` : ''}
+                    </td>
                     <td class="p-3">${statusHtml(m)}</td>
                 `;
                 tbody.appendChild(tr);
             });
+            const counter = document.getElementById('master-count'); if (counter) counter.innerText = String(visibleCount);
         }
 
         // Escape helper for safe text insertion
@@ -1033,21 +1061,47 @@
 
         // Delegate Attach and master status interactions
         document.addEventListener('click', (e) => {
+            // copy action
+            const copyBtn = e.target && e.target.closest && e.target.closest('.master-copy');
+            if (copyBtn) {
+                const constKey = copyBtn.dataset.const;
+                copyMasterKey(constKey);
+                return;
+            }
+            // clear action
+            const clearBtn = e.target && e.target.closest && e.target.closest('.master-clear');
+            if (clearBtn) {
+                const constKey = clearBtn.dataset.const;
+                clearMasterMapping(constKey);
+                return;
+            }
             const attachBtn = e.target && e.target.closest && e.target.closest('.master-attach');
             if (attachBtn) {
                 const constKey = attachBtn.dataset.const;
+                // create inline attach widget (search + list)
                 const pool = getAllSpecPool();
-                // create inline select
-                const sel = document.createElement('select');
-                sel.className = 'text-sm rounded px-2 py-1';
-                const emptyOpt = document.createElement('option'); emptyOpt.value = ''; emptyOpt.text = '(none)'; sel.appendChild(emptyOpt);
-                pool.forEach(p => { const o = document.createElement('option'); o.value = p; o.text = p; sel.appendChild(o); });
-                attachBtn.replaceWith(sel);
-                sel.focus();
-                sel.onchange = function() {
-                    assignSpecToConstant(constKey, sel.value);
-                };
-                sel.onblur = function() { renderFullSpec(); };
+                const widget = document.createElement('span'); widget.className = 'attach-widget';
+                const input = document.createElement('input'); input.className = 'attach-input'; input.placeholder = 'type to search...';
+                widget.appendChild(input);
+                const list = document.createElement('div'); list.className = 'attach-list hidden';
+                widget.appendChild(list);
+                attachBtn.replaceWith(widget);
+                // populate list helper
+                function renderAttachList(filter) {
+                    list.innerHTML = '';
+                    const f = (filter||'').toLowerCase().trim();
+                    pool.forEach(p => {
+                        if (f && !p.toLowerCase().includes(f)) return;
+                        const it = document.createElement('div'); it.className = 'attach-item'; it.innerText = p;
+                        it.onclick = function() { assignSpecToConstant(constKey, p); };
+                        list.appendChild(it);
+                    });
+                    if (!list.children.length) list.innerHTML = '<div class="attach-item text-slate-400">No matches</div>';
+                }
+                input.addEventListener('input', (ev) => { renderAttachList(ev.target.value); list.classList.remove('hidden'); });
+                input.addEventListener('focus', () => { renderAttachList(''); list.classList.remove('hidden'); });
+                input.addEventListener('blur', () => { setTimeout(() => { widget.replaceWith(attachBtn); renderFullSpec(); }, 180); });
+                input.focus();
                 return;
             }
             const statusBadge = e.target && e.target.closest && e.target.closest('.master-status');
@@ -1071,6 +1125,30 @@
             s.innerHTML = `.unassign-mark { background: #fff7f5; border-color: #fecaca !important; } .unassign-mark td { color: #9f1239; }`;
             document.head.appendChild(s);
         })();
+
+        // --- Master spec helpers: filter, copy, clear ---
+        document.getElementById && (function attachMasterHelpers(){
+            const ms = document.getElementById('master-search');
+            if (!ms) return;
+            ms.addEventListener('input', function(){ window.__masterFilter = ms.value || ''; renderFullSpec(); });
+        })();
+
+        function copyMasterKey(constKey) {
+            const text = constKey || '';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard', 'success'));
+            } else {
+                const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); showToast('Copied to clipboard', 'success'); }catch(e){ showToast('Copy failed', 'error'); } ta.remove();
+            }
+        }
+
+        function clearMasterMapping(constKey) {
+            if (!masterMappings[constKey]) return;
+            masterMappings[constKey].spec = '';
+            masterMappings[constKey].status = 'pending';
+            renderFullSpec();
+            saveState();
+        }
 
         // --- Persistence (localStorage) ---
     const STORAGE_KEY = 'solutioning-workbench-state-v1';
@@ -1444,6 +1522,12 @@
                 renderGaps();
                 // ensure feed state matches current scroll on load (in case some items had static 'active' classes)
                 if (mainScroll) mainScroll.dispatchEvent(new Event('scroll'));
+                // wire master search after DOM content is ready
+                const ms = document.getElementById('master-search');
+                if (ms) {
+                    window.__masterFilter = '';
+                    ms.addEventListener('input', function(){ window.__masterFilter = ms.value || ''; renderFullSpec(); });
+                }
             });
         });
         
