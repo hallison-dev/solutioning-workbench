@@ -6,7 +6,6 @@
     <title>Solutioning Workbench: Solutioning Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Design System -->
     <style>
         /* Typography & Base */
         body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -22,6 +21,8 @@
         .badge-purple { background-color: #f3e8ff; color: #7e22ce; border: 1px solid #d8b4fe; }
         .badge-red { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
         .badge-indigo { background-color: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+        .badge-slate { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .badge-emerald { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
         
         /* Visualizer Styles */
         .check-face { background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 10px 10px; font-family: 'Georgia', serif; }
@@ -38,24 +39,24 @@
         .tab-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .tab-btn { background-color: white; color: #64748b; border: 1px solid #cbd5e1; }
 
-    /* Status badges */
-    .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; }
-    .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
-    .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
-    .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+        /* Status badges */
+        .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; }
+        .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
+        .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
+        .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
 
-    /* Category tag */
-    .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
-    .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
+        /* Category tag */
+        .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
+        .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
 
-    /* Toast */
-    #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
-    .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { background: #059669; }
-    .toast.info { background: #2563eb; }
-    .toast.warn { background: #d97706; }
-    .toast.error { background: #b91c1c; }
+        /* Toast */
+        #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
+        .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: #059669; }
+        .toast.info { background: #2563eb; }
+        .toast.warn { background: #d97706; }
+        .toast.error { background: #b91c1c; }
 
         /* Story Feed */
         .feed-item { position: relative; padding-left: 1.5rem; padding-bottom: 1.5rem; border-left: 2px solid #e2e8f0; transition: all 0.3s ease; opacity: 0.5; cursor: pointer; }
@@ -89,48 +90,36 @@
         .row-item:active { cursor: grabbing; }
         .drag-zone { transition: all 0.2s ease; }
         .drag-zone.drag-over { background-color: #eff6ff; border-color: #3b82f6; }
+        
         /* Master Spec column styling: truncate long dotted keys and show full on hover */
         .spec-key { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
-    .spec-key:hover { cursor: help; }
-    /* wrap mode for long keys */
-    .spec-key.wrap { white-space: normal; word-break: break-word; max-width: none; }
-    /* master spec search & attach widgets */
-    .master-search { width: 100%; max-width: 480px; padding: 8px 10px; border: 1px solid #e6eef8; border-radius: 8px; }
-    .attach-widget { position: relative; display: inline-block; }
-    .attach-input { width: 260px; padding: 6px 8px; border: 1px solid #e6eef8; border-radius: 6px; }
-    .attach-list { position: absolute; top: 36px; left: 0; right: 0; max-height: 180px; overflow-y: auto; background: white; border: 1px solid #e6eef8; box-shadow: 0 8px 18px rgba(2,6,23,0.06); z-index: 60; }
-    .attach-item { padding: 6px 8px; font-size: 13px; cursor: pointer; }
-    .attach-item:hover { background: #f1f5f9; }
-    .spec-action { margin-left: 8px; font-size: 12px; color: #2563eb; cursor: pointer; }
+        .spec-key:hover { cursor: help; }
+        /* wrap mode for long keys */
+        .spec-key.wrap { white-space: normal; word-break: break-word; max-width: none; }
+        /* master spec search & attach widgets */
+        .master-search { width: 100%; max-width: 480px; padding: 8px 10px; border: 1px solid #e6eef8; border-radius: 8px; }
+        .attach-widget { position: relative; display: inline-block; }
+        .attach-input { width: 260px; padding: 6px 8px; border: 1px solid #e6eef8; border-radius: 6px; }
+        .attach-list { position: absolute; top: 36px; left: 0; right: 0; max-height: 180px; overflow-y: auto; background: white; border: 1px solid #e6eef8; box-shadow: 0 8px 18px rgba(2,6,23,0.06); z-index: 60; }
+        .attach-item { padding: 6px 8px; font-size: 13px; cursor: pointer; }
+        .attach-item:hover { background: #f1f5f9; }
+        .spec-action { margin-left: 8px; font-size: 12px; color: #2563eb; cursor: pointer; }
+        .unassign-mark { background: #fff7f5; border-color: #fecaca !important; } .unassign-mark td { color: #9f1239; }
+
+        /* Toggle Mode Styles */
+        .mode-toggle-btn { transition: all 0.3s; }
     </style>
 </head>
 <body class="bg-stone-50 text-slate-800 h-screen flex overflow-hidden">
 
-    <!-- 1. LEFT NAVIGATION -->
     <aside class="w-64 bg-slate-900 flex-shrink-0 flex flex-col h-full shadow-xl z-20 hidden md:flex">
         <div class="p-6 border-b border-slate-800">
             <h1 class="text-white font-bold text-lg tracking-tight">Solutioning Workbench <span class="text-blue-500 text-xs uppercase align-top">Beta</span></h1>
-            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v2.7</p>
+            <p class="text-slate-400 text-xs mt-1">Solutioning Builder v3.2</p>
         </div>
         
-        <nav class="flex-1 overflow-y-auto py-6 space-y-1">
-            <div class="px-6 mb-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Solution Phases</div>
-            <a href="#spec-manager" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group text-blue-400">
-                <span class="mr-3 text-lg">📤</span> <span class="font-medium text-sm">Spec Manager</span>
-            </a>
-            <a href="#phase-1" class="nav-item active flex items-center px-6 py-3 hover:bg-slate-800 transition group">
-                <span class="mr-3 text-lg">🔌</span> <span class="font-medium text-sm">1. Connectivity</span>
-            </a>
-            <a href="#phase-2" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group">
-                <span class="mr-3 text-lg">🖥️</span> <span class="font-medium text-sm">2. ERP & Plugin</span>
-            </a>
-            <a href="#phase-3" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group">
-                <span class="mr-3 text-lg">⚙️</span> <span class="font-medium text-sm">3. Platform Logic</span>
-            </a>
-            <a href="#phase-4" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group">
-                <span class="mr-3 text-lg">🏦</span> <span class="font-medium text-sm">4. Bank Spec</span>
-            </a>
-        </nav>
+        <nav class="flex-1 overflow-y-auto py-6 space-y-1" id="main-nav">
+            </nav>
 
         <div class="p-4 border-t border-slate-800">
             <div class="bg-slate-800 rounded p-3 flex items-center">
@@ -143,29 +132,29 @@
         </div>
     </aside>
 
-    <!-- 2. MAIN CONTENT AREA -->
     <main class="flex-1 overflow-y-auto relative scroll-smooth p-8 md:p-12 space-y-24" id="main-scroll">
         
-        <!-- HEADER -->
         <div class="max-w-4xl mx-auto">
             <div class="flex justify-between items-end mb-12 border-b border-slate-200 pb-6">
                 <div>
                     <h2 class="text-3xl font-extrabold text-slate-900">Check Print Solutioning</h2>
                     <p class="text-slate-500 mt-2">Target: <strong class="text-slate-800">Customers Bank</strong> | Spec: <span class="badge badge-blue">Flat File (CSV)</span></p>
                 </div>
-                <div class="flex gap-3">
-                    <button onclick="toggleUploader()" class="bg-white border border-slate-300 text-blue-600 px-4 py-2 rounded-lg text-sm font-semibold shadow-sm hover:bg-blue-50 flex items-center">
-                        <span class="mr-2">📂</span> Open Modal
-                    </button>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-sm hover:bg-blue-700">
-                        Export Doc
-                    </button>
-                    <button onclick="saveNow()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-sm hover:bg-emerald-700">Save</button>
-                    <button onclick="resetState()" class="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm font-semibold shadow-sm hover:bg-red-200">Reset</button>
+                <div class="flex flex-col items-end gap-3">
+                    <div class="flex items-center bg-slate-100 rounded-lg p-1 border border-slate-200">
+                        <button onclick="switchMode('enrichment')" id="btn-mode-enrichment" class="mode-toggle-btn px-3 py-1.5 rounded-md text-xs font-bold text-slate-500">Data Enrichment</button>
+                        <button onclick="switchMode('logical')" id="btn-mode-logical" class="mode-toggle-btn px-3 py-1.5 rounded-md text-xs font-bold text-slate-500">Logical Story</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="toggleUploader()" class="bg-white border border-slate-300 text-blue-600 px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-blue-50 flex items-center">
+                            <span class="mr-2">📂</span> Open Modal
+                        </button>
+                        <button onclick="saveNow()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-emerald-700">Save</button>
+                        <button onclick="resetState()" class="bg-red-100 text-red-700 px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-red-200">Reset</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- COMPONENT: SPEC MANAGER (Populated) -->
             <section id="spec-manager" class="scroll-mt-24 group">
                 <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm relative ring-1 ring-blue-50">
                     <div class="flex justify-between items-center mb-4">
@@ -177,14 +166,12 @@
                     </div>
                     
                     <div class="flex flex-col md:flex-row gap-6">
-                        <!-- Dropzone -->
-                        <div class="flex-1 border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:bg-slate-50 transition cursor-pointer bg-slate-50/50 drag-zone">
+                        <div class="flex-1 border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:bg-slate-50 transition cursor-pointer bg-slate-50/50 drag-zone" id="drag-zone">
                             <div class="text-3xl mb-2">📄</div>
-                            <p class="text-sm font-medium text-slate-700">Standard Check Layout - 10.21.25.csv</p>
-                            <p class="text-xs text-emerald-600 font-bold mt-1">✓ Uploaded Successfully</p>
+                            <p class="text-sm font-medium text-slate-700">Standard Check Layout.csv</p>
+                            <p class="text-xs text-emerald-600 font-bold mt-1">✓ Ready</p>
                         </div>
 
-                        <!-- Staging Area (Populated with real fields from CSV) -->
                         <div class="flex-1">
                             <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Unassigned Rows (Staging)</h4>
                             <div id="unassigned-staging" class="border border-slate-200 rounded-lg h-64 overflow-y-auto bg-white p-2 space-y-2 shadow-inner">
@@ -195,14 +182,12 @@
                 </div>
             </section>
 
-            <!-- PHASE 1: CONNECTIVITY -->
             <section id="phase-1" class="scroll-mt-24 group" data-index="0">
                 <div class="flex items-center mb-6">
                     <span class="bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded text-sm mr-3">PHASE 1</span>
                     <h3 class="text-2xl font-bold text-slate-900">Connectivity & Security</h3>
                 </div>
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative">
-                    <!-- Same Connectivity Content as V2.1 -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="p-4 border rounded-lg hover:border-blue-300 transition relative group/card">
                             <div class="flex justify-between items-center mb-2">
@@ -228,7 +213,6 @@
                     <div id="dynamic-context" class="mb-6 p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800 flex items-start">
                         <span class="mr-2">💡</span><p><strong>Nudge:</strong> Since SFTP is selected, suggest PGP Encryption for security compliance.</p>
                     </div>
-                    <!-- Question Builder (Abbreviated for brevity) -->
                     <div class="pt-6 border-t border-slate-100 bg-slate-50/50 -mx-6 -mb-6 px-6 pb-6 rounded-b-xl">
                         <div class="space-y-3" id="q-phase-1"></div>
                         <div class="mt-3 relative inline-block text-left w-full">
@@ -238,122 +222,17 @@
                                 <button onclick="addCustomQuestion('q-phase-1')" class="block px-4 py-2 text-sm text-blue-600 font-bold hover:bg-blue-50 w-full text-left border-t">Write Custom Question...</button>
                             </div></div>
                         </div>
-                        <!-- Add Note Button -->
                         <div class="mt-4 border-t border-slate-200 pt-2">
-                            <button onclick="addNote('q-phase-1')" class="text-xs text-slate-400 hover:text-slate-600 flex items-center"><span class="mr-1">+</span> Add Note</button>
+                             <button onclick="addNote('q-phase-1')" class="text-xs text-slate-400 hover:text-slate-600 flex items-center"><span class="mr-1">+</span> Add Note</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- PHASE 2: ERP & PLUGIN (The Split) -->
-            <section id="phase-2" class="scroll-mt-24 pt-12 border-t border-dashed border-slate-200 mt-12 group" data-index="1">
-                <div class="flex items-center mb-6">
-                    <span class="bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded text-sm mr-3">PHASE 2</span>
-                    <h3 class="text-2xl font-bold text-slate-900">ERP & Plugin Context</h3>
+            <div id="dynamic-workbench-container">
                 </div>
 
-                <!-- COMPONENT 2A: NATIVE ERP -->
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative mb-8">
-                    <div class="flex justify-between items-center mb-4">
-                        <h4 class="font-bold text-slate-800">2A. Native ERP Data</h4>
-                        <span class="badge badge-purple">Source: General Ledger</span>
-                    </div>
-                    <p class="text-slate-600 text-sm mb-4">Data pulled directly from the ERP (e.g., Vendor Master, Open Bills).</p>
-                    
-                    <div class="border border-slate-200 rounded-lg overflow-hidden mb-4">
-                        <table class="w-full text-sm text-left">
-                            <thead class="bg-slate-50 text-slate-700 font-bold">
-                                <tr><th class="p-3 border-b bg-slate-100 w-1/3">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100">Status</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
-                            </thead>
-                            <tbody id="erp-native-body" class="divide-y divide-slate-100">
-                                <!-- empty by default; restored from local state or user assignments -->
-                            </tbody>
-                        </table>
-                        <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('erp-native-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Native Mapping</button></div>
-                    </div>
-                </div>
-
-                <!-- COMPONENT 2B: PLUGIN ENRICHMENT -->
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative">
-                    <div class="flex justify-between items-center mb-4">
-                        <h4 class="font-bold text-slate-800">2B. Plugin Enrichment</h4>
-                        <span class="badge badge-blue">Source: User Input</span>
-                    </div>
-                    <p class="text-slate-600 text-sm mb-4">Data configured or input by the user at runtime (e.g., Payment Method, Memo).</p>
-
-                    <div class="border border-slate-200 rounded-lg overflow-hidden mb-4">
-                        <table class="w-full text-sm text-left">
-                            <thead class="bg-slate-50 text-slate-700 font-bold">
-                                <tr><th class="p-3 border-b bg-slate-100 w-1/3">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100">Status</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
-                            </thead>
-                            <tbody id="erp-plugin-body" class="divide-y divide-slate-100">
-                                <!-- empty by default; restored from local state or user assignments -->
-                            </tbody>
-                        </table>
-                        <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('erp-plugin-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Plugin Mapping</button></div>
-                    </div>
-                    
-                    <!-- Shared Q&A for Phase 2 -->
-                    <div class="pt-6 border-t border-slate-100 bg-slate-50/50 -mx-6 -mb-6 px-6 pb-6 rounded-b-xl">
-                        <h5 class="text-xs font-bold text-slate-500 uppercase mb-3">Solutioning Questions</h5>
-                        <div class="space-y-3" id="q-phase-2"></div>
-                        <div class="mt-3 relative inline-block text-left w-full">
-                            <button onclick="toggleDropdown('dd-phase-2')" class="flex items-center text-xs font-bold text-blue-600 hover:text-blue-800 transition bg-white border border-blue-200 px-3 py-2 rounded-lg shadow-sm w-full justify-between"><span>+ Add Scoping Question</span><span>▼</span></button>
-                            <div id="dd-phase-2" class="hidden absolute left-0 mt-2 w-full bg-white border border-slate-200 rounded-md shadow-lg z-50"><div class="py-1">
-                                <button onclick="addPresetQuestion('q-phase-2', 'Does the client require custom fields?')" class="block px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 w-full text-left">Custom Fields?</button>
-                                <button onclick="addCustomQuestion('q-phase-2')" class="block px-4 py-2 text-sm text-blue-600 font-bold hover:bg-blue-50 w-full text-left border-t">Write Custom Question...</button>
-                            </div></div>
-                        </div>
-                        <!-- Add Note Button -->
-                        <div class="mt-4 border-t border-slate-200 pt-2">
-                            <button onclick="addNote('q-phase-2')" class="text-xs text-slate-400 hover:text-slate-600 flex items-center"><span class="mr-1">+</span> Add Note</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PHASE 3: FISPAN PLATFORM LOGIC -->
-            <section id="phase-3" class="scroll-mt-24 pt-12 border-t border-dashed border-slate-200 mt-12 group" data-index="2">
-                <div class="flex items-center mb-6">
-                    <span class="bg-indigo-100 text-indigo-700 font-bold px-3 py-1 rounded text-sm mr-3">PHASE 3</span>
-                    <h3 class="text-2xl font-bold text-slate-900">FISPAN Platform Logic</h3>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 relative">
-                    <p class="text-slate-600 mb-6">Transformation Rules & Validation Gates (e.g., File Naming, Encryption).</p>
-                    
-                    <div class="border border-slate-200 rounded-lg overflow-hidden mb-6">
-                        <table class="w-full text-sm text-left">
-                            <thead class="bg-slate-50 text-slate-700 font-bold">
-                                <tr><th class="p-3 border-b bg-slate-100 w-1/2">Spec Requirement (Variable)</th><th class="p-3 border-b bg-slate-100 w-1/2">FISPAN Source (Constant)</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
-                            </thead>
-                            <tbody id="platform-workbench-body" class="divide-y divide-slate-100">
-                                <!-- empty by default; restored from local state or user assignments -->
-                            </tbody>
-                        </table>
-                        <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('platform-workbench-body')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ Add Logic Rule</button></div>
-                    </div>
-                    
-                    <div class="pt-6 border-t border-slate-100 bg-slate-50/50 -mx-6 -mb-6 px-6 pb-6 rounded-b-xl">
-                        <h5 class="text-xs font-bold text-slate-500 uppercase mb-3">Solutioning Questions</h5>
-                        <div class="space-y-3" id="q-phase-3"></div>
-                        <div class="mt-3 relative inline-block text-left w-full">
-                            <button onclick="toggleDropdown('dd-phase-3')" class="flex items-center text-xs font-bold text-blue-600 hover:text-blue-800 transition bg-white border border-blue-200 px-3 py-2 rounded-lg shadow-sm w-full justify-between"><span>+ Add Scoping Question</span><span>▼</span></button>
-                            <div id="dd-phase-3" class="hidden absolute left-0 mt-2 w-full bg-white border border-slate-200 rounded-md shadow-lg z-50"><div class="py-1">
-                                <button onclick="addPresetQuestion('q-phase-3', 'Who owns Householding Logic?')" class="block px-4 py-2 text-sm text-slate-700 hover:bg-blue-50 w-full text-left">Householding Logic?</button>
-                                <button onclick="addCustomQuestion('q-phase-3')" class="block px-4 py-2 text-sm text-blue-600 font-bold hover:bg-blue-50 w-full text-left border-t">Write Custom Question...</button>
-                            </div></div>
-                        </div>
-                        <!-- Add Note Button -->
-                        <div class="mt-4 border-t border-slate-200 pt-2">
-                            <button onclick="addNote('q-phase-3')" class="text-xs text-slate-400 hover:text-slate-600 flex items-center"><span class="mr-1">+</span> Add Note</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PHASE 4: BANK SPEC (Master View) -->
-            <section id="phase-4" class="scroll-mt-24 pt-12 border-t border-dashed border-slate-200 mt-12 pb-24 group" data-index="3">
+            <section id="phase-4" class="scroll-mt-24 pt-12 border-t border-dashed border-slate-200 mt-12 pb-24 group" data-index="4">
                 <div class="flex items-center mb-6">
                     <span class="bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded text-sm mr-3">PHASE 4</span>
                     <h3 class="text-2xl font-bold text-slate-900">Bank Specification (Master List)</h3>
@@ -368,19 +247,16 @@
                     </div>
                     
                     <div class="p-6">
-                        <!-- VIEW 1: SUMMARY -->
                         <div id="view-summary" class="block">
                             <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-4"><h4 class="font-bold text-amber-900 text-sm">Automated Gaps Detected</h4></div>
                             <div id="gaps-list" class="text-sm">
-                                <!-- Gaps will be rendered here by JS -->
                                 <p class="text-xs text-slate-500">No gaps detected yet.</p>
                             </div>
                         </div>
-                        <!-- VIEW 2: FULL SPEC -->
                         <div id="view-full" class="hidden">
                             <div class="flex items-center justify-between mb-3">
                                 <div class="flex items-center gap-3">
-                                    <input id="master-search" class="master-search" placeholder="Search FISPAN constant, value type, or mapped spec..." />
+                                    <input id="master-search" class="master-search" placeholder="Search FISPAN constant..." />
                                     <button id="master-toggle-wrap" class="text-sm px-3 py-1 border rounded text-slate-600">Wrap: <span id="master-wrap-state">off</span></button>
                                 </div>
                                 <div class="text-sm text-slate-500 ml-4">Total: <span id="master-count">0</span></div>
@@ -397,9 +273,8 @@
                                 <tbody id="full-spec-body" class="divide-y divide-slate-100"></tbody>
                             </table>
                         </div>
-                        <!-- VIEW 3: VISUALIZER -->
                         <div id="view-visualizer" class="hidden">
-                            <div class="check-face relative bg-blue-50 border-2 border-slate-300 rounded-md p-6 w-full max-w-3xl mx-auto shadow-md mb-6" style="aspect-ratio: 2.5/1;">
+                             <div class="check-face relative bg-blue-50 border-2 border-slate-300 rounded-md p-6 w-full max-w-3xl mx-auto shadow-md mb-6" style="aspect-ratio: 2.5/1;">
                                 <div class="absolute top-6 left-6 text-xs check-field" data-tooltip="Row 23: Payer Name"><p class="font-bold">MYCOMPANY INC.</p></div>
                                 <div class="absolute top-1/3 left-6 right-12 mt-6 flex items-end">
                                     <span class="text-xs font-bold uppercase mr-2">Pay To:</span>
@@ -415,23 +290,19 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- VIEW 4: TAGS -->
                         <div id="view-tags" class="hidden">
                             <p class="text-xs text-slate-500">No assigned rows yet.</p>
                         </div>
                     </div>
 
-                    <!-- Question Builder -->
                     <div class="pt-6 border-t border-slate-100 bg-slate-50/50 px-6 pb-6">
-                        <h5 class="text-xs font-bold text-slate-500 uppercase mb-3">Solutioning Questions</h5>
                         <div class="space-y-3" id="q-phase-4"></div>
                         <div class="mt-3 relative inline-block text-left w-full">
                             <button onclick="toggleDropdown('dd-phase-4')" class="flex items-center text-xs font-bold text-blue-600 hover:text-blue-800 transition bg-white border border-blue-200 px-3 py-2 rounded-lg shadow-sm w-full justify-between"><span>+ Add Scoping Question</span><span>▼</span></button>
                             <div id="dd-phase-4" class="hidden absolute bottom-full mb-2 left-0 w-full bg-white border border-slate-200 rounded-md shadow-lg z-50"><div class="py-1"><button onclick="addCustomQuestion('q-phase-4')" class="block px-4 py-2 text-sm text-blue-600 font-bold hover:bg-blue-50 w-full text-left border-t">Write Custom Question...</button></div></div>
                         </div>
-                        <!-- Add Note Button -->
                         <div class="mt-4 border-t border-slate-200 pt-2">
-                            <button onclick="addNote('q-phase-4')" class="text-xs text-slate-400 hover:text-slate-600 flex items-center"><span class="mr-1">+</span> Add Note</button>
+                             <button onclick="addNote('q-phase-4')" class="text-xs text-slate-400 hover:text-slate-600 flex items-center"><span class="mr-1">+</span> Add Note</button>
                         </div>
                     </div>
                 </div>
@@ -440,7 +311,6 @@
         </div>
     </main>
 
-    <!-- 3. RIGHT SIDE: THE "STORY FEED" -->
     <aside class="w-80 bg-white border-l border-slate-200 flex-shrink-0 hidden xl:flex flex-col h-full shadow-lg z-30">
         <div class="p-6 border-b border-slate-100 flex justify-between items-center">
             <div>
@@ -454,68 +324,64 @@
             </label>
         </div>
         <div class="flex-1 overflow-y-auto p-6 space-y-0 relative feed-container" id="feed-container">
-            <!-- Feed Items (Phase 2) -->
-            <div class="feed-item" data-phase="phase-2">
+            <div class="feed-item" data-phase="2">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">User Accesses Plugin</h4>
                 <p class="text-xs text-slate-500 mt-1">Requests latest open bills from ERP GL.</p>
                 <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Technical Context</h5><p class="text-xs text-slate-600 leading-relaxed">Plugin initiates `GET /vendor-bills` call to ERP API.</p></div>
             </div>
-            <div class="feed-item" data-phase="phase-2">
+            <div class="feed-item" data-phase="2">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Method Selection</h4>
                 <p class="text-xs text-slate-500 mt-1">User selects "Check" via Dropdown.</p>
                 <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Configuration</h5><p class="text-xs text-slate-600 leading-relaxed">Mapped to Bank Code: `CHK`.</p></div>
             </div>
-            <!-- Feed Items (Phase 2) -->
-            <div class="feed-item" data-phase="phase-2">
+             <div class="feed-item" data-phase="2">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Submission & Auth</h4>
                 <p class="text-xs text-slate-500 mt-1">Plugin creates record. FISPAN authenticates.</p>
             </div>
-            <!-- Feed Items (Phase 3) -->
-            <div class="feed-item" data-phase="phase-3">
+            <div class="feed-item" data-phase="3">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Platform Validation</h4>
                 <p class="text-xs text-slate-500 mt-1">Checks data against Customer File Spec.</p>
             </div>
-            <div class="feed-item" data-phase="phase-3">
+            <div class="feed-item" data-phase="3">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Transformation</h4>
-                <p class="text-xs text-slate-500 mt-1">Formats valid requests into Bank CSV Format.</p>
+                <p class="text-xs text-slate-500 mt-1">Formats valid requests into Bank CSV.</p>
             </div>
-            <div class="feed-item" data-phase="phase-3">
+             <div class="feed-item" data-phase="3">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Transmission</h4>
                 <p class="text-xs text-slate-500 mt-1">Sends to Endpoint (SFTP/API).</p>
             </div>
-             <div class="feed-item" data-phase="phase-4">
+             <div class="feed-item" data-phase="4">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Bank Processing</h4>
                 <p class="text-xs text-slate-500 mt-1">Bank parses file & executes payments.</p>
             </div>
-            <div class="feed-item" data-phase="phase-4">
+             <div class="feed-item" data-phase="4">
                 <div class="feed-dot"></div>
-                <h4 class="text-sm font-bold text-slate-800">Status Updates (Webhooks / ACKs)</h4>
-                <p class="text-xs text-slate-500 mt-1">Bank sends webhooks/ACKs back to FISPAN; these update payment status and push acknowledgements to ERP.</p>
-                <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Webhook Payload</h5><p class="text-xs text-slate-600 leading-relaxed">Example payload: <code class="font-mono">{ paymentId, status, bankRef, errorCode, settledAt }</code> — used to reconcile and notify ERP.</p></div>
+                <h4 class="text-sm font-bold text-slate-800">Status Updates</h4>
+                <p class="text-xs text-slate-500 mt-1">Bank sends webhooks/ACKs back to FISPAN.</p>
+                <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Webhook Payload</h5><p class="text-xs text-slate-600 leading-relaxed">Example payload: <code class="font-mono">{ paymentId, status, bankRef, errorCode }</code></p></div>
             </div>
-            <div class="feed-item" data-phase="phase-4">
+            <div class="feed-item" data-phase="4">
                 <div class="feed-dot"></div>
                 <h4 class="text-sm font-bold text-slate-800">Reconciliation</h4>
-                <p class="text-xs text-slate-500 mt-1">Bank feeds & settlement files are used to reconcile transactions and update ledgers in ERP.</p>
-                <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Reconciliation Data</h5><p class="text-xs text-slate-600 leading-relaxed">Includes bank statement lines, settlement references, clearing timestamps and status codes for matching and closing transactions.</p></div>
+                <p class="text-xs text-slate-500 mt-1">Bank feeds reconcile transactions in ERP.</p>
+                <div class="feed-modal"><h5 class="font-bold text-xs text-blue-700 uppercase mb-2">Reconciliation Data</h5><p class="text-xs text-slate-600 leading-relaxed">Includes bank statement lines, settlement references.</p></div>
             </div>
         </div>
     </aside>
 
-    <!-- SPEC UPLOADER MODAL -->
     <div id="uploader-modal" class="uploader-modal hidden">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative">
             <button onclick="toggleUploader()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Upload Bank Specification</h3>
             <p class="text-sm text-slate-500 mb-6">Upload a CSV or Paste Rows to begin the assignment process.</p>
-                <div id="drag-zone" class="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center hover:bg-slate-50 transition cursor-pointer">
+                <div id="drag-zone-modal" class="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center hover:bg-slate-50 transition cursor-pointer drag-zone">
                 <div class="text-4xl mb-2">📄</div>
                 <p class="text-sm font-medium text-slate-700">Drag & Drop CSV here</p>
             </div>
@@ -532,7 +398,6 @@
         </div>
     </div>
 
-    <!-- CONSTANT DETAILS MODAL -->
     <div id="const-modal" class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4" role="dialog" aria-modal="true">
             <div class="p-4 border-b flex justify-between items-start">
@@ -551,1118 +416,638 @@
         </div>
     </div>
 
-    <!-- Logic Script -->
     <script>
-        // --- DATA ---
-        // NOTE: removed initial "specRows" dummy dataset so pages load with a clean slate.
-        // Master mappings for FISPAN constants -> spec variable
-        // key => { key, valueType, description, spec, status }
+        // --- DATA & CONFIG ---
         const masterMappings = {};
+        const STORAGE_KEY = 'solutioning-workbench-state-v1';
+        let currentMode = 'enrichment'; // 'enrichment' or 'logical'
 
-        // --- RENDER FUNCTIONS ---
-        function renderFullSpec() {
-            const tbody = document.getElementById('full-spec-body');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            const filter = (window.__masterFilter || '').toLowerCase().trim();
-            // Build array from masterMappings
-            const rows = Object.keys(masterMappings).map(k => Object.assign({}, masterMappings[k]));
-            // sort: entries with non-empty spec first, then alphabetically by key
-            rows.sort((a,b) => {
-                if ((a.spec && !b.spec)) return -1;
-                if ((!a.spec && b.spec)) return 1;
-                return a.key.localeCompare(b.key);
-            });
-
-            // helper to create status badge
-            function statusHtml(m) {
-                const s = m.status || 'pending';
-                return `<span class="status-badge master-status ${s}" data-const="${m.key}">${s}</span>`;
+        const MODE_CONFIG = {
+            enrichment: {
+                label: 'Data Enrichment Story',
+                targets: [
+                    { id: 'erp-native-body', label: 'ERP', color: 'purple' },
+                    { id: 'erp-plugin-body', label: 'PLG', color: 'blue' },
+                    { id: 'platform-workbench-body', label: 'PLT', color: 'indigo' }
+                ],
+                nav: [
+                    { href: '#phase-2', icon: '🖥️', label: '2. ERP & Plugin' },
+                    { href: '#phase-3', icon: '⚙️', label: '3. Platform Logic' }
+                ],
+                sections: [
+                    {
+                        id: 'phase-2', badge: 'PHASE 2', badgeColor: 'purple', title: 'ERP & Plugin Context', index: 2,
+                        components: [
+                            { id: 'erp-native-body', title: '2A. Native ERP Data', source: 'General Ledger', desc: 'Data pulled directly from the ERP (e.g., Vendor Master, Open Bills).', btnLabel: 'Add Native Mapping' },
+                            { id: 'erp-plugin-body', title: '2B. Plugin Enrichment', source: 'User Input', desc: 'Data configured or input by the user at runtime.', btnLabel: 'Add Plugin Mapping' }
+                        ],
+                        qa: 'q-phase-2'
+                    },
+                    {
+                        id: 'phase-3', badge: 'PHASE 3', badgeColor: 'indigo', title: 'FISPAN Platform Logic', index: 3,
+                        components: [
+                            { id: 'platform-workbench-body', title: 'Transformation Rules', desc: 'Transformation Rules & Validation Gates (e.g., File Naming, Encryption).', btnLabel: 'Add Logic Rule' }
+                        ],
+                        qa: 'q-phase-3'
+                    }
+                ],
+                tags: [
+                    { id: 'payer', label: 'Payer' }, { id: 'payee', label: 'Payee' }, { id: 'bill', label: 'Bill' }
+                ]
+            },
+            logical: {
+                label: 'Logical Isolation Story',
+                targets: [
+                    { id: 'phase-fc-body', label: 'FC', color: 'slate' },
+                    { id: 'phase-ed-body', label: 'ED', color: 'blue' },
+                    { id: 'phase-pi-body', label: 'PI', color: 'emerald' },
+                    { id: 'phase-rm-body', label: 'RM', color: 'amber' }
+                ],
+                nav: [
+                    { href: '#phase-fc', icon: '📂', label: 'File Control' },
+                    { href: '#phase-ed', icon: '👥', label: 'Entity Details' },
+                    { href: '#phase-pi', icon: '💸', label: 'Payment Instruction' },
+                    { href: '#phase-rm', icon: '🧾', label: 'Remittance Data' }
+                ],
+                sections: [
+                    {
+                        id: 'phase-fc', badge: 'THE ENVELOPE', badgeColor: 'slate', title: 'File Control', index: 2,
+                        desc: 'Metadata that tells the bank how to process the file (Dates, Totals).',
+                        components: [{ id: 'phase-fc-body', title: 'Control Headers/Trailers', btnLabel: 'Add Control Mapping' }], qa: 'q-phase-fc'
+                    },
+                    {
+                        id: 'phase-ed', badge: 'THE ACTORS', badgeColor: 'blue', title: 'Entity Details', index: 3,
+                        desc: 'Payer & Payee Info: The two parties involved in the transaction.',
+                        components: [{ id: 'phase-ed-body', title: 'Payer & Payee Fields', btnLabel: 'Add Entity Mapping' }], qa: 'q-phase-ed'
+                    },
+                    {
+                        id: 'phase-pi', badge: 'THE ACTION', badgeColor: 'emerald', title: 'Payment Instruction', index: 3, 
+                        desc: 'The specific transfer of value (Check Num, Amount, Date).',
+                        components: [{ id: 'phase-pi-body', title: 'Instruction Fields', btnLabel: 'Add Instruction Mapping' }], qa: 'q-phase-pi'
+                    },
+                    {
+                        id: 'phase-rm', badge: 'THE CONTEXT', badgeColor: 'amber', title: 'Remittance Data', index: 3,
+                        desc: 'Information the vendor needs to reconcile their books (Invoice #s).',
+                        components: [{ id: 'phase-rm-body', title: 'Remittance Fields', btnLabel: 'Add Remittance Mapping' }], qa: 'q-phase-rm'
+                    }
+                ],
+                tags: [
+                    { id: 'fc', label: 'File Control' }, { id: 'ed', label: 'Entity Details' }, 
+                    { id: 'pi', label: 'Payment Instr.' }, { id: 'rm', label: 'Remittance' }
+                ]
             }
+        };
 
-            let visibleCount = 0;
-            rows.forEach(m => {
-                // apply filter
-                if (filter) {
-                    const hay = (m.key + ' ' + (m.valueType||'') + ' ' + (m.spec||'')).toLowerCase();
-                    if (!hay.includes(filter)) return; // skip non-matching
-                }
-                visibleCount++;
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
-                const specDisplay = m.spec ? `<span class="master-spec" data-const="${m.key}">${escapeHtml(m.spec)}</span>` : `<em class="text-xs text-slate-400">(unmatched)</em>`;
-                // first column uses a truncated inline element with a title so long dotted keys don't break layout
-                tr.innerHTML = `
-                    <td class="p-3 font-mono text-xs text-blue-600">
-                        <span class="spec-key" data-const="${escapeHtml(m.key)}" title="${escapeHtml(m.key)}">${escapeHtml(m.key)}</span>
-                        <span class="spec-action master-copy" data-const="${escapeHtml(m.key)}">📋</span>
-                    </td>
-                    <td class="p-3 text-xs text-slate-500">${escapeHtml(m.valueType || '')}</td>
-                    <td class="p-3 text-sm text-slate-700">
-                        ${specDisplay}
-                        <button class="ml-2 text-[10px] px-2 py-1 bg-slate-100 rounded master-attach" data-const="${escapeHtml(m.key)}">Attach</button>
-                        ${m.spec ? `<span class="spec-action master-clear" data-const="${escapeHtml(m.key)}">clear</span>` : ''}
-                    </td>
-                    <td class="p-3">${statusHtml(m)}</td>
-                `;
-                tbody.appendChild(tr);
+        // --- MODE LOGIC ---
+        function switchMode(mode) {
+            if (!MODE_CONFIG[mode]) return;
+            saveState(); 
+            currentMode = mode;
+            // UI Update
+            document.querySelectorAll('.mode-toggle-btn').forEach(b => {
+                b.classList.remove('bg-white','shadow-sm','text-slate-800');
+                b.classList.add('text-slate-500');
             });
-            const counter = document.getElementById('master-count'); if (counter) counter.innerText = String(visibleCount);
-        }
-
-        // Escape helper for safe text insertion
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; });
-        }
-
-        // Collect available spec strings from staging and assigned tables
-        function getAllSpecPool() {
-            const set = new Set();
-            // staging
-            const staging = document.getElementById('unassigned-staging');
-            if (staging) Array.from(staging.querySelectorAll('span')).forEach(s => set.add(s.innerText.trim()));
-            // assigned tables
-            ['erp-native-body','erp-plugin-body','platform-workbench-body'].forEach(id => {
-                const tb = document.getElementById(id);
-                if (!tb) return;
-                Array.from(tb.querySelectorAll('tr')).forEach(tr => {
-                    const txt = tr.children[0] ? tr.children[0].innerText.trim() : '';
-                    if (txt) set.add(txt);
-                });
-            });
-            return Array.from(set).filter(s => s && s.length);
-        }
-
-        // Attach a spec string to a constant; if spec was attached to another constant, swap
-        function assignSpecToConstant(constKey, specText) {
-            // find other constant that has this spec
-            let other = null;
-            Object.keys(masterMappings).forEach(k => { if (masterMappings[k].spec === specText) other = k; });
-            const prevSpec = masterMappings[constKey].spec || '';
-            if (other && other !== constKey) {
-                // swap
-                masterMappings[other].spec = prevSpec || '';
+            const activeBtn = document.getElementById(`btn-mode-${mode}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-white','shadow-sm','text-slate-800');
+                activeBtn.classList.remove('text-slate-500');
             }
-            masterMappings[constKey].spec = specText || '';
-            // update statuses: if spec assigned set to mapped
-            if (specText) masterMappings[constKey].status = 'mapped';
-            if (other && other !== constKey && !masterMappings[other].spec) masterMappings[other].status = 'pending';
-            renderFullSpec();
-            saveState();
-        }
-
-        // Update master mapping status
-        function updateMasterStatus(constKey, newStatus) {
-            if (!masterMappings[constKey]) return;
-            masterMappings[constKey].status = newStatus;
-            renderFullSpec();
-            saveState();
-        }
-
-        // --- WORKBENCH LOGIC (Add & Edit) ---
-        function addRow(tbodyId) {
-            const tbody = document.getElementById(tbodyId);
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="p-3"><input type="text" placeholder="Spec Requirement..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
-                <td class="p-3"><input type="text" placeholder="FISPAN Source..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
-                <td class="p-3">
-                    <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
-                        <option value="mapped">mapped</option>
-                        <option value="pending" selected>pending</option>
-                        <option value="gap">gap</option>
-                    </select>
-                </td>
-                <td class="p-3 text-right"><button class="text-xs text-red-500 hover:underline" onclick="this.closest('tr').remove()">Remove</button></td>
-            `;
-            tbody.appendChild(tr);
-            // New rows may be gaps until mapped
+            localStorage.setItem(STORAGE_KEY + ':mode', mode);
+            renderNav();
+            renderWorkbench();
+            loadState(); 
             renderGaps();
         }
-        
-        function editRow(btn) {
-            const tr = btn.closest('tr');
-            // Only edit the first two columns (Spec Requirement and FISPAN Source)
-            const cells = tr.querySelectorAll('td:nth-child(1), td:nth-child(2)');
-            cells.forEach(td => {
-                const text = td.innerText;
-                td.innerHTML = `<input type="text" value="${text}" class="w-full bg-white border border-blue-300 rounded px-2 py-1 text-sm focus:outline-none">`;
+
+        function renderNav() {
+            const nav = document.getElementById('main-nav');
+            const config = MODE_CONFIG[currentMode];
+            if (!nav) return;
+            let html = `
+                <div class="px-6 mb-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Solution Phases</div>
+                <a href="#spec-manager" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group text-blue-400">
+                    <span class="mr-3 text-lg">📤</span> <span class="font-medium text-sm">Spec Manager</span>
+                </a>
+                <a href="#phase-1" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group">
+                    <span class="mr-3 text-lg">🔌</span> <span class="font-medium text-sm">1. Connectivity</span>
+                </a>
+            `;
+            config.nav.forEach(n => {
+                html += `
+                    <a href="${n.href}" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group">
+                        <span class="mr-3 text-lg">${n.icon}</span> <span class="font-medium text-sm">${n.label}</span>
+                    </a>
+                `;
             });
-            // Replace action cell with Save and Unassign controls
-            const actionTd = tr.querySelector('td:nth-child(4)');
-            if (actionTd) {
-                actionTd.innerHTML = `
-                    <div class="flex gap-2 justify-end">
-                        <button class="text-xs text-blue-600 hover:underline" onclick="saveRow(this)">Save</button>
-                        <button class="text-xs text-red-600 hover:underline" onclick="toggleUnassignMark(this)">Unassign</button>
+            html += `
+                <a href="#phase-4" class="nav-item flex items-center px-6 py-3 hover:bg-slate-800 transition group">
+                    <span class="mr-3 text-lg">🏦</span> <span class="font-medium text-sm">4. Bank Spec</span>
+                </a>
+            `;
+            nav.innerHTML = html;
+        }
+
+        function renderWorkbench() {
+            const container = document.getElementById('dynamic-workbench-container');
+            if (!container) return;
+            container.innerHTML = ''; 
+            const config = MODE_CONFIG[currentMode];
+            
+            config.sections.forEach(sec => {
+                const section = document.createElement('section');
+                section.id = sec.id;
+                section.className = 'scroll-mt-24 pt-12 border-t border-dashed border-slate-200 mt-12 group';
+                section.dataset.index = sec.index; 
+
+                let compsHtml = '';
+                sec.components.forEach(comp => {
+                    compsHtml += `
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative mb-8">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="font-bold text-slate-800">${comp.title}</h4>
+                                ${comp.source ? `<span class="badge badge-purple">Source: ${comp.source}</span>` : ''}
+                            </div>
+                            ${comp.desc ? `<p class="text-slate-600 text-sm mb-4">${comp.desc}</p>` : ''}
+                            <div class="border border-slate-200 rounded-lg overflow-hidden mb-4">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="bg-slate-50 text-slate-700 font-bold">
+                                        <tr><th class="p-3 border-b bg-slate-100 w-1/3">Spec Requirement</th><th class="p-3 border-b bg-slate-100 w-1/3">FISPAN Source</th><th class="p-3 border-b bg-slate-100">Status</th><th class="p-3 border-b bg-slate-100 text-right">Action</th></tr>
+                                    </thead>
+                                    <tbody id="${comp.id}" class="divide-y divide-slate-100"></tbody>
+                                </table>
+                                <div class="p-2 bg-slate-50 border-t border-slate-200 text-center"><button onclick="addRow('${comp.id}')" class="text-xs text-blue-600 font-bold hover:text-blue-800">+ ${comp.btnLabel}</button></div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                section.innerHTML = `
+                    <div class="flex items-center mb-6">
+                        <span class="bg-${sec.badgeColor}-100 text-${sec.badgeColor}-700 font-bold px-3 py-1 rounded text-sm mr-3">${sec.badge}</span>
+                        <h3 class="text-2xl font-bold text-slate-900">${sec.title}</h3>
+                    </div>
+                    ${sec.desc ? `<p class="mb-6 text-slate-600">${sec.desc}</p>` : ''}
+                    ${compsHtml}
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h5 class="text-xs font-bold text-slate-500 uppercase mb-3">Solutioning Questions</h5>
+                        <div class="space-y-3" id="${sec.qa}"></div>
+                        <div class="mt-3 relative inline-block text-left w-full">
+                            <button onclick="addCustomQuestion('${sec.qa}')" class="flex items-center text-xs font-bold text-blue-600 hover:text-blue-800 transition bg-white border border-blue-200 px-3 py-2 rounded-lg shadow-sm justify-between"><span>+ Add Question</span></button>
+                        </div>
+                         <div class="mt-4 border-t border-slate-200 pt-2">
+                             <button onclick="addNote('${sec.qa}')" class="text-xs text-slate-400 hover:text-slate-600 flex items-center"><span class="mr-1">+</span> Add Note</button>
+                        </div>
                     </div>
                 `;
-            }
-        }
-
-        function saveRow(btn) {
-            const tr = btn.closest('tr');
-            // Only save first two columns
-            const inputs = tr.querySelectorAll('td:nth-child(1) input, td:nth-child(2) input');
-            inputs.forEach(input => {
-                const td = input.closest('td');
-                td.innerText = input.value;
-            });
-            // If row was marked for unassign, move it back to staging
-            if (tr.dataset && tr.dataset.unassign === '1') {
-                const spec = tr.children[0] ? tr.children[0].innerText.trim() : '';
-                // create staging-style element
-                const staging = document.getElementById('unassigned-staging');
-                if (staging) {
-                    const div = document.createElement('div');
-                    div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
-                    const s = document.createElement('span');
-                    s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
-                    s.title = spec; s.innerText = spec;
-                    const btnDiv = document.createElement('div');
-                    btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
-                    btnDiv.innerHTML = `
-                        <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                        <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                        <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
-                    `;
-                    div.appendChild(s); div.appendChild(btnDiv); staging.appendChild(div);
-                }
-                // remove the row from the table
-                tr.remove();
-                showToast('Unassigned: ' + spec, 'info');
-                renderGaps();
-                saveState();
-                return;
-            }
-
-            // Restore action cell to Edit
-            const actionTd = tr.querySelector('td:nth-child(4)');
-            if (actionTd) actionTd.innerHTML = `<button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button>`;
-            // Update gaps after saving
-            renderGaps();
-            saveState();
-        }
-
-        // Mark/unmark a row for unassignment while in edit mode
-        function toggleUnassignMark(btn) {
-            const tr = btn.closest('tr');
-            if (!tr) return;
-            if (tr.dataset && tr.dataset.unassign === '1') {
-                // clear mark
-                delete tr.dataset.unassign;
-                tr.classList.remove('unassign-mark');
-                btn.innerText = 'Unassign';
-            } else {
-                tr.dataset.unassign = '1';
-                tr.classList.add('unassign-mark');
-                btn.innerText = 'Undo';
-            }
-        }
-
-        // --- UPLOADER LOGIC ---
-        function toggleUploader() {
-            const modal = document.getElementById('uploader-modal');
-            const isHidden = modal.classList.contains('hidden');
-            // If modal is visible and we're about to hide it, move remaining preview rows to staging
-            if (!isHidden) {
-                movePreviewToStaging();
-            }
-            modal.classList.toggle('hidden');
-        }
-
-        // --- CSV UPLOAD / PARSE (MVP: show row # and first column) ---
-        const csvInput = document.getElementById('csv-file-input');
-        const uploadBtn = document.getElementById('btn-upload-csv');
-        const dragZone = document.getElementById('drag-zone');
-
-        if (uploadBtn && csvInput) {
-            uploadBtn.addEventListener('click', () => csvInput.click());
-            csvInput.addEventListener('change', (e) => {
-                if (e.target.files && e.target.files.length) handleCSVFile(e.target.files[0]);
-                e.target.value = '';
+                container.appendChild(section);
             });
         }
 
-        // Drag & drop support
-        if (dragZone) {
-            ['dragenter','dragover'].forEach(ev => dragZone.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); dragZone.classList.add('ring-2','ring-blue-300'); }));
-            ['dragleave','drop'].forEach(ev => dragZone.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); dragZone.classList.remove('ring-2','ring-blue-300'); }));
-            dragZone.addEventListener('drop', (e) => {
-                const f = e.dataTransfer.files && e.dataTransfer.files[0];
-                if (f) handleCSVFile(f);
-            });
-        }
-
-        function handleCSVFile(file) {
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                const text = evt.target.result;
-                const rows = parseCSV(text);
-                renderPreview(rows);
-            };
-            reader.onerror = function() { console.error('Failed to read file'); };
-            reader.readAsText(file);
-        }
-
-        // Naive CSV parser that handles quoted values; returns array of {row: number, first: string}
-        function parseCSV(text) {
-            const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
-            const out = [];
-            lines.forEach((line, idx) => {
-                const cells = [];
-                let cur = '';
-                let inQuotes = false;
-                for (let i = 0; i < line.length; i++) {
-                    const ch = line[i];
-                    if (ch === '"') {
-                        if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
-                        else inQuotes = !inQuotes;
-                    } else if (ch === ',' && !inQuotes) {
-                        cells.push(cur);
-                        cur = '';
-                    } else {
-                        cur += ch;
-                    }
-                }
-                cells.push(cur);
-                const first = (cells[0] || '').trim().replace(/^"|"$/g, '');
-                out.push({ row: idx + 1, first });
-            });
-            return out;
-        }
-
-        function renderPreview(rows) {
-            const preview = document.getElementById('unassigned-preview');
-            if (!preview) return;
-            preview.innerHTML = '';
-            rows.forEach(r => {
-                const div = document.createElement('div');
-                div.className = 'flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300';
-                const left = document.createElement('div');
-                left.className = 'flex items-center gap-2';
-                // compact tag toggle: button that reveals a small select
-                const tagBtn = document.createElement('button');
-                tagBtn.className = 'text-[10px] tag-toggle px-2 py-1 rounded bg-slate-100 text-slate-700 hover:bg-slate-200';
-                tagBtn.title = 'Tag';
-                tagBtn.innerText = '🏷';
-                const sel = document.createElement('select');
-                sel.className = 'category-select hidden text-xs rounded bg-white border px-1 py-0';
-                sel.innerHTML = '<option value="">-</option><option value="payer">payer</option><option value="payee">payee</option><option value="bill">bill</option>';
-                sel.addEventListener('change', function() {
-                    // store category on the row container
-                    if (sel.value) div.dataset.category = sel.value; else delete div.dataset.category;
-                });
-                const span = document.createElement('span');
-                span.className = 'text-sm font-mono text-slate-700';
-                span.innerText = 'Row ' + r.row + ': ' + r.first;
-                left.appendChild(tagBtn);
-                left.appendChild(sel);
-                left.appendChild(span);
-                const btns = document.createElement('div');
-                btns.className = 'flex gap-2';
-                btns.innerHTML = '\n                    <button onclick="assignRow(this, \'erp-native-body\')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">Native ERP</button>\n                    <button onclick="assignRow(this, \'erp-plugin-body\')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">Plugin</button>\n                    <button onclick="assignRow(this, \'platform-workbench-body\')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">Platform</button>\n                ';
-                div.appendChild(left);
-                div.appendChild(btns);
-                preview.appendChild(div);
-                // toggle select visibility when clicking the tag button
-                tagBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    sel.classList.toggle('hidden');
-                    if (!sel.classList.contains('hidden')) sel.focus();
-                });
-            });
-        }
-
-        function movePreviewToStaging() {
-            const preview = document.getElementById('unassigned-preview');
-            const staging = document.getElementById('unassigned-staging');
-            if (!preview || !staging) return;
-            // Move any remaining rows from preview to staging, preserving their text and buttons
-            const items = Array.from(preview.querySelectorAll('.row-item'));
-            items.forEach(item => {
-                // create staging-style element
-                const span = item.querySelector('span');
-                const text = span ? span.innerText : '';
-                const category = item.dataset && item.dataset.category ? item.dataset.category : '';
-                const div = document.createElement('div');
-                div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
-                if (category) div.dataset.category = category;
-                const s = document.createElement('span');
-                s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
-                s.title = text;
-                s.innerText = text;
-                if (category) {
-                    const badge = document.createElement('span'); badge.className = 'tag-badge ml-2'; badge.innerText = category; s.appendChild(badge);
-                }
-                const btnDiv = document.createElement('div');
-                btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
-                btnDiv.innerHTML = `
-                    <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                    <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                    <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
-                `;
-                div.appendChild(s);
-                div.appendChild(btnDiv);
-                staging.appendChild(div);
-                item.remove();
-            });
-            if (items.length) {
-                showToast(`${items.length} rows moved to staging`, 'info');
-                renderGaps();
-                saveState();
-            }
-        }
-        function assignRow(btn, targetId) {
-            // Robustly find the row container (markup varies between templates)
-            let rowEl = btn.parentElement;
-            for (let i = 0; i < 6 && rowEl; i++) {
-                if (rowEl.querySelector && rowEl.querySelector('span')) break;
-                rowEl = rowEl.parentElement;
-            }
-            if (!rowEl) {
-                console.warn('assignRow: could not find row container for', btn);
-                return;
-            }
-            const span = rowEl.querySelector('span');
-            const rowText = span ? span.innerText.trim() : '';
-            const targetBody = document.getElementById(targetId);
-            if (!targetBody) {
-                console.warn('assignRow: target body not found', targetId);
-                return;
-            }
-            const tr = document.createElement('tr');
-            // include category badge if present on source row
-            let category = '';
-            if (rowEl && rowEl.dataset && rowEl.dataset.category) category = rowEl.dataset.category;
-            const catHtml = category ? `<span class="tag-badge">${category}</span>` : '';
-            tr.innerHTML = `
-                <td class="p-3 text-sm font-medium text-slate-700">${rowText} ${catHtml}</td>
-                <td class="p-3"><input type="text" placeholder="Map to..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
-                <td class="p-3">
-                    <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
-                        <option value="mapped">mapped</option>
-                        <option value="pending" selected>pending</option>
-                        <option value="gap">gap</option>
-                    </select>
-                </td>
-                <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
-            `;
-            if (category) tr.dataset.category = category;
-            targetBody.appendChild(tr);
-            // Convert status select to badge UI
-            const sel = tr.querySelector('select');
-            if (sel) updateStatusClass(sel);
-            // Show confirmation toast
-            showToast('Assigned: ' + rowText, 'success');
-            // Update gaps list and persist
-            renderGaps();
-            saveState();
-            rowEl.remove();
-        }
-
-        // --- Toast helper ---
-        function showToast(message, type = 'info', ms = 2500) {
-            let container = document.getElementById('toast-container');
-            if (!container) {
-                container = document.createElement('div');
-                container.id = 'toast-container';
-                document.body.appendChild(container);
-            }
-            const t = document.createElement('div');
-            t.className = `toast ${type}`;
-            t.innerText = message;
-            container.appendChild(t);
-            // allow CSS transition
-            requestAnimationFrame(() => t.classList.add('show'));
-            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 250); }, ms);
-        }
-
-        // --- Status helper ---
-        function updateStatusClass(select) {
-            const val = select.value;
-            // replace select with a visually styled badge to keep table compact
-            const td = select.closest('td');
-            const badge = document.createElement('span');
-            badge.className = `status-badge ${val}`;
-            badge.innerText = val;
-            // keep a hidden input to store status if needed
-            const hidden = document.createElement('input');
-            hidden.type = 'hidden'; hidden.name = 'status'; hidden.value = val;
-            td.innerHTML = '';
-            td.appendChild(badge);
-            td.appendChild(hidden);
-            // small feedback
-            showToast('Status set to ' + val, val === 'mapped' ? 'success' : (val === 'gap' ? 'error' : 'info'));
-            renderGaps();
-            saveState();
-        }
-
-        // Initialize any existing selects to badges on load
-        function initStatusSelects() {
-            document.querySelectorAll('select').forEach(s => {
-                if (s.closest && s.closest('tbody')) {
-                    updateStatusClass(s);
-                }
-            });
-        }
-
-        // --- Editable status badges ---
-        // Clicking a status badge replaces it with a select so user can reassign status.
-        function makeStatusEditable(badge) {
-            const td = badge.closest('td');
-            if (!td) return;
-            const current = badge.innerText.trim();
-            const select = document.createElement('select');
-            select.className = 'text-sm rounded px-2 py-1';
-            select.innerHTML = `
-                <option value="mapped">mapped</option>
-                <option value="pending">pending</option>
-                <option value="gap">gap</option>
-            `;
-            select.value = current;
-            select.onchange = function() { updateStatusClass(this); };
-            td.innerHTML = '';
-            td.appendChild(select);
-            select.focus();
-        }
-
-        // Delegate clicks on badges to enable editing
-        document.addEventListener('click', (e) => {
-            const b = e.target && e.target.closest && e.target.closest('.status-badge');
-            if (b && !b.classList.contains('master-status')) {
-                makeStatusEditable(b);
-            }
-        });
-
-        // --- Editable tag badges ---
-        // Clicking a tag badge replaces it with a select so user can change category.
-        function makeTagEditable(badge) {
-            if (!badge || !badge.parentElement) return;
-            const current = badge.innerText.trim();
-            const select = document.createElement('select');
-            select.className = 'text-sm rounded px-2 py-1';
-            select.innerHTML = '<option value="">-</option><option value="payer">payer</option><option value="payee">payee</option><option value="bill">bill</option>';
-            select.value = current || '';
-            // replace the badge element with the select so spec text remains
-            badge.replaceWith(select);
-            select.focus();
-            select.onchange = function() {
-                const tr = select.closest('tr');
-                if (tr) {
-                    if (select.value) tr.dataset.category = select.value;
-                    else delete tr.dataset.category;
-                }
-                if (select.value) {
-                    const nb = document.createElement('span'); nb.className = 'tag-badge'; nb.innerText = select.value;
-                    select.replaceWith(nb);
-                } else {
-                    // remove select and leave no badge
-                    const empty = document.createTextNode('');
-                    select.replaceWith(empty);
-                }
-                saveState();
-            };
-            // if user clicks away without changing, restore original badge
-            select.onblur = function() {
-                if (!select.parentElement) return;
-                const val = select.value;
-                if (val) {
-                    const nb = document.createElement('span'); nb.className = 'tag-badge'; nb.innerText = val;
-                    select.replaceWith(nb);
-                } else {
-                    const nb = document.createElement('span'); nb.className = 'tag-badge'; nb.innerText = '';
-                    select.replaceWith(nb);
-                }
-            };
-        }
-
-        document.addEventListener('click', (e) => {
-            const tb = e.target && e.target.closest && e.target.closest('.tag-badge');
-            if (tb) makeTagEditable(tb);
-        });
-
-        // Delegate Attach and master status interactions
-        document.addEventListener('click', (e) => {
-            // copy action
-                const copyBtn = e.target && e.target.closest && e.target.closest('.master-copy');
-                if (copyBtn) {
-                    const constKey = copyBtn.dataset.const;
-                    copyMasterKey(constKey);
-                    return;
-                }
-                // click on spec-key opens details modal
-                const specKeyEl = e.target && e.target.closest && e.target.closest('.spec-key');
-                if (specKeyEl) {
-                    const constKey = specKeyEl.dataset.const || specKeyEl.title || specKeyEl.innerText;
-                    openConstModal(constKey);
-                    return;
-                }
-            // clear action
-            const clearBtn = e.target && e.target.closest && e.target.closest('.master-clear');
-            if (clearBtn) {
-                const constKey = clearBtn.dataset.const;
-                clearMasterMapping(constKey);
-                return;
-            }
-            const attachBtn = e.target && e.target.closest && e.target.closest('.master-attach');
-            if (attachBtn) {
-                const constKey = attachBtn.dataset.const;
-                // create inline attach widget (search + list)
-                const pool = getAllSpecPool();
-                const widget = document.createElement('span'); widget.className = 'attach-widget';
-                const input = document.createElement('input'); input.className = 'attach-input'; input.placeholder = 'type to search...';
-                widget.appendChild(input);
-                const list = document.createElement('div'); list.className = 'attach-list hidden';
-                widget.appendChild(list);
-                attachBtn.replaceWith(widget);
-                // populate list helper
-                function renderAttachList(filter) {
-                    list.innerHTML = '';
-                    const f = (filter||'').toLowerCase().trim();
-                    pool.forEach(p => {
-                        if (f && !p.toLowerCase().includes(f)) return;
-                        const it = document.createElement('div'); it.className = 'attach-item'; it.innerText = p;
-                        it.onclick = function() { assignSpecToConstant(constKey, p); };
-                        list.appendChild(it);
-                    });
-                    if (!list.children.length) list.innerHTML = '<div class="attach-item text-slate-400">No matches</div>';
-                }
-                input.addEventListener('input', (ev) => { renderAttachList(ev.target.value); list.classList.remove('hidden'); });
-                input.addEventListener('focus', () => { renderAttachList(''); list.classList.remove('hidden'); });
-                input.addEventListener('blur', () => { setTimeout(() => { widget.replaceWith(attachBtn); renderFullSpec(); }, 180); });
-                input.focus();
-                return;
-            }
-            const statusBadge = e.target && e.target.closest && e.target.closest('.master-status');
-            if (statusBadge) {
-                const constKey = statusBadge.dataset.const;
-                const select = document.createElement('select');
-                select.className = 'text-sm rounded px-2 py-1';
-                select.innerHTML = `\n                    <option value="mapped">mapped</option>\n                    <option value="pending">pending</option>\n                    <option value="gap">gap</option>\n                `;
-                select.value = masterMappings[constKey] ? masterMappings[constKey].status : 'pending';
-                statusBadge.replaceWith(select);
-                select.focus();
-                select.onchange = function() { updateMasterStatus(constKey, select.value); };
-                select.onblur = function() { renderFullSpec(); };
-                return;
-            }
-        });
-
-        // small style for marked unassign rows
-        (function addUnassignStyle(){
-            const s = document.createElement('style');
-            s.innerHTML = `.unassign-mark { background: #fff7f5; border-color: #fecaca !important; } .unassign-mark td { color: #9f1239; }`;
-            document.head.appendChild(s);
-        })();
-
-        // --- Master spec helpers: filter, copy, clear ---
-        document.getElementById && (function attachMasterHelpers(){
-            const ms = document.getElementById('master-search');
-            if (!ms) return;
-            ms.addEventListener('input', function(){ window.__masterFilter = ms.value || ''; renderFullSpec(); });
-        })();
-
-        function copyMasterKey(constKey) {
-            const text = constKey || '';
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard', 'success'));
-            } else {
-                const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); showToast('Copied to clipboard', 'success'); }catch(e){ showToast('Copy failed', 'error'); } ta.remove();
-            }
-        }
-
-        function clearMasterMapping(constKey) {
-            if (!masterMappings[constKey]) return;
-            masterMappings[constKey].spec = '';
-            masterMappings[constKey].status = 'pending';
-            renderFullSpec();
-            saveState();
-        }
-
-        // Open constant details modal and wire copy button
-        function openConstModal(constKey) {
-            const m = masterMappings[constKey];
-            const modal = document.getElementById('const-modal');
-            if (!modal) return;
-            const title = document.getElementById('const-modal-title');
-            const sub = document.getElementById('const-modal-sub');
-            const desc = document.getElementById('const-modal-desc');
-            if (title) title.innerText = m ? m.key : constKey;
-            if (sub) sub.innerText = m ? (m.valueType || '') : '';
-            if (desc) desc.innerText = m ? (m.description || '') : '';
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-            const copyBtn = document.getElementById('const-copy-key');
-            if (copyBtn) {
-                copyBtn.onclick = function() { copyMasterKey(m ? m.key : constKey); };
-            }
-        }
-
-        function closeConstModal() {
-            const modal = document.getElementById('const-modal');
-            if (!modal) return; modal.classList.remove('flex'); modal.classList.add('hidden');
-        }
-
-        // --- Persistence (localStorage) ---
-    const STORAGE_KEY = 'solutioning-workbench-state-v1';
-        function saveState() {
-            try {
-                const state = { targets: {}, staging: [] };
-                const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
-                targets.forEach(id => {
-                    const tbody = document.getElementById(id);
-                    if (!tbody) return;
-                    const rows = [];
-                    Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
-                        const spec = tr.children[0] ? tr.children[0].innerText.trim() : '';
-                        let mapping = '';
-                        const mapCell = tr.children[1];
-                        if (mapCell) {
-                            const input = mapCell.querySelector('input');
-                            if (input) mapping = input.value;
-                            else mapping = mapCell.innerText.trim();
-                        }
-                        let status = 'pending';
-                        const statusCell = tr.children[2];
-                        if (statusCell) {
-                            const hid = statusCell.querySelector('input[name="status"]');
-                            if (hid) status = hid.value;
-                            else {
-                                const badge = statusCell.querySelector('.status-badge');
-                                if (badge) status = badge.innerText.trim();
-                            }
-                        }
-                        const category = tr.dataset && tr.dataset.category ? tr.dataset.category : '';
-                        rows.push({spec,mapping,status,category});
-                    });
-                    state.targets[id] = rows;
-                });
-                const staging = document.getElementById('unassigned-staging');
-                if (staging) {
-                    // Only consider immediate child rows; avoid nested divs (buttons/containers)
-                    Array.from(staging.children).forEach(d => {
-                        if (!(d instanceof HTMLElement)) return;
-                        const span = d.querySelector('span');
-                        const text = span ? span.innerText : '';
-                        const category = d.dataset && d.dataset.category ? d.dataset.category : '';
-                        if (!text || !String(text).trim()) return; // skip empty rows
-                        state.staging.push({ text, category });
-                    });
-                }
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-                // persist master mappings as well
-                try { localStorage.setItem(STORAGE_KEY + ':master', JSON.stringify(masterMappings)); } catch(e) {}
-            } catch (e) { console.warn('saveState failed', e); }
-        }
-
-        // Explicit Save button handler (calls saveState and give feedback)
-        function saveNow() {
-            saveState();
-            showToast('Saved locally', 'success', 1800);
-        }
-
-        // Reset handler: confirm, clear localStorage key and reload
-        function resetState() {
-            if (!confirm('Reset local progress? This will clear saved mappings in this browser.')) return;
-            try {
-                localStorage.removeItem(STORAGE_KEY);
-                showToast('Progress cleared — reloading', 'info', 1200);
-                setTimeout(() => location.reload(), 600);
-            } catch (e) {
-                console.warn('resetState failed', e);
-                showToast('Reset failed', 'error', 1800);
-            }
-        }
-
-        // --- Load persisted state ---
+        // --- CORE LOGIC (Persistence, Editing) ---
         function loadState() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
-                if (!raw) {
-                    // try to load master mappings only
-                    const mm = localStorage.getItem(STORAGE_KEY + ':master');
-                    if (mm) {
-                        const parsed = JSON.parse(mm);
-                        Object.keys(parsed).forEach(k => masterMappings[k] = parsed[k]);
-                        renderFullSpec();
-                    }
-                    return;
-                }
+                if (!raw) return;
                 const state = JSON.parse(raw);
-                const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
-                targets.forEach(id => {
-                    const tbody = document.getElementById(id);
-                    if (!tbody) return;
-                    tbody.innerHTML = '';
-                    const rows = (state.targets && state.targets[id]) || [];
-                    rows.forEach(r => {
-                        const tr = document.createElement('tr');
-                        const catHtml = r.category ? `<span class="tag-badge">${r.category}</span>` : '';
-                        tr.innerHTML = `
-                            <td class="p-3 text-sm font-medium text-slate-700">${escapeHtml(r.spec)} ${catHtml}</td>
-                            <td class="p-3"><input type="text" placeholder="Map to..." class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
-                            <td class="p-3">
-                                <select onchange="updateStatusClass(this)" class="text-sm rounded px-2 py-1">
-                                    <option value="mapped">mapped</option>
-                                    <option value="pending">pending</option>
-                                    <option value="gap">gap</option>
-                                </select>
-                            </td>
-                            <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
-                        `;
-                        if (r.category) tr.dataset.category = r.category;
-                        tbody.appendChild(tr);
-                        if (r.mapping) {
-                            const input = tr.querySelector('td:nth-child(2) input');
-                            if (input) input.value = r.mapping;
-                        }
-                        const sel = tr.querySelector('select');
-                        if (sel) {
-                            sel.value = r.status || 'pending';
-                            updateStatusClass(sel);
+                if(state.master) Object.assign(masterMappings, state.master);
+                const modeKey = currentMode; 
+                const modeData = state[modeKey] || {};
+                const config = MODE_CONFIG[currentMode];
+                config.sections.forEach(sec => {
+                    sec.components.forEach(comp => {
+                        const tbody = document.getElementById(comp.id);
+                        if(tbody && modeData[comp.id]) {
+                            tbody.innerHTML = '';
+                            modeData[comp.id].forEach(r => createTableRow(tbody, r));
                         }
                     });
+                    if(modeData[sec.qa]) {
+                       const qContainer = document.getElementById(sec.qa);
+                       if(qContainer) {
+                           qContainer.innerHTML = '';
+                           modeData[sec.qa].forEach(q => createQuestionEl(qContainer, q.text, q.answer, q.confirmed, q.note));
+                       }
+                    }
                 });
                 const staging = document.getElementById('unassigned-staging');
-                if (staging) {
+                if (staging && modeData.staging) {
                     staging.innerHTML = '';
-                    (state.staging || []).forEach(entry => {
-                            let text = '';
-                            let category = '';
-                            if (typeof entry === 'string') text = entry; else { text = entry.text || ''; category = entry.category || ''; }
-                            if (!text || !String(text).trim()) return; // sanitize: skip empty entries from older saves
-                            const div = document.createElement('div');
-                            div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
-                            if (category) div.dataset.category = category;
-                            const s = document.createElement('span');
-                            s.className = 'text-xs font-mono text-slate-700 truncate max-w-[180px]';
-                            s.title = text; s.innerText = text;
-                            if (category) { const badge = document.createElement('span'); badge.className = 'tag-badge ml-2'; badge.innerText = category; s.appendChild(badge); }
-                            const btnDiv = document.createElement('div');
-                            btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
-                            btnDiv.innerHTML = `
-                                <button onclick="assignRow(this, 'platform-workbench-body')" class="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">PLT</button>
-                                <button onclick="assignRow(this, 'erp-native-body')" class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">ERP</button>
-                                <button onclick="assignRow(this, 'erp-plugin-body')" class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">PLG</button>
-                            `;
-                            div.appendChild(s); div.appendChild(btnDiv); staging.appendChild(div);
-                        });
+                    modeData.staging.forEach(s => createStagingRow(staging, s.text, s.category));
                 }
-
-                // restore master mappings if present
-                const mmRaw = localStorage.getItem(STORAGE_KEY + ':master');
-                if (mmRaw) {
-                    const mm = JSON.parse(mmRaw);
-                    Object.keys(mm).forEach(k => masterMappings[k] = mm[k]);
-                }
-                renderGaps();
                 renderFullSpec();
             } catch (e) { console.warn('loadState failed', e); }
         }
 
-        // --- Gaps detection & rendering ---
-        function renderGaps() {
-            const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
-            const gaps = [];
-            targets.forEach(id => {
-                const tbody = document.getElementById(id);
-                if (!tbody) return;
-                Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
-                    const spec = tr.children[0] ? tr.children[0].innerText.trim() : '';
-                    const mappingCell = tr.children[1];
-                    let mapped = false;
-                    if (mappingCell) {
-                        const input = mappingCell.querySelector('input');
-                        if (input) mapped = input.value.trim() !== '';
-                        else mapped = mappingCell.innerText.trim() !== '' && mappingCell.innerText.trim().toLowerCase() !== 'map to...';
+        function saveState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                const state = raw ? JSON.parse(raw) : {};
+                state.master = masterMappings;
+                const modeKey = currentMode;
+                const modeData = { staging: [] };
+                const config = MODE_CONFIG[currentMode];
+                config.sections.forEach(sec => {
+                    sec.components.forEach(comp => {
+                        const tbody = document.getElementById(comp.id);
+                        if(tbody) {
+                            modeData[comp.id] = [];
+                            Array.from(tbody.querySelectorAll('tr')).forEach(tr => modeData[comp.id].push(extractRowData(tr)));
+                        }
+                    });
+                    const qContainer = document.getElementById(sec.qa);
+                    if(qContainer) {
+                         modeData[sec.qa] = [];
+                         Array.from(qContainer.querySelectorAll('.question-row')).forEach(row => {
+                             modeData[sec.qa].push({
+                                 text: row.querySelector('.q-text').innerText || row.querySelector('.q-text').value,
+                                 answer: row.querySelector('textarea.answer-text') ? row.querySelector('textarea.answer-text').value : '',
+                                 confirmed: row.classList.contains('confirmed'),
+                                 note: row.parentElement.querySelector('.note-area textarea') ? row.parentElement.querySelector('.note-area textarea').value : ''
+                             });
+                         });
                     }
-                    if (!mapped) gaps.push({target: id, spec});
                 });
+                const staging = document.getElementById('unassigned-staging');
+                if(staging) {
+                    Array.from(staging.children).forEach(d => {
+                        const span = d.querySelector('span');
+                        if(span) modeData.staging.push({ text: span.title || span.innerText, category: d.dataset.category });
+                    });
+                }
+                state[modeKey] = modeData;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch(e) { console.error(e); }
+        }
+
+        function extractRowData(tr) {
+            const spec = tr.children[0].innerText.replace(tr.children[0].querySelector('.tag-badge')?.innerText || '', '').trim();
+            const mapInput = tr.children[1].querySelector('input');
+            const mapping = mapInput ? mapInput.value : tr.children[1].innerText;
+            const statusBadge = tr.children[2].querySelector('.status-badge') || tr.children[2].querySelector('select');
+            const status = statusBadge.value || statusBadge.innerText;
+            const category = tr.dataset.category;
+            return { spec, mapping, status, category };
+        }
+
+        function createTableRow(tbody, data) {
+            const tr = document.createElement('tr');
+            const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
+            tr.innerHTML = `
+                <td class="p-3 text-sm font-medium text-slate-700">${data.spec} ${catHtml}</td>
+                <td class="p-3"><input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm"></td>
+                <td class="p-3"></td>
+                <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
+            `;
+            if(data.category) tr.dataset.category = data.category;
+            tbody.appendChild(tr);
+            const tdStatus = tr.children[2];
+            const badge = document.createElement('span');
+            badge.className = `status-badge ${data.status||'pending'}`;
+            badge.innerText = data.status||'pending';
+            tdStatus.appendChild(badge);
+        }
+
+        function createStagingRow(container, text, category) {
+            const div = document.createElement('div');
+            div.className = 'flex items-center justify-between p-2 bg-slate-50 rounded border border-slate-100 hover:border-blue-300 group/row';
+            if(category) div.dataset.category = category;
+            
+            const left = document.createElement('div');
+            left.className = "flex items-center gap-2 overflow-hidden";
+            const tagBtn = document.createElement('button');
+            tagBtn.className = 'text-[10px] text-slate-400 hover:text-blue-600';
+            tagBtn.innerHTML = '🏷';
+            tagBtn.onclick = (e) => {
+                e.stopPropagation();
+                const cats = MODE_CONFIG[currentMode].tags.map(t => t.id);
+                let idx = cats.indexOf(div.dataset.category || '');
+                idx = (idx + 1) % (cats.length + 1); 
+                const newCat = idx === cats.length ? '' : cats[idx];
+                if(newCat) div.dataset.category = newCat; else delete div.dataset.category;
+                refreshStagingRowUI(div, text, newCat);
+                saveState();
+            };
+            left.appendChild(tagBtn);
+            const s = document.createElement('span');
+            s.className = 'text-xs font-mono text-slate-700 truncate max-w-[150px]';
+            s.title = text; s.innerText = text;
+            left.appendChild(s);
+            if(category) { const b = document.createElement('span'); b.className = 'tag-badge'; b.innerText = category; left.appendChild(b); }
+            div.appendChild(left);
+            const btnDiv = document.createElement('div');
+            btnDiv.className = 'flex gap-1 opacity-50 group-hover/row:opacity-100 transition';
+            MODE_CONFIG[currentMode].targets.forEach(t => {
+                const btn = document.createElement('button');
+                btn.className = `text-[10px] bg-${t.color}-100 text-${t.color}-700 px-2 py-1 rounded hover:bg-${t.color}-200`;
+                btn.innerText = t.label;
+                btn.onclick = () => assignRow(btn, t.id);
+                btnDiv.appendChild(btn);
             });
-            const container = document.getElementById('gaps-list');
-            if (!container) return;
-            if (!gaps.length) {
-                container.innerHTML = '<p class="text-xs text-slate-500">No gaps detected.</p>';
-                return;
-            }
-            // Render gaps as a small list grouped by target
-            const grouped = {};
-            gaps.forEach(g => { grouped[g.target] = grouped[g.target] || []; grouped[g.target].push(g.spec); });
-            let html = '<div class="space-y-3">';
-            Object.keys(grouped).forEach(k => {
-                html += `<div class="p-3 bg-white rounded border">`;
-                html += `<div class="font-bold text-sm mb-2">${k.replace(/-/g,' ')} (${grouped[k].length})</div>`;
-                html += '<ul class="text-sm list-disc pl-5">';
-                grouped[k].forEach(s => html += `<li>${s}</li>`);
-                html += '</ul></div>';
-            });
-            html += '</div>';
-            container.innerHTML = html;
+            div.appendChild(btnDiv);
+            container.appendChild(div);
         }
+        function refreshStagingRowUI(div, text, category) { div.innerHTML = ''; createStagingRow(div.parentElement, text, category); div.remove(); }
 
-        // --- DYNAMIC CONTEXT & QUESTIONS ---
-        function updateContext(mode) {
-            const ctxDiv = document.getElementById('dynamic-context');
-            if (mode === 'sftp') {
-                ctxDiv.innerHTML = `<span class="mr-2">💡</span><p><strong>Nudge:</strong> Since SFTP is selected, suggest PGP Encryption for security compliance.</p>`;
-                ctxDiv.className = "mb-6 p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800 flex items-start";
+        function assignRow(btn, targetId) {
+            let rowEl = btn.closest('.group\\/row');
+            if (!rowEl) return;
+            const span = rowEl.querySelector('span[title]');
+            const text = span ? span.innerText : '';
+            const category = rowEl.dataset.category;
+            const tbody = document.getElementById(targetId);
+            if(tbody) {
+                createTableRow(tbody, { spec: text, mapping: '', status: 'pending', category });
+                rowEl.remove();
+                saveState();
+                renderGaps();
+                showToast('Assigned to ' + targetId, 'success');
+            }
+        }
+        function addRow(tbodyId) {
+            createTableRow(document.getElementById(tbodyId), { spec: 'New Requirement', mapping: '', status: 'pending' });
+            saveState();
+        }
+        function editRow(btn) {
+            const tr = btn.closest('tr');
+            const actionTd = tr.children[3];
+            actionTd.innerHTML = `
+                <div class="flex gap-2 justify-end">
+                     <button class="text-xs text-blue-600" onclick="saveRowBtn(this)">Save</button>
+                     <button class="text-xs text-red-600" onclick="toggleUnassignMark(this)">Unassign</button>
+                </div>
+            `;
+        }
+        function saveRowBtn(btn) {
+            const tr = btn.closest('tr');
+            // If marked for unassign, execute removal
+            if(tr.dataset.unassign === '1') {
+                const spec = tr.children[0].innerText.replace(tr.dataset.category || '', '').trim();
+                const cat = tr.dataset.category;
+                createStagingRow(document.getElementById('unassigned-staging'), spec, cat);
+                tr.remove();
             } else {
-                ctxDiv.innerHTML = `<span class="mr-2">⚠️</span><p><strong>Caution:</strong> API implementations often require complex Idempotency logic.</p>`;
-                ctxDiv.className = "mb-6 p-3 bg-amber-50 border border-amber-200 rounded text-sm text-amber-900 flex items-start";
+                const actionTd = tr.children[3];
+                actionTd.innerHTML = `<button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button>`;
             }
+            saveState();
+            renderGaps();
         }
-
-        function toggleDropdown(id) {
-            const el = document.getElementById(id);
-            if (el.classList.contains('hidden')) {
-                document.querySelectorAll('[id^="dd-phase-"]').forEach(d => d.classList.add('hidden'));
-                el.classList.remove('hidden');
+        function toggleUnassignMark(btn) {
+            const tr = btn.closest('tr');
+            if(tr.dataset.unassign === '1') {
+                delete tr.dataset.unassign; tr.classList.remove('unassign-mark'); btn.innerText = 'Unassign';
             } else {
-                el.classList.add('hidden');
+                tr.dataset.unassign = '1'; tr.classList.add('unassign-mark'); btn.innerText = 'Undo';
             }
         }
 
-        function addPresetQuestion(containerId, text) {
-            createQuestionEl(document.getElementById(containerId), text);
-            document.getElementById(containerId.replace('q-', 'dd-')).classList.add('hidden');
-        }
-
+        // --- Question Builder Logic (Restored) ---
         function addCustomQuestion(containerId) {
-            const container = document.getElementById(containerId);
-            const div = document.createElement('div');
-            div.className = "question-row flex flex-col p-3 bg-white rounded border border-blue-200 shadow-sm animate-pulse";
-            div.innerHTML = `
+             const c = document.getElementById(containerId);
+             const div = document.createElement('div');
+             div.className = 'question-row flex flex-col p-3 bg-white rounded border border-blue-200 shadow-sm mt-2 animate-pulse';
+             div.innerHTML = `
                 <div class="flex items-start w-full">
-                    <div class="flex-shrink-0 pt-0.5 cursor-pointer mr-3 text-slate-300 hover:text-emerald-500 transition" onclick="toggleConfirm(this.closest('.question-row'))">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <input type="text" placeholder="Type your custom question..." class="q-text w-full text-sm outline-none bg-transparent font-medium text-slate-700" onblur="this.parentElement.parentElement.classList.remove('animate-pulse')" onkeydown="if(event.key === 'Enter') this.blur()">
+                    <div class="flex-shrink-0 pt-0.5 cursor-pointer mr-3 text-slate-300 hover:text-emerald-500 transition" onclick="toggleConfirm(this.closest('.question-row'))"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    <input type="text" placeholder="Type your custom question..." class="q-text w-full text-sm outline-none bg-transparent font-medium text-slate-700" onblur="this.parentElement.parentElement.classList.remove('animate-pulse')">
+                </div>
+                <div class="mt-2 w-full pl-8"><button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">+ Add Answer</button><div class="answer-box hidden"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer..."></textarea></div></div>
+             `;
+             c.appendChild(div);
+             div.querySelector('input').focus();
+        }
+        function createQuestionEl(container, text, ans, confirmed, note) {
+             const div = document.createElement('div');
+             div.className = `question-row flex flex-col p-3 bg-white rounded border border-slate-200 mt-2 ${confirmed?'confirmed':''}`;
+             div.innerHTML = `
+                <div class="flex items-start w-full">
+                    <div class="flex-shrink-0 pt-0.5 cursor-pointer mr-3 ${confirmed?'text-emerald-600':'text-slate-300'} hover:text-emerald-500 transition" onclick="toggleConfirm(this.closest('.question-row'))"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                    <p class="q-text text-sm font-medium ${confirmed?'text-emerald-700 line-through':''}">${text}</p>
                 </div>
                 <div class="mt-2 w-full pl-8">
-                    <button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">+ Add Answer</button>
-                    <div class="answer-box hidden">
-                         <textarea class="w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Enter answer from bank..."></textarea>
-                    </div>
+                    <button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">${ans ? '- Hide Answer' : '+ Add Answer'}</button>
+                    <div class="answer-box ${ans ? 'visible' : 'hidden'}"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer...">${ans||''}</textarea></div>
                 </div>
-            `;
-            container.appendChild(div);
-            div.querySelector('input').focus();
-            document.getElementById(containerId.replace('q-', 'dd-')).classList.add('hidden');
+             `;
+             container.appendChild(div);
+             if(note) addNote(container.id, note);
         }
-
-        function createQuestionEl(container, text) {
-            const div = document.createElement('div');
-            div.className = "question-row flex flex-col p-3 bg-white rounded border border-slate-200 shadow-sm hover:border-blue-300 transition";
-            div.innerHTML = `
-                <div class="flex items-start w-full">
-                    <div class="flex-shrink-0 pt-0.5 cursor-pointer mr-3 text-slate-300 hover:text-emerald-500 transition" onclick="toggleConfirm(this.closest('.question-row'))" title="Mark as Confirmed">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <p class="q-text text-sm text-slate-700 font-medium">${text}</p>
-                </div>
-                <div class="mt-2 w-full pl-8">
-                    <button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">+ Add Answer</button>
-                    <div class="answer-box hidden">
-                         <textarea class="w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Enter answer from bank..."></textarea>
-                    </div>
-                </div>
-            `;
-            container.appendChild(div);
-        }
-        
-        function toggleAnswer(btn) {
-            const box = btn.nextElementSibling;
-            box.classList.toggle('hidden');
-            btn.innerText = box.classList.contains('hidden') ? "+ Add Answer" : "- Hide Answer";
-        }
-
-        function addNote(containerId) {
-            const container = document.getElementById(containerId).parentElement; // Go up to parent container
-            // Check if note area exists
-            let noteArea = container.querySelector('.note-area');
-            if (!noteArea) {
-                const noteDiv = document.createElement('div');
-                noteDiv.className = "mt-4 border-t border-slate-100 pt-3 note-area";
-                noteDiv.innerHTML = `
-                    <h6 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Notes</h6>
-                    <textarea class="w-full text-sm bg-yellow-50 border border-yellow-100 rounded p-2 text-slate-700 focus:outline-none focus:border-yellow-300 shadow-sm" rows="3" placeholder="Add context notes here..."></textarea>
-                `;
-                container.appendChild(noteDiv);
-            }
-            container.querySelector('textarea').focus();
-        }
-
         function toggleConfirm(row) {
             row.classList.toggle('confirmed');
-            const icon = row.querySelector('svg');
-            if (row.classList.contains('confirmed')) {
-                icon.parentElement.classList.remove('text-slate-300');
-                icon.parentElement.classList.add('text-emerald-600');
-            } else {
-                icon.parentElement.classList.add('text-slate-300');
-                icon.parentElement.classList.remove('text-emerald-600');
-            }
+            const icon = row.querySelector('svg').parentElement;
+            const text = row.querySelector('.q-text');
+            if(row.classList.contains('confirmed')) { icon.classList.remove('text-slate-300'); icon.classList.add('text-emerald-600'); text.classList.add('text-emerald-700','line-through'); }
+            else { icon.classList.add('text-slate-300'); icon.classList.remove('text-emerald-600'); text.classList.remove('text-emerald-700','line-through'); }
+            saveState();
+        }
+        function toggleAnswer(btn) {
+            const box = btn.nextElementSibling;
+            box.classList.toggle('hidden'); box.classList.toggle('visible');
+            btn.innerText = box.classList.contains('hidden') ? "+ Add Answer" : "- Hide Answer";
+        }
+        function addNote(containerId, initialValue='') {
+             const c = document.getElementById(containerId).parentElement;
+             let note = c.querySelector('.note-area');
+             if(!note) {
+                 note = document.createElement('div'); note.className = "mt-4 border-t border-slate-100 pt-3 note-area";
+                 note.innerHTML = `<h6 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Notes</h6><textarea class="w-full text-sm bg-yellow-50 border border-yellow-100 rounded p-2 text-slate-700 focus:outline-none focus:border-yellow-300 shadow-sm" rows="3" placeholder="Add context...">${initialValue}</textarea>`;
+                 c.appendChild(note);
+             }
+             if(!initialValue) note.querySelector('textarea').focus();
         }
 
-        // --- SCROLL SYNC ---
-        const sections = document.querySelectorAll('section');
-        const navItems = document.querySelectorAll('.nav-item');
-        const feedItems = document.querySelectorAll('.feed-item');
-        const mainScroll = document.getElementById('main-scroll');
-
-        mainScroll.addEventListener('scroll', () => {
-            let currentPhase = '';
-            if (mainScroll.scrollHeight - mainScroll.scrollTop <= mainScroll.clientHeight + 10) {
-                currentPhase = sections[sections.length - 1].getAttribute('id');
-            } else {
-                sections.forEach(section => {
-                    if (mainScroll.scrollTop >= section.offsetTop - 300) currentPhase = section.getAttribute('id');
-                });
-            }
-
-            navItems.forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href').includes(currentPhase)) a.classList.add('active');
+        // --- Master Spec Features (Restored) ---
+        function renderFullSpec() {
+            const tbody = document.getElementById('full-spec-body');
+            tbody.innerHTML = '';
+            const filter = (window.__masterFilter || '').toLowerCase().trim();
+            const rows = Object.values(masterMappings).sort((a,b)=>(a.key.localeCompare(b.key)));
+            let visibleCount = 0;
+            rows.forEach(m => {
+                 if (filter && !(m.key+m.valueType+(m.spec||'')).toLowerCase().includes(filter)) return;
+                 visibleCount++;
+                 const tr = document.createElement('tr');
+                 tr.className = 'hover:bg-slate-50 border-b border-slate-100';
+                 const specDisplay = m.spec ? `<span class="text-blue-700 font-medium">${m.spec}</span> <button class="ml-2 text-[10px] text-red-400 hover:text-red-600 master-clear" data-const="${m.key}">✕</button>` : `<button class="text-[10px] px-2 py-1 bg-slate-100 rounded master-attach" data-const="${m.key}">Attach</button>`;
+                 tr.innerHTML = `<td class="p-3 font-mono text-xs text-blue-600"><span class="spec-key" title="${m.key}">${m.key}</span><button class="ml-2 text-slate-300 hover:text-blue-500 master-copy" data-const="${m.key}">📋</button></td><td class="p-3 text-xs text-slate-500">${m.valueType}</td><td class="p-3 text-sm">${specDisplay}</td><td class="p-3"><span class="status-badge ${m.status}" data-const="${m.key}">${m.status}</span></td>`;
+                 tbody.appendChild(tr);
             });
-
-            feedItems.forEach(item => {
-                const attr = item.getAttribute('data-phase') || '';
-                let itemPhaseIndex = 0;
-                const m = String(attr).match(/phase-(\d+)/i);
-                if (m) itemPhaseIndex = parseInt(m[1], 10);
-                else itemPhaseIndex = parseInt(attr, 10) || 0;
-                const currentPhaseIndex = parseInt(String(currentPhase).split('-').pop(), 10) || 0;
-                // Activate only items that belong to the current phase exactly.
-                // This follows the mapping: when in phase N, highlight only phase-N feed items
-                // (so phase 2 shows plugin steps, phase 3 shows validation/transmission, etc.).
-                if (itemPhaseIndex === currentPhaseIndex) item.classList.add('active');
-                else item.classList.remove('active');
+            document.getElementById('master-count').innerText = visibleCount;
+        }
+        function getAllSpecPool() {
+            const set = new Set();
+            const staging = document.getElementById('unassigned-staging');
+            if(staging) Array.from(staging.querySelectorAll('span')).forEach(s => set.add(s.innerText.trim()));
+            const targets = MODE_CONFIG[currentMode].targets.map(t=>t.id);
+            targets.forEach(id => {
+                const tb = document.getElementById(id);
+                if(tb) Array.from(tb.querySelectorAll('tr')).forEach(tr=>set.add(tr.children[0].innerText.replace(tr.dataset.category||'','').trim()));
             });
+            return Array.from(set).filter(s=>s.length);
+        }
+        function assignSpecToConstant(constKey, spec) {
+             masterMappings[constKey].spec = spec;
+             masterMappings[constKey].status = 'mapped';
+             renderFullSpec(); saveState();
+        }
+        document.addEventListener('click', e => {
+             const attachBtn = e.target.closest('.master-attach');
+             if(attachBtn) {
+                 const key = attachBtn.dataset.const;
+                 const pool = getAllSpecPool();
+                 const widget = document.createElement('div'); widget.className = 'attach-widget';
+                 widget.innerHTML = `<input class="attach-input" placeholder="Search spec..."><div class="attach-list hidden"></div>`;
+                 attachBtn.replaceWith(widget);
+                 const input = widget.querySelector('input'); const list = widget.querySelector('.attach-list');
+                 const filterList = (v) => {
+                     list.innerHTML = ''; 
+                     pool.filter(p=>p.toLowerCase().includes(v.toLowerCase())).forEach(p=>{
+                         const it = document.createElement('div'); it.className='attach-item'; it.innerText=p;
+                         it.onclick=()=>{assignSpecToConstant(key, p)}; list.appendChild(it);
+                     });
+                     if(!list.children.length) list.innerHTML='<div class="p-2 text-xs text-gray-400">No matches</div>';
+                 };
+                 input.addEventListener('input', (ev)=>{ list.classList.remove('hidden'); filterList(ev.target.value); });
+                 input.addEventListener('focus', ()=>{ list.classList.remove('hidden'); filterList(''); });
+                 input.addEventListener('blur', ()=>{ setTimeout(()=>{ if(widget.parentNode) { widget.replaceWith(attachBtn); } }, 200); });
+                 input.focus();
+             }
+             const clearBtn = e.target.closest('.master-clear');
+             if(clearBtn) { masterMappings[clearBtn.dataset.const].spec = ''; masterMappings[clearBtn.dataset.const].status='pending'; renderFullSpec(); saveState(); }
+             const copyBtn = e.target.closest('.master-copy');
+             if(copyBtn) { navigator.clipboard.writeText(copyBtn.dataset.const); showToast('Copied'); }
+             // Master status edit
+             const ms = e.target.closest('.status-badge[data-const]');
+             if(ms) {
+                  const sel = document.createElement('select'); sel.className='text-xs border rounded';
+                  ['pending','mapped','gap'].forEach(v=>sel.add(new Option(v,v,false,v===ms.innerText)));
+                  sel.onchange=()=>{ masterMappings[ms.dataset.const].status=sel.value; renderFullSpec(); saveState(); };
+                  sel.onblur=()=>renderFullSpec();
+                  ms.replaceWith(sel); sel.focus();
+             }
         });
+        document.getElementById('master-search').addEventListener('input', (e)=>{ window.__masterFilter=e.target.value; renderFullSpec(); });
+        document.getElementById('master-toggle-wrap').onclick = function() { document.querySelectorAll('.spec-key').forEach(s=>s.classList.toggle('wrap')); this.querySelector('span').innerText = this.querySelector('span').innerText==='off'?'on':'off'; };
 
+        // --- Boilerplate (CSV, Toast, etc) ---
+        function toggleUploader(){ const m = document.getElementById('uploader-modal'); if(!m.classList.contains('hidden')) movePreviewToStaging(); m.classList.toggle('hidden'); }
         async function loadFispanConstants() {
             try {
-                // when site is published from the `docs` folder the JSON should live
-                // inside `docs/data` so fetch from the local `./data` path
-                const res = await fetch('./data/fispan-constants.flat.json');
-                if (!res.ok) throw new Error('Failed to fetch constants');
+                const res = await fetch('docs/data/fispan-constants.flat.json'); 
                 const constants = await res.json();
-                // merge constants into specRows for master spec and initialize masterMappings
-                constants.forEach(c => {
-                    // initialize master mapping for each constant (no default spec assigned)
-                    masterMappings[c.key] = {
-                        key: c.key,
-                        valueType: c.valueType || '',
-                        description: c.description || '',
-                        spec: '',
-                        status: 'pending'
-                    };
-                });
+                constants.forEach(c => { if (!masterMappings[c.key]) masterMappings[c.key] = { key: c.key, valueType: c.valueType||'', description: c.description||'', spec: '', status: 'pending' }; });
                 renderFullSpec();
-                return constants;
-            } catch (e) {
-                console.warn('loadFispanConstants error', e);
-                // still render whatever we have
-                renderFullSpec();
-                return [];
-            }
+            } catch (e) { console.warn('Fetch error', e); renderFullSpec(); }
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // load FISPAN constants (from data/fispan-constants.json) then initialize UI
-            loadFispanConstants().then(() => {
-                addPresetQuestion('q-phase-1', 'Does the SFTP server require IP Allowlisting?');
-                // load persisted state (if any) before initializing selects
-                loadState();
-                initStatusSelects();
-                renderGaps();
-                // ensure feed state matches current scroll on load (in case some items had static 'active' classes)
-                if (mainScroll) mainScroll.dispatchEvent(new Event('scroll'));
-                // wire master search after DOM content is ready
-                const ms = document.getElementById('master-search');
-                if (ms) {
-                    window.__masterFilter = '';
-                    ms.addEventListener('input', function(){ window.__masterFilter = ms.value || ''; renderFullSpec(); });
-                }
-                // restore wrap preference and wire toggle
-                try {
-                    const prefsRaw = localStorage.getItem(STORAGE_KEY + ':prefs');
-                    const prefs = prefsRaw ? JSON.parse(prefsRaw) : {};
-                    let wrap = !!prefs.wrapKeys;
-                    const wrapEl = document.getElementById('master-toggle-wrap');
-                    const wrapState = document.getElementById('master-wrap-state');
-                    function applyWrap() {
-                        document.querySelectorAll('.spec-key').forEach(s => {
-                            if (wrap) s.classList.add('wrap'); else s.classList.remove('wrap');
-                        });
-                        if (wrapState) wrapState.innerText = wrap ? 'on' : 'off';
-                    }
-                    if (wrapEl) {
-                        wrapEl.addEventListener('click', function(){ wrap = !wrap; applyWrap(); localStorage.setItem(STORAGE_KEY + ':prefs', JSON.stringify({ wrapKeys: wrap })); });
-                    }
-                    // apply current state after initial render
-                    window.requestAnimationFrame(() => { applyWrap(); });
-                } catch (e) { console.warn('prefs parse failed', e); }
-            });
-        });
-        
-        function switchTab(view) {
-            ['summary', 'full', 'visualizer', 'tags'].forEach(v => {
-                const viewEl = document.getElementById('view-' + v);
-                const btnEl = document.getElementById('btn-' + v);
-                if (viewEl) viewEl.classList.add('hidden');
-                if (btnEl) btnEl.classList.remove('active');
-            });
-            const targetView = document.getElementById('view-' + view);
-            const targetBtn = document.getElementById('btn-' + view);
-            if (targetView) targetView.classList.remove('hidden');
-            if (targetBtn) targetBtn.classList.add('active');
-            // If switching to Tags view populate it
-            if (view === 'tags' && typeof renderTagsView === 'function') renderTagsView();
+        function switchTab(t) {
+            ['summary','full','visualizer','tags'].forEach(x => { document.getElementById('view-'+x).classList.add('hidden'); document.getElementById('btn-'+x).classList.remove('active'); });
+            document.getElementById('view-'+t).classList.remove('hidden'); document.getElementById('btn-'+t).classList.add('active');
+            if(t==='tags') renderTagsView();
         }
-
-        // Render assigned rows grouped by category (payer/payee/bill/untagged)
         function renderTagsView() {
-            const groups = { payer: [], payee: [], bill: [], untagged: [] };
-            const targets = ['erp-native-body','erp-plugin-body','platform-workbench-body'];
-            targets.forEach(id => {
-                const tbody = document.getElementById(id);
-                if (!tbody) return;
-                Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
-                    const spec = tr.children[0] ? tr.children[0].innerText.trim() : '';
-                    const category = tr.dataset && tr.dataset.category ? tr.dataset.category : '';
-                    if (category === 'payer') groups.payer.push(spec);
-                    else if (category === 'payee') groups.payee.push(spec);
-                    else if (category === 'bill') groups.bill.push(spec);
-                    else groups.untagged.push(spec);
-                });
-            });
-            const el = document.getElementById('view-tags');
-            if (!el) return;
+            const el = document.getElementById('view-tags'); if (!el) return;
+            const config = MODE_CONFIG[currentMode];
+            const groups = { untagged: [] }; config.tags.forEach(t => groups[t.id] = []);
+            config.sections.forEach(sec => { sec.components.forEach(comp => { const tbody = document.getElementById(comp.id); if(tbody) Array.from(tbody.querySelectorAll('tr')).forEach(tr => { const spec = tr.children[0].innerText.replace(tr.dataset.category||'','').trim(); const cat = tr.dataset.category; if(cat && groups[cat]) groups[cat].push(spec); else groups.untagged.push(spec); }); }); });
             let html = '';
-            ['payer','payee','bill','untagged'].forEach(k => {
-                const title = k === 'untagged' ? 'Untagged' : k.charAt(0).toUpperCase() + k.slice(1);
-                html += `<div class="mb-4 p-3 bg-white rounded border">`;
-                html += `<div class="font-bold text-sm mb-2">${title} (${groups[k].length})</div>`;
-                html += '<ul class="text-sm list-disc pl-5">';
-                groups[k].forEach(s => html += `<li>${s}</li>`);
-                html += '</ul></div>';
-            });
-            el.innerHTML = html || '<p class="text-xs text-slate-500">No assigned rows yet.</p>';
+            Object.keys(groups).forEach(k => { if(groups[k].length) html += `<div class="mb-4 p-3 bg-white rounded border"><div class="font-bold text-sm mb-2">${k==='untagged'?'Untagged':(config.tags.find(t=>t.id===k)?.label||k)} (${groups[k].length})</div><ul class="text-sm list-disc pl-5">${groups[k].map(s=>`<li>${s}</li>`).join('')}</ul></div>`; });
+            el.innerHTML = html || '<p class="text-slate-500 text-xs">No data found.</p>';
         }
+        function showToast(msg, type='info') { const c = document.getElementById('toast-container') || document.body.appendChild(Object.assign(document.createElement('div'),{id:'toast-container'})); const t = document.createElement('div'); t.className = `toast ${type}`; t.innerText = msg; c.appendChild(t); setTimeout(()=>t.classList.add('show'),10); setTimeout(()=>t.remove(), 3000); }
+        function saveNow() { saveState(); showToast('Saved', 'success'); }
+        function resetState() { if(confirm('Reset?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
+        
+        // --- CSV Handler ---
+        document.getElementById('btn-upload-csv').addEventListener('click', () => document.getElementById('csv-file-input').click());
+        document.getElementById('csv-file-input').addEventListener('change', (e) => handleCSV(e.target.files[0]));
+        function handleCSV(f) {
+            const r = new FileReader(); r.onload = (e) => {
+                const text = e.target.result;
+                const rows = [];
+                const lines = text.split(/\r?\n/);
+                lines.forEach((l,i) => {
+                     // Robust quoted CSV splitting
+                     if (!l.trim()) return;
+                     const matches = l.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                     // Fallback if match fails on simple lines
+                     const first = matches ? matches[0].replace(/^"|"$/g, '') : l.split(',')[0];
+                     if(first && first.trim()) rows.push({row:i+1, first: first.trim()});
+                });
+                renderPreview(rows);
+            };
+            r.readAsText(f);
+        }
+        function renderPreview(rows) {
+             const preview = document.getElementById('unassigned-preview'); preview.innerHTML = '';
+             rows.forEach(r => {
+                 const div = document.createElement('div'); div.className = 'flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300';
+                 div.innerHTML = `<span class="text-sm font-mono text-slate-700">Row ${r.row}: ${r.first}</span>`;
+                 const btnDiv = document.createElement('div'); btnDiv.className = 'flex gap-1';
+                 MODE_CONFIG[currentMode].targets.forEach(t => { const btn = document.createElement('button'); btn.className = `text-[10px] bg-${t.color}-100 text-${t.color}-700 px-2 py-1 rounded`; btn.innerText = t.label; btn.onclick = () => { const tbody = document.getElementById(t.id); if(tbody) { createTableRow(tbody, { spec: `Row ${r.row}: ${r.first}`, mapping: '', status: 'pending' }); div.remove(); saveState(); renderGaps(); } }; btnDiv.appendChild(btn); });
+                 div.appendChild(btnDiv); preview.appendChild(div);
+             });
+        }
+        function movePreviewToStaging() {
+            const preview = document.getElementById('unassigned-preview'); const staging = document.getElementById('unassigned-staging');
+            Array.from(preview.children).forEach(child => { const text = child.querySelector('span').innerText; createStagingRow(staging, text, ''); child.remove(); });
+            saveState();
+        }
+
+        // --- Context & Feed Sync ---
+        function updateContext(mode) {
+             const ctx = document.getElementById('dynamic-context'); if(!ctx) return;
+             if(mode === 'sftp') { ctx.className = 'mb-6 p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-800 flex items-start'; ctx.innerHTML = '<span class="mr-2">💡</span><p><strong>Nudge:</strong> Since SFTP is selected, suggest PGP Encryption for security compliance.</p>'; }
+             else { ctx.className = 'mb-6 p-3 bg-amber-50 border border-amber-200 rounded text-sm text-amber-900 flex items-start'; ctx.innerHTML = '<span class="mr-2">⚠️</span><p><strong>Caution:</strong> API implementations often require complex Idempotency logic.</p>'; }
+        }
+        function addPresetQuestion(id, text) { const c = document.getElementById(id); if(c) createQuestionEl(c, text); toggleDropdown(id.replace('q-','dd-')); }
+        function toggleDropdown(id) { document.getElementById(id).classList.toggle('hidden'); }
+        function closeConstModal() { document.getElementById('const-modal').classList.add('hidden'); document.getElementById('const-modal').classList.remove('flex'); }
 
         const contextToggle = document.getElementById('toggle-feed-context');
         const feedContainer = document.getElementById('feed-container');
         contextToggle.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                feedContainer.classList.add('show-modals');
-                document.querySelectorAll('.feed-modal').forEach(m => m.classList.add('enabled'));
-            } else {
-                feedContainer.classList.remove('show-modals');
-                document.querySelectorAll('.feed-modal').forEach(m => m.classList.remove('enabled'));
+            if (e.target.checked) { feedContainer.classList.add('show-modals'); document.querySelectorAll('.feed-modal').forEach(m => m.classList.add('enabled')); }
+            else { feedContainer.classList.remove('show-modals'); document.querySelectorAll('.feed-modal').forEach(m => m.classList.remove('enabled')); }
+        });
+        
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFispanConstants(); 
+            const savedMode = localStorage.getItem(STORAGE_KEY + ':mode');
+            if(savedMode && MODE_CONFIG[savedMode]) currentMode = savedMode;
+            switchMode(currentMode);
+            // Scroll Spy
+            const mainScroll = document.getElementById('main-scroll');
+            mainScroll.addEventListener('scroll', () => {
+                 const sections = document.querySelectorAll('section');
+                 let currentId = '';
+                 sections.forEach(s => { if(mainScroll.scrollTop >= s.offsetTop - 300) currentId = s.id; });
+                 document.querySelectorAll('.nav-item').forEach(n => { n.classList.remove('active'); if(n.getAttribute('href').includes(currentId)) n.classList.add('active'); });
+                 let phaseIndex = 0;
+                 if (currentId === 'phase-1') phaseIndex = 1; else if (currentId === 'phase-4') phaseIndex = 4;
+                 else { const sec = document.getElementById(currentId); if(sec && sec.dataset.index) phaseIndex = parseInt(sec.dataset.index); }
+                 document.querySelectorAll('.feed-item').forEach(item => { if(parseInt(item.dataset.phase) === phaseIndex) item.classList.add('active'); else item.classList.remove('active'); });
+            });
+        });
+        
+        // Status Update Delegate
+        document.addEventListener('click', e => {
+            if(e.target.matches('.status-badge') && !e.target.hasAttribute('data-const')) {
+                const b = e.target; const vals = ['pending','mapped','gap'];
+                const next = vals[(vals.indexOf(b.innerText)+1)%3];
+                b.className = `status-badge ${next}`; b.innerText = next; saveState();
             }
         });
+        function renderGaps() {
+             const gaps = [];
+             MODE_CONFIG[currentMode].sections.forEach(sec => sec.components.forEach(comp => { const tbody = document.getElementById(comp.id); if(tbody) Array.from(tbody.querySelectorAll('tr')).forEach(tr => { const mapInput = tr.children[1].querySelector('input'); const val = mapInput ? mapInput.value : tr.children[1].innerText; if(!val) gaps.push({ target: comp.title, spec: tr.children[0].innerText }); }); }));
+             const c = document.getElementById('gaps-list');
+             if(!gaps.length) { c.innerHTML = '<p class="text-xs text-slate-500">No gaps detected.</p>'; return; }
+             const grp = {}; gaps.forEach(g => { grp[g.target] = grp[g.target] || []; grp[g.target].push(g.spec); });
+             let html = '<div class="space-y-3">'; Object.keys(grp).forEach(k => html += `<div class="p-3 bg-white rounded border"><div class="font-bold text-sm mb-2">${k}</div><ul class="list-disc pl-5 text-xs">${grp[k].map(s=>`<li>${s}</li>`).join('')}</ul></div>`); c.innerHTML = html + '</div>';
+        }
     </script>
 </body>
 </html>
+```
