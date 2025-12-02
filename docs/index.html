@@ -24,14 +24,8 @@
         .badge-slate { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
         .badge-emerald { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
         
-        /* Visualizer Styles */
-        .check-face { background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 10px 10px; font-family: 'Georgia', serif; }
-        .micr-font { font-family: 'Courier New', Courier, monospace; letter-spacing: 2px; font-weight: bold; }
-        .handwriting { font-family: 'Brush Script MT', cursive; color: #1e3a8a; }
-        .check-field { position: relative; cursor: help; border: 1px dashed transparent; transition: all 0.2s; }
-        .check-field:hover { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
-        .check-field::after { content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background-color: #1e293b; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 50; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .check-field:hover::after { opacity: 1; bottom: 110%; }
+        /* Row ID Badge */
+        .row-id-badge { font-size: 0.65rem; font-family: 'Courier New', monospace; background: #f8fafc; color: #64748b; padding: 2px 6px; border-radius: 4px; margin-right: 8px; border: 1px solid #e2e8f0; vertical-align: middle; }
 
         /* Navigation */
         .nav-item.active { background-color: #1e293b; border-left: 4px solid #3b82f6; color: white; }
@@ -39,24 +33,24 @@
         .tab-btn.active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .tab-btn { background-color: white; color: #64748b; border: 1px solid #cbd5e1; }
 
-    /* Status badges */
-    .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; }
-    .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
-    .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
-    .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+        /* Status badges */
+        .status-badge { display: inline-block; padding: 4px 8px; border-radius: 9999px; font-weight: 700; text-transform: lowercase; font-size: 0.75rem; cursor: pointer; user-select: none; }
+        .status-badge.mapped { background: #dcfce7; color: #065f46; border: 1px solid #86efac; }
+        .status-badge.pending { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
+        .status-badge.gap { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
 
-    /* Category tag */
-    .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
-    .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
+        /* Category tag */
+        .tag-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 9999px; background: #f1f5f9; color: #0f172a; font-size: 0.7rem; font-weight: 600; }
+        .category-select { font-size: 0.7rem; padding: 3px 6px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; }
 
-    /* Toast */
-    #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
-    .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { background: #059669; }
-    .toast.info { background: #2563eb; }
-    .toast.warn { background: #d97706; }
-    .toast.error { background: #b91c1c; }
+        /* Toast */
+        #toast-container { position: fixed; right: 24px; bottom: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 8px; }
+        .toast { min-width: 220px; padding: 10px 14px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 6px 18px rgba(2,6,23,0.2); opacity: 0; transform: translateY(8px); transition: all 220ms ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: #059669; }
+        .toast.info { background: #2563eb; }
+        .toast.warn { background: #d97706; }
+        .toast.error { background: #b91c1c; }
 
         /* Story Feed */
         .feed-item { position: relative; padding-left: 1.5rem; padding-bottom: 1.5rem; border-left: 2px solid #e2e8f0; transition: all 0.3s ease; opacity: 0.5; cursor: pointer; }
@@ -91,10 +85,9 @@
         .drag-zone { transition: all 0.2s ease; }
         .drag-zone.drag-over { background-color: #eff6ff; border-color: #3b82f6; }
         
-        /* Master Spec column styling: truncate long dotted keys and show full on hover */
+        /* Master Spec */
         .spec-key { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
         .spec-key:hover { cursor: help; }
-        /* wrap mode for long keys */
         .spec-key.wrap { white-space: normal; word-break: break-word; max-width: none; }
         /* master spec search & attach widgets */
         .master-search { width: 100%; max-width: 480px; padding: 8px 10px; border: 1px solid #e6eef8; border-radius: 8px; }
@@ -106,8 +99,28 @@
         .spec-action { margin-left: 8px; font-size: 12px; color: #2563eb; cursor: pointer; }
         .unassign-mark { background: #fff7f5; border-color: #fecaca !important; } .unassign-mark td { color: #9f1239; }
 
+        /* Autocomplete Styles */
+        .autocomplete-wrapper { position: relative; width: 100%; }
+        .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; max-height: 220px; overflow-y: auto; background: white; border: 1px solid #cbd5e1; border-radius: 0 0 6px 6px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 50; display: none; }
+        .autocomplete-item { padding: 8px 12px; font-size: 0.8rem; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
+        .autocomplete-item:last-child { border-bottom: none; }
+        .autocomplete-item:hover { background-color: #eff6ff; color: #1d4ed8; }
+        .autocomplete-item strong { color: #1e40af; font-family: 'Courier New', monospace; font-weight: bold; }
+        .autocomplete-desc { display: block; font-size: 0.7rem; color: #64748b; margin-top: 2px; }
+
+        /* Highlight Flash Animation for Gaps Deep-Link */
+        @keyframes highlight-row { 0% { background: #fef9c3; } 100% { background: transparent; } }
+        .highlight-flash { animation: highlight-row 2s ease-out; }
+
         /* Toggle Mode Styles */
         .mode-toggle-btn { transition: all 0.3s; }
+        
+        /* Visualizer */
+        .check-face { background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 10px 10px; font-family: 'Georgia', serif; }
+        .check-field { position: relative; cursor: help; border: 1px dashed transparent; transition: all 0.2s; }
+        .check-field:hover { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); }
+        .check-field::after { content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background-color: #1e293b; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 50; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .check-field:hover::after { opacity: 1; bottom: 110%; }
     </style>
 </head>
 <body class="bg-stone-50 text-slate-800 h-screen flex overflow-hidden">
@@ -148,6 +161,9 @@
                     <div class="flex gap-2">
                         <button onclick="toggleUploader()" class="bg-white border border-slate-300 text-blue-600 px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-blue-50 flex items-center">
                             <span class="mr-2">📂</span> Open Modal
+                        </button>
+                        <button onclick="toggleExport()" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-blue-700 flex items-center">
+                            <span class="mr-2">📤</span> Export Doc
                         </button>
                         <button onclick="saveNow()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-emerald-700">Save</button>
                         <button onclick="resetState()" class="bg-red-100 text-red-700 px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-red-200">Reset</button>
@@ -376,6 +392,38 @@
         </div>
     </aside>
 
+    <div id="export-modal" class="uploader-modal hidden">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-8 relative">
+            <button onclick="toggleExport()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Export Solution</h3>
+            <p class="text-sm text-slate-500 mb-6">Choose an export format for your current mapping configuration.</p>
+            
+            <div class="space-y-4">
+                <div class="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer flex items-center justify-between group" onclick="copyToClipboardHTML()">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">📋</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Copy to Clipboard</h4>
+                            <p class="text-xs text-slate-500">Best for pasting into Confluence, Excel, or Google Sheets.</p>
+                        </div>
+                    </div>
+                    <span class="text-blue-600 opacity-0 group-hover:opacity-100 transition font-bold text-sm">Copy &rarr;</span>
+                </div>
+
+                <div class="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer flex items-center justify-between group" onclick="downloadCSV()">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-emerald-100 text-emerald-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">📊</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Download CSV</h4>
+                            <p class="text-xs text-slate-500">Raw data file for data analysis or migration.</p>
+                        </div>
+                    </div>
+                    <span class="text-emerald-600 opacity-0 group-hover:opacity-100 transition font-bold text-sm">Download &rarr;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="uploader-modal" class="uploader-modal hidden">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative">
             <button onclick="toggleUploader()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
@@ -499,9 +547,9 @@
         };
 
         // --- MODE LOGIC ---
-        function switchMode(mode, saveFirst = true) {
+        function switchMode(mode) {
             if (!MODE_CONFIG[mode]) return;
-            if (saveFirst) saveState(); 
+            saveState(); 
             currentMode = mode;
             // UI Update
             document.querySelectorAll('.mode-toggle-btn').forEach(b => {
@@ -693,19 +741,67 @@
         function createTableRow(tbody, data) {
             const tr = document.createElement('tr');
             const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
+            
+            // Visual Split Logic
+            let specDisplay = data.spec;
+            const match = data.spec.match(/^Row\s+(\d+)[:\s]+(.*)/i);
+            if (match) {
+                specDisplay = `<span class="row-id-badge">Row ${match[1]}</span><span class="font-bold text-slate-700 text-sm">${match[2]}</span>`;
+            } else {
+                specDisplay = `<span class="text-sm font-medium text-slate-700">${data.spec}</span>`;
+            }
+
             tr.innerHTML = `
-                <td class="p-3 text-sm font-medium text-slate-700">${data.spec} ${catHtml}</td>
-                <td class="p-3"><input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm" oninput="saveState()"></td>
-                <td class="p-3"></td>
-                <td class="p-3 text-right"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
+                <td class="p-3 align-middle">${specDisplay} ${catHtml}</td>
+                <td class="p-3">
+                    <div class="autocomplete-wrapper">
+                        <input type="text" placeholder="Map to..." value="${data.mapping||''}" class="w-full bg-transparent border-b border-slate-300 focus:border-blue-500 outline-none text-sm" onchange="saveState()" autocomplete="off">
+                        <div class="autocomplete-list"></div>
+                    </div>
+                </td>
+                <td class="p-3 align-middle"></td>
+                <td class="p-3 text-right align-middle"><button class="text-xs text-blue-600 hover:underline" onclick="editRow(this)">Edit</button></td>
             `;
             if(data.category) tr.dataset.category = data.category;
             tbody.appendChild(tr);
+            
+            setupFispanAutocomplete(tr.querySelector('input'), tr.querySelector('.autocomplete-list'));
+
             const tdStatus = tr.children[2];
             const badge = document.createElement('span');
             badge.className = `status-badge ${data.status||'pending'}`;
             badge.innerText = data.status||'pending';
             tdStatus.appendChild(badge);
+        }
+
+        function setupFispanAutocomplete(input, list) {
+            input.addEventListener('input', (e) => {
+                const val = e.target.value.toLowerCase();
+                if (!val) { list.style.display = 'none'; return; }
+                const matches = Object.values(masterMappings).filter(m => 
+                    m.key.toLowerCase().includes(val) || (m.description && m.description.toLowerCase().includes(val))
+                );
+                list.innerHTML = '';
+                if(matches.length > 0) {
+                    list.style.display = 'block';
+                    matches.slice(0, 10).forEach(m => { 
+                        const div = document.createElement('div');
+                        div.className = 'autocomplete-item';
+                        div.innerHTML = `<strong>${m.key}</strong><span class="autocomplete-desc">${m.description || ''}</span>`;
+                        div.onclick = () => {
+                            input.value = m.key;
+                            list.style.display = 'none';
+                            saveState();
+                            renderGaps(); 
+                        };
+                        list.appendChild(div);
+                    });
+                } else {
+                    list.style.display = 'none';
+                }
+            });
+            input.addEventListener('blur', () => setTimeout(() => list.style.display = 'none', 200));
+            input.addEventListener('focus', (e) => { if(e.target.value) e.target.dispatchEvent(new Event('input')); });
         }
 
         function createStagingRow(container, text, category) {
@@ -780,7 +876,6 @@
         }
         function saveRowBtn(btn) {
             const tr = btn.closest('tr');
-            // If marked for unassign, execute removal
             if(tr.dataset.unassign === '1') {
                 const spec = tr.children[0].innerText.replace(tr.dataset.category || '', '').trim();
                 const cat = tr.dataset.category;
@@ -802,6 +897,23 @@
             }
         }
 
+        // --- Deep Linking for Gaps (Scroll To Row) ---
+        function scrollToRow(specText) {
+            const cells = document.querySelectorAll('td:first-child');
+            for(let td of cells) {
+                if(td.innerText.includes(specText)) {
+                    const tr = td.parentElement;
+                    tr.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    tr.classList.add('highlight-flash');
+                    setTimeout(()=>tr.classList.remove('highlight-flash'), 2000);
+                    const input = tr.querySelector('input');
+                    if(input) input.focus();
+                    return;
+                }
+            }
+            showToast('Row not found in current view', 'error');
+        }
+
         // --- Question Builder Logic (Restored) ---
         function addCustomQuestion(containerId) {
              const c = document.getElementById(containerId);
@@ -810,9 +922,9 @@
              div.innerHTML = `
                 <div class="flex items-start w-full">
                     <div class="flex-shrink-0 pt-0.5 cursor-pointer mr-3 text-slate-300 hover:text-emerald-500 transition" onclick="toggleConfirm(this.closest('.question-row'))"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                    <input type="text" placeholder="Type your custom question..." class="q-text w-full text-sm outline-none bg-transparent font-medium text-slate-700" onblur="this.parentElement.parentElement.classList.remove('animate-pulse')" oninput="saveState()">
+                    <input type="text" placeholder="Type your custom question..." class="q-text w-full text-sm outline-none bg-transparent font-medium text-slate-700" onblur="this.parentElement.parentElement.classList.remove('animate-pulse')">
                 </div>
-                <div class="mt-2 w-full pl-8"><button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">+ Add Answer</button><div class="answer-box hidden"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer..." oninput="saveState()"></textarea></div></div>
+                <div class="mt-2 w-full pl-8"><button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">+ Add Answer</button><div class="answer-box hidden"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer..."></textarea></div></div>
              `;
              c.appendChild(div);
              div.querySelector('input').focus();
@@ -827,7 +939,7 @@
                 </div>
                 <div class="mt-2 w-full pl-8">
                     <button onclick="toggleAnswer(this)" class="text-[10px] font-bold text-blue-500 hover:text-blue-700 mb-1">${ans ? '- Hide Answer' : '+ Add Answer'}</button>
-                    <div class="answer-box ${ans ? 'visible' : 'hidden'}"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer..." oninput="saveState()">${ans||''}</textarea></div>
+                    <div class="answer-box ${ans ? 'visible' : 'hidden'}"><textarea class="answer-text w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300" rows="2" placeholder="Answer...">${ans||''}</textarea></div>
                 </div>
              `;
              container.appendChild(div);
@@ -851,7 +963,7 @@
              let note = c.querySelector('.note-area');
              if(!note) {
                  note = document.createElement('div'); note.className = "mt-4 border-t border-slate-100 pt-3 note-area";
-                 note.innerHTML = `<h6 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Notes</h6><textarea class="w-full text-sm bg-yellow-50 border border-yellow-100 rounded p-2 text-slate-700 focus:outline-none focus:border-yellow-300 shadow-sm" rows="3" placeholder="Add context..." oninput="saveState()">${initialValue}</textarea>`;
+                 note.innerHTML = `<h6 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Notes</h6><textarea class="w-full text-sm bg-yellow-50 border border-yellow-100 rounded p-2 text-slate-700 focus:outline-none focus:border-yellow-300 shadow-sm" rows="3" placeholder="Add context...">${initialValue}</textarea>`;
                  c.appendChild(note);
              }
              if(!initialValue) note.querySelector('textarea').focus();
@@ -930,16 +1042,75 @@
         document.getElementById('master-search').addEventListener('input', (e)=>{ window.__masterFilter=e.target.value; renderFullSpec(); });
         document.getElementById('master-toggle-wrap').onclick = function() { document.querySelectorAll('.spec-key').forEach(s=>s.classList.toggle('wrap')); this.querySelector('span').innerText = this.querySelector('span').innerText==='off'?'on':'off'; };
 
+        // --- Export Logic ---
+        function toggleExport() { document.getElementById('export-modal').classList.toggle('hidden'); }
+        
+        function getExportData() {
+            const data = { title: MODE_CONFIG[currentMode].label, sections: [] };
+            MODE_CONFIG[currentMode].sections.forEach(sec => {
+                const sectionData = { title: sec.title, rows: [], questions: [] };
+                sec.components.forEach(comp => {
+                    const tbody = document.getElementById(comp.id);
+                    if(tbody) Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
+                        const rd = extractRowData(tr);
+                        sectionData.rows.push(rd);
+                    });
+                });
+                const qContainer = document.getElementById(sec.qa);
+                if(qContainer) Array.from(qContainer.querySelectorAll('.question-row')).forEach(row => {
+                    sectionData.questions.push({
+                        q: row.querySelector('.q-text').innerText || row.querySelector('.q-text').value,
+                        a: row.querySelector('textarea.answer-text')?.value || ''
+                    });
+                });
+                data.sections.push(sectionData);
+            });
+            return data;
+        }
+
+        async function copyToClipboardHTML() {
+            const data = getExportData();
+            let html = `<h1>${data.title}</h1>`;
+            data.sections.forEach(sec => {
+                html += `<h2>${sec.title}</h2><table border="1" style="border-collapse:collapse;width:100%"><tr><th>Spec Requirement</th><th>FISPAN Source</th><th>Status</th></tr>`;
+                sec.rows.forEach(r => html += `<tr><td>${r.spec}</td><td>${r.mapping}</td><td>${r.status}</td></tr>`);
+                html += `</table>`;
+                if(sec.questions.length) {
+                    html += `<h3>Questions</h3><ul>` + sec.questions.map(q => `<li><strong>Q:</strong> ${q.q}<br><strong>A:</strong> ${q.a}</li>`).join('') + `</ul>`;
+                }
+                html += `<br>`;
+            });
+            
+            try {
+                const blob = new Blob([html], { type: 'text/html' });
+                const item = new ClipboardItem({ 'text/html': blob });
+                await navigator.clipboard.write([item]);
+                showToast('Copied to Clipboard!', 'success');
+                toggleExport();
+            } catch(e) { console.error(e); showToast('Copy failed', 'error'); }
+        }
+
+        function downloadCSV() {
+            const data = getExportData();
+            let csv = 'Section,Spec Requirement,FISPAN Source,Status\n';
+            data.sections.forEach(sec => {
+                sec.rows.forEach(r => {
+                    csv += `"${sec.title}","${r.spec.replace(/"/g,'""')}","${r.mapping.replace(/"/g,'""')}","${r.status}"\n`;
+                });
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `solutioning-export-${currentMode}.csv`;
+            a.click();
+            toggleExport();
+        }
+
         // --- Boilerplate (CSV, Toast, etc) ---
         function toggleUploader(){ const m = document.getElementById('uploader-modal'); if(!m.classList.contains('hidden')) movePreviewToStaging(); m.classList.toggle('hidden'); }
         async function loadFispanConstants() {
             try {
-                // Modified to fetch from docs/data based on user instruction
-                // Also smart check for paths
                 const paths = ['docs/data/fispan-constants.flat.json', 'data/fispan-constants.flat.json', './data/fispan-constants.flat.json'];
-                let res;
-                for(let p of paths) { try { res = await fetch(p); if(res.ok) break; } catch(e){} }
-                
+                let res; for(let p of paths) { try { res = await fetch(p); if(res.ok) break; } catch(e){} }
                 const constants = await res.json();
                 constants.forEach(c => { if (!masterMappings[c.key]) masterMappings[c.key] = { key: c.key, valueType: c.valueType||'', description: c.description||'', spec: '', status: 'pending' }; });
                 renderFullSpec();
@@ -972,7 +1143,7 @@
                 const rows = [];
                 const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
                 lines.forEach((line, idx) => {
-                    // Manual parser to handle quotes, identical to your original request
+                    // Manual parser to handle quotes
                     const cells = [];
                     let cur = '';
                     let inQuotes = false;
@@ -991,8 +1162,6 @@
                     
                     // Logic: Use Col 1 (cells[0]) as the Row Text
                     const firstVal = (cells[0] || '').trim().replace(/^"|"$/g, '');
-                    
-                    // We simply grab the FIRST column value
                     const rowText = firstVal; 
                     
                     if(rowText) rows.push({ row: idx + 1, first: rowText });
@@ -1005,7 +1174,6 @@
              const preview = document.getElementById('unassigned-preview'); preview.innerHTML = '';
              rows.forEach(r => {
                  const div = document.createElement('div'); div.className = 'flex items-center justify-between p-2 bg-white rounded shadow-sm row-item border border-slate-100 hover:border-blue-300';
-                 // Rendering: Row X: Value (where Value is Col 1)
                  div.innerHTML = `<span class="text-sm font-mono text-slate-700">Row ${r.row}: ${r.first}</span>`;
                  const btnDiv = document.createElement('div'); btnDiv.className = 'flex gap-1';
                  MODE_CONFIG[currentMode].targets.forEach(t => { const btn = document.createElement('button'); btn.className = `text-[10px] bg-${t.color}-100 text-${t.color}-700 px-2 py-1 rounded`; btn.innerText = t.label; btn.onclick = () => { const tbody = document.getElementById(t.id); if(tbody) { createTableRow(tbody, { spec: `Row ${r.row}: ${r.first}`, mapping: '', status: 'pending' }); div.remove(); saveState(); renderGaps(); } }; btnDiv.appendChild(btn); });
@@ -1040,8 +1208,7 @@
             loadFispanConstants(); 
             const savedMode = localStorage.getItem(STORAGE_KEY + ':mode');
             if(savedMode && MODE_CONFIG[savedMode]) currentMode = savedMode;
-            // Prevent race condition: don't save empty state on load!
-            switchMode(currentMode, false);
+            switchMode(currentMode);
             // Scroll Spy
             const mainScroll = document.getElementById('main-scroll');
             mainScroll.addEventListener('scroll', () => {
@@ -1070,7 +1237,22 @@
              const c = document.getElementById('gaps-list');
              if(!gaps.length) { c.innerHTML = '<p class="text-xs text-slate-500">No gaps detected.</p>'; return; }
              const grp = {}; gaps.forEach(g => { grp[g.target] = grp[g.target] || []; grp[g.target].push(g.spec); });
-             let html = '<div class="space-y-3">'; Object.keys(grp).forEach(k => html += `<div class="p-3 bg-white rounded border"><div class="font-bold text-sm mb-2">${k}</div><ul class="list-disc pl-5 text-xs">${grp[k].map(s=>`<li>${s}</li>`).join('')}</ul></div>`); c.innerHTML = html + '</div>';
+             // Updated render logic for Quick Wins: Deep Linking and Icons
+             let html = '<div class="space-y-3">'; 
+             const icons = {'Control Headers/Trailers':'📂','Payer & Payee Fields':'👤','Instruction Fields':'💸','Remittance Fields':'🧾','Native ERP Data':'🖥️','Plugin Enrichment':'🔌','Transformation Rules':'⚙️'};
+             Object.keys(grp).forEach(k => {
+                 const icon = icons[k] || '🔹';
+                 html += `<div class="p-3 bg-white rounded border border-slate-200">
+                    <div class="font-bold text-sm mb-2 text-slate-700">${icon} ${k}</div>
+                    <ul class="space-y-1">
+                        ${grp[k].map(s => {
+                            // Strip "Row X:" part for cleaner gap text if possible, or just keep it
+                            return `<li><button onclick="scrollToRow('${s.replace(/'/g,"\\'")}')" class="text-xs text-blue-600 hover:underline hover:text-blue-800 text-left w-full truncate block transition-colors">● ${s}</button></li>`
+                        }).join('')}
+                    </ul>
+                 </div>`; 
+             }); 
+             c.innerHTML = html + '</div>';
         }
     </script>
 </body>
