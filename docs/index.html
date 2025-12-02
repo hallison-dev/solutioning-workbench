@@ -22,8 +22,9 @@
         .badge-red { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
         .badge-indigo { background-color: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
         .badge-slate { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .badge-emerald { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
         
-        /* Row ID Badge (NEW) */
+        /* Row ID Badge */
         .row-id-badge { font-size: 0.65rem; font-family: 'Courier New', monospace; background: #f8fafc; color: #64748b; padding: 2px 6px; border-radius: 4px; margin-right: 8px; border: 1px solid #e2e8f0; vertical-align: middle; }
 
         /* Navigation */
@@ -84,7 +85,7 @@
         .drag-zone { transition: all 0.2s ease; }
         .drag-zone.drag-over { background-color: #eff6ff; border-color: #3b82f6; }
         
-        /* Master Spec column styling */
+        /* Master Spec */
         .spec-key { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; }
         .spec-key:hover { cursor: help; }
         .spec-key.wrap { white-space: normal; word-break: break-word; max-width: none; }
@@ -160,6 +161,9 @@
                     <div class="flex gap-2">
                         <button onclick="toggleUploader()" class="bg-white border border-slate-300 text-blue-600 px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-blue-50 flex items-center">
                             <span class="mr-2">📂</span> Open Modal
+                        </button>
+                        <button onclick="toggleExport()" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-blue-700 flex items-center">
+                            <span class="mr-2">📤</span> Export Doc
                         </button>
                         <button onclick="saveNow()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-emerald-700">Save</button>
                         <button onclick="resetState()" class="bg-red-100 text-red-700 px-3 py-2 rounded-lg text-xs font-semibold shadow-sm hover:bg-red-200">Reset</button>
@@ -387,6 +391,38 @@
             </div>
         </div>
     </aside>
+
+    <div id="export-modal" class="uploader-modal hidden">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-8 relative">
+            <button onclick="toggleExport()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Export Solution</h3>
+            <p class="text-sm text-slate-500 mb-6">Choose an export format for your current mapping configuration.</p>
+            
+            <div class="space-y-4">
+                <div class="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer flex items-center justify-between group" onclick="copyToClipboardHTML()">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">📋</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Copy to Clipboard</h4>
+                            <p class="text-xs text-slate-500">Best for pasting into Confluence, Excel, or Google Sheets.</p>
+                        </div>
+                    </div>
+                    <span class="text-blue-600 opacity-0 group-hover:opacity-100 transition font-bold text-sm">Copy &rarr;</span>
+                </div>
+
+                <div class="p-4 border rounded-lg hover:bg-slate-50 cursor-pointer flex items-center justify-between group" onclick="downloadCSV()">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-emerald-100 text-emerald-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">📊</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Download CSV</h4>
+                            <p class="text-xs text-slate-500">Raw data file for data analysis or migration.</p>
+                        </div>
+                    </div>
+                    <span class="text-emerald-600 opacity-0 group-hover:opacity-100 transition font-bold text-sm">Download &rarr;</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="uploader-modal" class="uploader-modal hidden">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative">
@@ -693,14 +729,7 @@
         }
 
         function extractRowData(tr) {
-            // Get raw HTML or text from first cell, need to strip badge HTML if saving raw text
-            // But we reconstruct the badge on load from data.spec string. 
-            // The regex parser expects "Row X: Value" or similar.
-            // If we modified HTML, innerText usually strips tags but keeps text "Row 15 Payee Name".
-            // Let's rely on data.spec property if stored, or parse innerText carefully.
-            // Actually, best to just grab innerText. The badge adds a space.
             const spec = tr.children[0].innerText.replace(tr.children[0].querySelector('.tag-badge')?.innerText || '', '').trim();
-            
             const mapInput = tr.children[1].querySelector('input');
             const mapping = mapInput ? mapInput.value : tr.children[1].innerText;
             const statusBadge = tr.children[2].querySelector('.status-badge') || tr.children[2].querySelector('select');
@@ -715,8 +744,6 @@
             
             // Visual Split Logic
             let specDisplay = data.spec;
-            // Matches "Row 123: Some Value" or "Row 123 Some Value"
-            // The CSV parser outputs "Row X: Value"
             const match = data.spec.match(/^Row\s+(\d+)[:\s]+(.*)/i);
             if (match) {
                 specDisplay = `<span class="row-id-badge">Row ${match[1]}</span><span class="font-bold text-slate-700 text-sm">${match[2]}</span>`;
@@ -738,7 +765,6 @@
             if(data.category) tr.dataset.category = data.category;
             tbody.appendChild(tr);
             
-            // Setup Autocomplete
             setupFispanAutocomplete(tr.querySelector('input'), tr.querySelector('.autocomplete-list'));
 
             const tdStatus = tr.children[2];
@@ -875,7 +901,6 @@
         function scrollToRow(specText) {
             const cells = document.querySelectorAll('td:first-child');
             for(let td of cells) {
-                // Check if innerText contains the text (ignoring badges)
                 if(td.innerText.includes(specText)) {
                     const tr = td.parentElement;
                     tr.scrollIntoView({behavior: 'smooth', block: 'center'});
@@ -1017,15 +1042,75 @@
         document.getElementById('master-search').addEventListener('input', (e)=>{ window.__masterFilter=e.target.value; renderFullSpec(); });
         document.getElementById('master-toggle-wrap').onclick = function() { document.querySelectorAll('.spec-key').forEach(s=>s.classList.toggle('wrap')); this.querySelector('span').innerText = this.querySelector('span').innerText==='off'?'on':'off'; };
 
+        // --- Export Logic ---
+        function toggleExport() { document.getElementById('export-modal').classList.toggle('hidden'); }
+        
+        function getExportData() {
+            const data = { title: MODE_CONFIG[currentMode].label, sections: [] };
+            MODE_CONFIG[currentMode].sections.forEach(sec => {
+                const sectionData = { title: sec.title, rows: [], questions: [] };
+                sec.components.forEach(comp => {
+                    const tbody = document.getElementById(comp.id);
+                    if(tbody) Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
+                        const rd = extractRowData(tr);
+                        sectionData.rows.push(rd);
+                    });
+                });
+                const qContainer = document.getElementById(sec.qa);
+                if(qContainer) Array.from(qContainer.querySelectorAll('.question-row')).forEach(row => {
+                    sectionData.questions.push({
+                        q: row.querySelector('.q-text').innerText || row.querySelector('.q-text').value,
+                        a: row.querySelector('textarea.answer-text')?.value || ''
+                    });
+                });
+                data.sections.push(sectionData);
+            });
+            return data;
+        }
+
+        async function copyToClipboardHTML() {
+            const data = getExportData();
+            let html = `<h1>${data.title}</h1>`;
+            data.sections.forEach(sec => {
+                html += `<h2>${sec.title}</h2><table border="1" style="border-collapse:collapse;width:100%"><tr><th>Spec Requirement</th><th>FISPAN Source</th><th>Status</th></tr>`;
+                sec.rows.forEach(r => html += `<tr><td>${r.spec}</td><td>${r.mapping}</td><td>${r.status}</td></tr>`);
+                html += `</table>`;
+                if(sec.questions.length) {
+                    html += `<h3>Questions</h3><ul>` + sec.questions.map(q => `<li><strong>Q:</strong> ${q.q}<br><strong>A:</strong> ${q.a}</li>`).join('') + `</ul>`;
+                }
+                html += `<br>`;
+            });
+            
+            try {
+                const blob = new Blob([html], { type: 'text/html' });
+                const item = new ClipboardItem({ 'text/html': blob });
+                await navigator.clipboard.write([item]);
+                showToast('Copied to Clipboard!', 'success');
+                toggleExport();
+            } catch(e) { console.error(e); showToast('Copy failed', 'error'); }
+        }
+
+        function downloadCSV() {
+            const data = getExportData();
+            let csv = 'Section,Spec Requirement,FISPAN Source,Status\n';
+            data.sections.forEach(sec => {
+                sec.rows.forEach(r => {
+                    csv += `"${sec.title}","${r.spec.replace(/"/g,'""')}","${r.mapping.replace(/"/g,'""')}","${r.status}"\n`;
+                });
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `solutioning-export-${currentMode}.csv`;
+            a.click();
+            toggleExport();
+        }
+
         // --- Boilerplate (CSV, Toast, etc) ---
         function toggleUploader(){ const m = document.getElementById('uploader-modal'); if(!m.classList.contains('hidden')) movePreviewToStaging(); m.classList.toggle('hidden'); }
         async function loadFispanConstants() {
             try {
-                // Smart path check
                 const paths = ['docs/data/fispan-constants.flat.json', 'data/fispan-constants.flat.json', './data/fispan-constants.flat.json'];
-                let res;
-                for(let p of paths) { try { res = await fetch(p); if(res.ok) break; } catch(e){} }
-                
+                let res; for(let p of paths) { try { res = await fetch(p); if(res.ok) break; } catch(e){} }
                 const constants = await res.json();
                 constants.forEach(c => { if (!masterMappings[c.key]) masterMappings[c.key] = { key: c.key, valueType: c.valueType||'', description: c.description||'', spec: '', status: 'pending' }; });
                 renderFullSpec();
@@ -1172,4 +1257,3 @@
     </script>
 </body>
 </html>
-```
