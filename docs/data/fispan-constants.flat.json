@@ -1033,5 +1033,4515 @@
       "phase-2-plugin"
     ],
     "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.erpIds",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.accountLabel",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.accountHolderName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.bankName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.institutionNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.enabledProducts",
+    "sampleValue": "BANK_ACCOUNT_INFO",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.iban",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.transitNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.routingNumber",
+    "sampleValue": "123456789",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.accountNumber",
+    "sampleValue": "*****5432",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.ifscCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.sortCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.bankCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.localBranchCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.bic",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.cnapsCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.bsbCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.bikCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.kodCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.kbeCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.nubanCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.ribCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.line1",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.streetNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.streetName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.line2",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.city",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.stateProvince",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.country",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.postalCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.types",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.address.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.countryCode",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.accountType",
+    "sampleValue": "CHECKING",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.balanceInfo",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.checkTemplateCodes",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.usageProfileIds",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.extraDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.vccAccountPoolId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.defaultAccount",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.defaultFor",
+    "sampleValue": "WIRE",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.paymentDefaults.purposeMessage",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.paymentDefaults.purposeCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.paymentDefaults.residentialStatus",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.paymentDefaults.paymentCodeword",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.paymentDefaults.paymentIsoCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.paymentDefaults.paymentPartyType",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.paymentDefaults.checkDeliveryMethod",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.bankExternalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.accountNumberLastFourDigits",
+    "sampleValue": "5432",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.maskedAccountNumber",
+    "sampleValue": "*****5432",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.autoSyncFeatures",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.excludeFromAutoSync",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.checkEntitlements",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.deleted",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.deletedDateTime",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.bankAccountFeatureConfigs",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.registeredPaymentMethods.bankAccount.intermediaryBankAccounts",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.id",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.createdAt",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.updatedAt",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.erpIds",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.accountLabel",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.accountHolderName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.bankName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.institutionNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.enabledProducts",
+    "sampleValue": "BANK_ACCOUNT_INFO",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.iban",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.transitNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.routingNumber",
+    "sampleValue": "123456789",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.accountNumber",
+    "sampleValue": "*****5432",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.ifscCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.sortCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.bankCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.localBranchCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.bic",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.cnapsCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.bsbCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.bikCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.kodCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.kbeCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.nubanCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.ribCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.line1",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.streetNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.streetName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.line2",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.city",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.stateProvince",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.country",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.postalCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.types",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.address.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.countryCode",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.accountType",
+    "sampleValue": "CHECKING",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.balanceInfo",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.checkTemplateCodes",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.usageProfileIds",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.extraDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.vccAccountPoolId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.defaultAccount",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.defaultFor",
+    "sampleValue": "WIRE",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.paymentDefaults.purposeMessage",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.paymentDefaults.purposeCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.paymentDefaults.residentialStatus",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.paymentDefaults.paymentCodeword",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.paymentDefaults.paymentIsoCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.paymentDefaults.paymentPartyType",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.paymentDefaults.checkDeliveryMethod",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.bankExternalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.accountNumberLastFourDigits",
+    "sampleValue": "5432",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.maskedAccountNumber",
+    "sampleValue": "*****5432",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.autoSyncFeatures",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.excludeFromAutoSync",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.checkEntitlements",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.deleted",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.deletedDateTime",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.bankAccountFeatureConfigs",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.bankAccounts.intermediaryBankAccounts",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.emails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.availablePaymentMethods",
+    "sampleValue": "WIRE",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.preferredPaymentType",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.serviceProviderId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.line1",
+    "sampleValue": "627 State Street",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.streetNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.streetName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.line2",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.city",
+    "sampleValue": "Anytown",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.stateProvince",
+    "sampleValue": "CA",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.country",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.postalCode",
+    "sampleValue": "95113",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.types",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.addresses.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.phoneNumbers.types",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.lastUpdated",
+    "sampleValue": "2025-11-01T08:25:14Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.syncErrors",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.vendorAccountNumber",
+    "sampleValue": "5225632",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.extraDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.paymentDefaults.purposeMessage",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.paymentDefaults.purposeCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.paymentDefaults.residentialStatus",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.paymentDefaults.paymentCodeword",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.paymentDefaults.paymentIsoCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.paymentDefaults.paymentPartyType",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.paymentDefaults.checkDeliveryMethod",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.nameOrFullContactName",
+    "sampleValue": "Verizon-Network Services",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payee.fullContactName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.type",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.name",
+    "sampleValue": "JP Tire Shop",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.firstName",
+    "sampleValue": "John",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.lastName",
+    "sampleValue": "Park",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.email",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.phoneNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.line1",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.streetNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.streetName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.line2",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.city",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.stateProvince",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.country",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.postalCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.types",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.address.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.taxId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.principleOfficerDoB",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.ssn",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.registeredPaymentMethods",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.id",
+    "sampleValue": "4b6df531-ab09-4598-917e-fe0f8c757361",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.createdAt",
+    "sampleValue": "2025-08-06T20:37:16.5251997Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.updatedAt",
+    "sampleValue": "2025-11-17T19:46:26.743584592Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.erpIds.id",
+    "sampleValue": "Checking A",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.erpIds.erpProvider",
+    "sampleValue": "INTACCT",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.erpIds.subsidiaryId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.accountLabel",
+    "sampleValue": "JP Bank Account",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.accountHolderName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.bankName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.institutionNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.enabledProducts",
+    "sampleValue": "BANK_ACCOUNT_INFO",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.iban",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.transitNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.routingNumber",
+    "sampleValue": "123456789",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.accountNumber",
+    "sampleValue": "*****1357",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.ifscCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.sortCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.bankCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.localBranchCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.bic",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.cnapsCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.bsbCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.bikCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.kodCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.kbeCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.nubanCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.ribCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.line1",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.streetNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.streetName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.line2",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.city",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.stateProvince",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.country",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.postalCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.types",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.address.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.countryCode",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.accountType",
+    "sampleValue": "BUSINESS",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.bankAccountId",
+    "sampleValue": "4b6df531-ab09-4598-917e-fe0f8c757361",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.overdraftLimit",
+    "sampleValue": 294374.14,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.lastUpdated",
+    "sampleValue": "2025-08-06T20:38:17.274914Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.clientId",
+    "sampleValue": "4b60d948-99bd-4443-b4e8-1882a2830ffe",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.clientName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.currentDay.requestId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.currentDay.ledgerBalance",
+    "sampleValue": 156347.91,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.currentDay.availableBalance",
+    "sampleValue": 560298.15,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.currentDay.lastUpdatedLedgerBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257574Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.currentDay.lastUpdatedAvailableBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257566Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.previousDay.requestId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.previousDay.ledgerBalance",
+    "sampleValue": 389102.08,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.previousDay.availableBalance",
+    "sampleValue": 572794.94,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.previousDay.lastUpdatedLedgerBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257595Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.balances.previousDay.lastUpdatedAvailableBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257593Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.accountNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.balanceInfo.accountDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.checkTemplateCodes",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.usageProfileIds",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.extraDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.vccAccountPoolId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.defaultAccount",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.paymentDefaults",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.bankExternalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.accountNumberLastFourDigits",
+    "sampleValue": "1357",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.maskedAccountNumber",
+    "sampleValue": "*****1357",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.autoSyncFeatures",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.excludeFromAutoSync",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.checkEntitlements",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.userFeatures.default.enabled",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.userFeatures.default.featureType",
+    "sampleValue": "PAYABLES",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.userFeatures.default.featureSubType",
+    "sampleValue": "POSITIVE_PAY",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.userFeatures.default.featureOwner",
+    "sampleValue": "FISPAN",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.userFeatures.default.config",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.deleted",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.deletedDateTime",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.bankAccountFeatureConfigs",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.bankAccounts.intermediaryBankAccounts",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.emails.email",
+    "sampleValue": "johnpark@fispan.com",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.emails.name",
+    "sampleValue": "John Park",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.emails.types",
+    "sampleValue": "ERP_ADMIN",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.emails.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.availablePaymentMethods",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.preferredPaymentType",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.serviceProviderId",
+    "sampleValue": "d8251a94-9af9-46e2-b957-0ff18914f497",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.addresses",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.phoneNumbers",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.lastUpdated",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.syncErrors",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.vendorAccountNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.extraDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.paymentDefaults",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.nameOrFullContactName",
+    "sampleValue": "JP Tire Shop",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payer.fullContactName",
+    "sampleValue": "John Park",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.id",
+    "sampleValue": "4b6df531-ab09-4598-917e-fe0f8c757361",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.createdAt",
+    "sampleValue": "2025-08-06T20:37:16.5251997Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.updatedAt",
+    "sampleValue": "2025-11-17T19:46:26.743584592Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.erpIds.id",
+    "sampleValue": "Checking A",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.erpIds.erpProvider",
+    "sampleValue": "INTACCT",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.erpIds.subsidiaryId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.accountLabel",
+    "sampleValue": "JP Bank Account",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.accountHolderName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.bankName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.institutionNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.enabledProducts",
+    "sampleValue": "BANK_ACCOUNT_INFO",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.iban",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.transitNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.routingNumber",
+    "sampleValue": "123456789",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.accountNumber",
+    "sampleValue": "*****1357",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.ifscCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.sortCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.bankCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.localBranchCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.bic",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.cnapsCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.bsbCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.bikCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.kodCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.kbeCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.nubanCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.ribCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.externalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.line1",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.streetNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.streetName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.line2",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.city",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.stateProvince",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.country",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.postalCode",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.types",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.address.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.countryCode",
+    "sampleValue": "US",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.accountType",
+    "sampleValue": "BUSINESS",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.bankAccountId",
+    "sampleValue": "4b6df531-ab09-4598-917e-fe0f8c757361",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.overdraftLimit",
+    "sampleValue": 294374.14,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.lastUpdated",
+    "sampleValue": "2025-08-06T20:38:17.274914Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.clientId",
+    "sampleValue": "4b60d948-99bd-4443-b4e8-1882a2830ffe",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.clientName",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.currentDay.requestId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.currentDay.ledgerBalance",
+    "sampleValue": 156347.91,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.currentDay.availableBalance",
+    "sampleValue": 560298.15,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.currentDay.lastUpdatedLedgerBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257574Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.currentDay.lastUpdatedAvailableBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257566Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.previousDay.requestId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.previousDay.ledgerBalance",
+    "sampleValue": 389102.08,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.previousDay.availableBalance",
+    "sampleValue": 572794.94,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.previousDay.lastUpdatedLedgerBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257595Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.balances.previousDay.lastUpdatedAvailableBalance",
+    "sampleValue": "2025-08-06T20:38:17.2257593Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.accountNumber",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.balanceInfo.accountDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.checkTemplateCodes",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.usageProfileIds",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.extraDetails",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.vccAccountPoolId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.defaultAccount",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.defaultFor",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.paymentDefaults",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.bankExternalId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.accountNumberLastFourDigits",
+    "sampleValue": "1357",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.maskedAccountNumber",
+    "sampleValue": "*****1357",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.autoSyncFeatures",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.excludeFromAutoSync",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.checkEntitlements",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.userFeatures.default.enabled",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.userFeatures.default.featureType",
+    "sampleValue": "PAYABLES",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.userFeatures.default.featureSubType",
+    "sampleValue": "POSITIVE_PAY",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.userFeatures.default.featureOwner",
+    "sampleValue": "FISPAN",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.userFeatures.default.config",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.deleted",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.deletedDateTime",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.bankAccountFeatureConfigs",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "clientBankAccount.intermediaryBankAccounts",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "sourceBankAccountUsageProfileId",
+    "sampleValue": "",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "createdDate",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "paymentType",
+    "sampleValue": "ach",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "fulfillmentStartDate",
+    "sampleValue": "2025-11-17T19:50:21.161+0000",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "currency",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "amount",
+    "sampleValue": 374.75,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "paymentRequestId",
+    "sampleValue": "ab314526-a69f-4389-a726-1b39459deedf",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "meta.payer",
+    "sampleValue": "249",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "meta.payerEmail",
+    "sampleValue": "johnpark@fispan.com",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "meta.payerName",
+    "sampleValue": "Park, John",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "meta.pluginVersion",
+    "sampleValue": "2025.15",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "meta.timestamp",
+    "sampleValue": "2025-11-17T19:50:15.361Z",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "erpProvider",
+    "sampleValue": "INTACCT",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "purpose",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.invoiceId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.billId",
+    "sampleValue": "7150",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.postingDate",
+    "sampleValue": "2025-11-01",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.dueDate",
+    "sampleValue": "2025-12-01",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.purpose",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.invoicedAmount.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.invoicedAmount.amount",
+    "sampleValue": 374.75,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.discountAppliedAmount.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.discountAppliedAmount.amount",
+    "sampleValue": 0,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.discountDate",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.billCredits",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.apAdjustmentsApplied.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.apAdjustmentsApplied.amount",
+    "sampleValue": 0,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.remittedAmount.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.remittedAmount.amount",
+    "sampleValue": 374.75,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.dueAmount.currencyCode",
+    "sampleValue": "USD",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.dueAmount.amount",
+    "sampleValue": 374.75,
+    "valueType": "number",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.purchaseOrders",
+    "sampleValue": null,
+    "valueType": "array",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.name",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.grossAmount",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.excluded",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.commission",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.percentage",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.billingAddress",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "invoices.paymentExternalId",
+    "sampleValue": "7165",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "paymentDirection",
+    "sampleValue": "CREDIT",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "vendorPaymentMethod",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "fx",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "vendorAddressId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "vendorBankAccountId",
+    "sampleValue": "69dbd9df-9c31-47fc-8cab-f4c885900692",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-erp",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "destinationAccountId",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "sourceAccountId",
+    "sampleValue": "4b6df531-ab09-4598-917e-fe0f8c757361",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "payeeRole",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "paymentRequestDate",
+    "sampleValue": "2025-11-17T19:50:15.878+0000",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "scheduledTimestamp",
+    "sampleValue": null,
+    "valueType": "object",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "forScheduling",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "details.billIds",
+    "sampleValue": "c084b9a4-0152-405f-8251-9072b4ce2215",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "details.billPaymentId",
+    "sampleValue": "7165",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "details.hasERPPartialPayments",
+    "sampleValue": "true",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4",
+      "phase-2-plugin"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "details.ERPPartiallyPaidBills",
+    "sampleValue": "c084b9a4-0152-405f-8251-9072b4ce2215",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "details.numberOfERPPartiallyPaidBills",
+    "sampleValue": "1",
+    "valueType": "string",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "hasAttachments",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "safetyHoldApplied",
+    "sampleValue": false,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
+  },
+  {
+    "key": "fxEmpty",
+    "sampleValue": true,
+    "valueType": "boolean",
+    "description": "",
+    "candidatePhases": [
+      "phase-4"
+    ],
+    "railsCovered": []
   }
 ]
