@@ -66,17 +66,17 @@
                         <span class="text-xs text-slate-400">Assign raw spec rows to solution phases</span>
                     </div>
                     
-                    <div class="flex flex-col md:flex-row gap-6">
-                        <div class="flex-1 border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:bg-slate-50 transition cursor-pointer bg-slate-50/50 drag-zone" id="drag-zone">
+                    <div class="flex flex-col gap-6">
+                        <div class="w-full border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:bg-slate-50 transition cursor-pointer bg-slate-50/50 drag-zone" id="drag-zone">
                             <div class="text-3xl mb-2">📄</div>
                             <p class="text-sm font-medium text-slate-700">Standard Check Layout.csv</p>
                             <p class="text-xs text-emerald-600 font-bold mt-1">✓ Ready</p>
                         </div>
 
-                        <div class="flex-1">
+                        <div class="w-full">
                             <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Unassigned Rows (Staging)</h4>
-                            <div id="unassigned-staging" class="border border-slate-200 rounded-lg h-64 overflow-y-auto bg-white p-2 space-y-2 shadow-inner">
-                                <p class="text-xs text-slate-500 p-3">No unassigned rows.</p>
+                            <div id="unassigned-staging" class="w-full">
+                                <p class="text-xs text-slate-500 p-3 border rounded bg-white">No unassigned rows.</p>
                             </div>
                         </div>
                     </div>
@@ -305,8 +305,7 @@
     </div>
 
     <div id="uploader-modal" class="uploader-modal hidden">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative">
-            <button onclick="toggleUploader()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 relative"> <button onclick="toggleUploader()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Upload Bank Specification</h3>
             <p class="text-sm text-slate-500 mb-6">Upload a CSV or Paste Rows to begin the assignment process.</p>
                 <div id="drag-zone-modal" class="border-2 border-dashed border-slate-200 rounded-lg p-8 text-center hover:bg-slate-50 transition cursor-pointer drag-zone">
@@ -317,12 +316,6 @@
                     <input id="csv-file-input" type="file" accept="text/csv,.csv" class="hidden">
                     <button id="btn-upload-csv" class="text-sm bg-blue-600 text-white px-3 py-2 rounded-md">Upload CSV</button>
                 </div>
-            <div class="mt-6">
-                <h4 class="text-xs font-bold text-slate-500 uppercase mb-3">Unassigned Rows (Preview)</h4>
-                <div id="unassigned-preview" class="border border-slate-200 rounded-lg h-48 overflow-y-auto bg-slate-50 p-2 space-y-2">
-                    <p class="text-xs text-slate-500 p-3">No preview rows. Upload a CSV or paste rows to start.</p>
-                </div>
-            </div>
         </div>
     </div>
 
