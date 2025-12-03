@@ -2,11 +2,10 @@
 const masterMappings = {};
 const STORAGE_KEY = 'solutioning-workbench-state-v1';
 let currentMode = 'enrichment'; 
-// Staging Data: Array of objects { rowId: 1, cells: ["val1", "val2"], category: "payer" }
+// Staging Data
 let stagingData = [];
-// Which column index is the "Active" mapping column? (Default 0 for Col 2 value if preserving structure)
-// Logic: Col 0 = Row ID (internal), Cells[0] = Col 1 (CSV), Cells[1] = Col 2 (CSV).
-let activeMapColumnIndex = 0; // Default to first data column
+let stagingColumnWidths = []; // Store widths: [150, 200, 100]
+let activeMapColumnIndex = 0; 
 
 const MODE_CONFIG = {
     enrichment: {
@@ -76,7 +75,7 @@ const MODE_CONFIG = {
                 desc: 'Information the vendor needs to reconcile their books (Invoice #s).',
                 components: [{ id: 'phase-rm-body', title: 'Remittance Fields', btnLabel: 'Add Remittance Mapping' }], qa: 'q-phase-rm'
             }
-                ],
+        ],
         tags: [
             { id: 'fc', label: 'File Control' }, { id: 'ed', label: 'Entity Details' }, 
             { id: 'pi', label: 'Payment Instr.' }, { id: 'rm', label: 'Remittance' }
@@ -196,16 +195,12 @@ function loadState() {
         if (!raw) return;
         const state = JSON.parse(raw);
         if(state.master) Object.assign(masterMappings, state.master);
+        
         // Load Staging Data
         if(state.stagingData) stagingData = state.stagingData;
-        else if(state.staging) {
-            // Migration from old string-based staging to cell-based staging
-            stagingData = state.staging.map((s, i) => ({ 
-                rowId: i+1, 
-                cells: typeof s === 'string' ? [s] : [s.text], 
-                category: s.category 
-            }));
-        }
+        
+        // Load Column Widths
+        if(state.stagingColumnWidths) stagingColumnWidths = state.stagingColumnWidths;
 
         const modeKey = currentMode; 
         const modeData = state[modeKey] || {};
@@ -227,7 +222,7 @@ function loadState() {
             }
         });
         
-        renderStagingTable(); // Replaces old renderStagingRow logic
+        renderStagingTable(); 
         renderFullSpec();
     } catch (e) { console.warn('loadState failed', e); }
 }
@@ -237,7 +232,8 @@ function saveState() {
         const raw = localStorage.getItem(STORAGE_KEY);
         const state = raw ? JSON.parse(raw) : {};
         state.master = masterMappings;
-        state.stagingData = stagingData; // Save robust staging data
+        state.stagingData = stagingData;
+        state.stagingColumnWidths = stagingColumnWidths; // Save widths
         
         const modeKey = currentMode;
         const modeData = { };
@@ -283,13 +279,12 @@ function createTableRow(tbody, data) {
     const tr = document.createElement('tr');
     const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
     
-    // Visual Split Logic
     let specDisplay = data.spec;
     const match = data.spec.match(/^Row\s+(\d+)[:\s]+(.*)/i);
     if (match) {
-        specDisplay = `<span class="row-id-badge">Row ${match[1]}</span><span class="font-bold text-slate-700 text-sm">${match[2]}</span>`;
+        specDisplay = `<span class="row-id-badge">Row ${match[1]}</span><span class="font-bold text-slate-900 text-sm">${match[2]}</span>`;
     } else {
-        specDisplay = `<span class="text-sm font-medium text-slate-700">${data.spec}</span>`;
+        specDisplay = `<span class="text-sm font-medium text-slate-900">${data.spec}</span>`;
     }
 
     tr.innerHTML = `
@@ -345,32 +340,33 @@ function setupFispanAutocomplete(input, list) {
     input.addEventListener('focus', (e) => { if(e.target.value) e.target.dispatchEvent(new Event('input')); });
 }
 
-// --- STAGING LOGIC (Updated for Spreadsheet) ---
+// --- STAGING LOGIC (With Resizing) ---
 function renderStagingTable() {
     const container = document.getElementById('unassigned-staging');
     if (!container) return;
     container.innerHTML = '';
 
     if (stagingData.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 p-3">No unassigned rows.</p>';
+        container.innerHTML = '<p class="text-xs text-slate-500 p-3 border rounded bg-white">No unassigned rows.</p>';
         return;
     }
 
-    // Determine max columns
     let maxCols = 0;
     stagingData.forEach(row => maxCols = Math.max(maxCols, row.cells.length));
 
-    // Create Table
+    // Init widths if empty
+    if(stagingColumnWidths.length < maxCols) {
+        for(let i=stagingColumnWidths.length; i<maxCols; i++) stagingColumnWidths.push(150); // Default 150px
+    }
+
     const tableWrapper = document.createElement('div');
     tableWrapper.className = 'spreadsheet-container';
     const table = document.createElement('table');
     table.className = 'spreadsheet-table';
     
-    // Header
     const thead = document.createElement('thead');
     const trHead = document.createElement('tr');
     
-    // Col 0: Action/RowID
     const thAction = document.createElement('th');
     thAction.className = 'col-action-header';
     thAction.innerText = 'Action';
@@ -378,47 +374,35 @@ function renderStagingTable() {
 
     for (let i = 0; i < maxCols; i++) {
         const th = document.createElement('th');
-        // Radio for mapping selection
+        th.style.width = `${stagingColumnWidths[i]}px`;
+        
         const radio = document.createElement('input');
-        radio.type = 'radio';
-        radio.name = 'activeMapCol';
-        radio.className = 'map-radio';
+        radio.type = 'radio'; radio.name = 'activeMapCol'; radio.className = 'map-radio';
         radio.checked = (i === activeMapColumnIndex);
         radio.onclick = () => { activeMapColumnIndex = i; };
         
-        const label = document.createElement('span');
-        label.innerText = `Col ${i + 1}`;
+        const label = document.createElement('span'); label.innerText = `Col ${i + 1}`;
+        const delBtn = document.createElement('span'); delBtn.className = 'col-delete-btn'; delBtn.innerText = '✕'; delBtn.title = 'Delete Column'; delBtn.onclick = (e) => { e.stopPropagation(); deleteColumn(i); };
         
-        const delBtn = document.createElement('span');
-        delBtn.className = 'col-delete-btn';
-        delBtn.innerText = '✕';
-        delBtn.title = 'Delete Column';
-        delBtn.onclick = (e) => { e.stopPropagation(); deleteColumn(i); };
+        // Resizer handle
+        const resizer = document.createElement('div');
+        resizer.className = 'resizer';
+        resizer.addEventListener('mousedown', (e) => initResize(e, i));
 
-        th.appendChild(radio);
-        th.appendChild(label);
-        th.appendChild(delBtn);
+        th.appendChild(radio); th.appendChild(label); th.appendChild(delBtn); th.appendChild(resizer);
         trHead.appendChild(th);
     }
     thead.appendChild(trHead);
     table.appendChild(thead);
 
-    // Body
     const tbody = document.createElement('tbody');
     stagingData.forEach((rowObj, idx) => {
         const tr = document.createElement('tr');
-        
-        // Action Cell
         const tdAction = document.createElement('td');
         tdAction.className = 'bg-slate-50 sticky left-0 z-10 border-r';
         
-        // Render Action Buttons (Stacked/Compact)
-        const btnDiv = document.createElement('div');
-        btnDiv.className = 'flex flex-col gap-1';
-        // Row ID Badge
-        const idBadge = document.createElement('div');
-        idBadge.className = 'row-id-badge mb-1 text-center';
-        idBadge.innerText = `Row ${rowObj.rowId}`;
+        const btnDiv = document.createElement('div'); btnDiv.className = 'flex flex-col gap-1';
+        const idBadge = document.createElement('div'); idBadge.className = 'row-id-badge mb-1 text-center'; idBadge.innerText = `Row ${rowObj.rowId}`;
         btnDiv.appendChild(idBadge);
 
         MODE_CONFIG[currentMode].targets.forEach(t => {
@@ -431,10 +415,10 @@ function renderStagingTable() {
         tdAction.appendChild(btnDiv);
         tr.appendChild(tdAction);
 
-        // Data Cells
         for(let i=0; i<maxCols; i++) {
             const td = document.createElement('td');
             td.innerText = rowObj.cells[i] || '';
+            // Optional: apply width here too for some browsers, but TH usually controls it
             tr.appendChild(td);
         }
         tbody.appendChild(tr);
@@ -444,15 +428,52 @@ function renderStagingTable() {
     container.appendChild(tableWrapper);
 }
 
+// --- COLUMN RESIZING LOGIC ---
+let startX, startWidth, resizingColIndex;
+
+function initResize(e, colIndex) {
+    e.preventDefault(); // Prevent text selection
+    startX = e.clientX;
+    resizingColIndex = colIndex;
+    // Get current width
+    startWidth = stagingColumnWidths[colIndex] || 150;
+    
+    document.documentElement.addEventListener('mousemove', doResize);
+    document.documentElement.addEventListener('mouseup', stopResize);
+    document.body.style.cursor = 'col-resize';
+}
+
+function doResize(e) {
+    const diff = e.clientX - startX;
+    const newWidth = Math.max(50, startWidth + diff); // Min width 50px
+    stagingColumnWidths[resizingColIndex] = newWidth;
+    
+    // Update DOM directly for performance (avoid full re-render)
+    const table = document.querySelector('.spreadsheet-table');
+    if(table) {
+        const ths = table.querySelectorAll('th');
+        if(ths[resizingColIndex + 1]) { // +1 because of Action column
+            ths[resizingColIndex + 1].style.width = `${newWidth}px`;
+        }
+    }
+}
+
+function stopResize() {
+    document.documentElement.removeEventListener('mousemove', doResize);
+    document.documentElement.removeEventListener('mouseup', stopResize);
+    document.body.style.cursor = 'default';
+    saveState(); // Persist new widths
+}
+
 function assignStagingRow(dataIndex, targetId) {
     const rowObj = stagingData[dataIndex];
-    const val = rowObj.cells[activeMapColumnIndex] || rowObj.cells[0]; // Fallback
+    const val = rowObj.cells[activeMapColumnIndex] || rowObj.cells[0]; 
     const specText = `Row ${rowObj.rowId}: ${val}`;
     
     const tbody = document.getElementById(targetId);
     if(tbody) {
         createTableRow(tbody, { spec: specText, mapping: '', status: 'pending', category: '' });
-        stagingData.splice(dataIndex, 1); // Remove from staging
+        stagingData.splice(dataIndex, 1); 
         renderStagingTable();
         saveState();
         renderGaps();
@@ -465,15 +486,13 @@ function deleteColumn(colIndex) {
     stagingData.forEach(row => {
         row.cells.splice(colIndex, 1);
     });
-    // Adjust active index if needed
+    stagingColumnWidths.splice(colIndex, 1); // Remove width entry
     if(activeMapColumnIndex >= colIndex && activeMapColumnIndex > 0) activeMapColumnIndex--;
     renderStagingTable();
     saveState();
 }
 
-function assignRow(btn, targetId) {
-    // Legacy/Fallback logic if needed, but assignStagingRow replaces this for staging
-}
+function assignRow(btn, targetId) {}
 function addRow(tbodyId) {
     createTableRow(document.getElementById(tbodyId), { spec: 'New Requirement', mapping: '', status: 'pending' });
     saveState();
@@ -484,18 +503,14 @@ function editRow(btn) {
     actionTd.innerHTML = `
         <div class="flex gap-2 justify-end">
              <button class="text-xs text-blue-600" onclick="saveRowBtn(this)">Save</button>
-             <button class="text-xs text-red-600" onclick="toggleUnassignMark(this)">Unassign</button>
+             <button class="text-xs text-red-600" onclick="saveRowBtn(this, true)">Unassign</button>
         </div>
     `;
 }
-function saveRowBtn(btn) {
+function saveRowBtn(btn, unassign = false) {
     const tr = btn.closest('tr');
-    if(tr.dataset.unassign === '1') {
-        // Unassign logic: Move back to staging?
-        // Extract original text. This is hard because we formatted it.
-        // For MVP, just delete or create a basic staging row.
+    if(unassign) {
         const specRaw = tr.children[0].innerText; 
-        // Try to parse "Row 123: Value"
         const m = specRaw.match(/Row\s+(\d+)[:\s]+(.*)/);
         if(m) {
             stagingData.push({ rowId: m[1], cells: [m[2]], category: '' });
@@ -511,14 +526,7 @@ function saveRowBtn(btn) {
     saveState();
     renderGaps();
 }
-function toggleUnassignMark(btn) {
-    const tr = btn.closest('tr');
-    if(tr.dataset.unassign === '1') {
-        delete tr.dataset.unassign; tr.classList.remove('unassign-mark'); btn.innerText = 'Unassign';
-    } else {
-        tr.dataset.unassign = '1'; tr.classList.add('unassign-mark'); btn.innerText = 'Undo';
-    }
-}
+function toggleUnassignMark(btn) {} // Deprecated by immediate unassign
 
 // --- Deep Linking for Gaps ---
 function scrollToRow(specText) {
@@ -611,8 +619,8 @@ function renderFullSpec() {
     document.getElementById('master-count').innerText = visibleCount;
 }
 function getAllSpecPool() {
-    // Collect text from workbench tables
     const set = new Set();
+    stagingData.forEach(row => { row.cells.forEach(c => set.add(c.trim())); });
     const targets = MODE_CONFIG[currentMode].targets.map(t=>t.id);
     targets.forEach(id => {
         const tb = document.getElementById(id);
