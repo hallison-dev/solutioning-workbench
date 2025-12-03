@@ -2,9 +2,8 @@
 const masterMappings = {};
 const STORAGE_KEY = 'solutioning-workbench-state-v1';
 let currentMode = 'enrichment'; 
-// Staging Data
+// Staging Data: { rowId, cells: [], category, question: { text, answer, resolved } }
 let stagingData = [];
-// stagingColumnWidths: [ActionColWidth, DataCol1Width, DataCol2Width...]
 let stagingColumnWidths = []; 
 let activeMapColumnIndex = 0; 
 
@@ -277,13 +276,12 @@ function createTableRow(tbody, data) {
     const tr = document.createElement('tr');
     const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
     
-    // Visual Split Logic
     let specDisplay = data.spec;
     const match = data.spec.match(/^Row\s+(\d+)[:\s]+(.*)/i);
     if (match) {
         specDisplay = `<span class="row-id-badge">Row ${match[1]}</span><span class="font-bold text-slate-900 text-sm">${match[2]}</span>`;
     } else {
-        specDisplay = `<span class="text-sm font-medium text-slate-900">${data.spec}</span>`;
+        specDisplay = `<span class="text-sm font-medium text-slate-700">${data.spec}</span>`;
     }
 
     tr.innerHTML = `
@@ -339,12 +337,11 @@ function setupFispanAutocomplete(input, list) {
     input.addEventListener('focus', (e) => { if(e.target.value) e.target.dispatchEvent(new Event('input')); });
 }
 
-// --- STAGING LOGIC (Updated: Scroll Preservation & Action Resizing) ---
+// --- STAGING LOGIC (Updated with Dropdown & Questions) ---
 function renderStagingTable() {
     const container = document.getElementById('unassigned-staging');
     if (!container) return;
     
-    // SCROLL FIX: Capture existing scroll position
     const existingWrapper = container.querySelector('.spreadsheet-container');
     const previousScrollTop = existingWrapper ? existingWrapper.scrollTop : 0;
     const previousScrollLeft = existingWrapper ? existingWrapper.scrollLeft : 0;
@@ -358,13 +355,8 @@ function renderStagingTable() {
 
     let maxCols = 0;
     stagingData.forEach(row => maxCols = Math.max(maxCols, row.cells.length));
-
-    // Ensure width array has entry for Action Col (index 0) + Data Cols
-    // Total Resizable columns = 1 (Action) + maxCols
     const totalCols = 1 + maxCols;
-    while(stagingColumnWidths.length < totalCols) {
-        stagingColumnWidths.push(120); // Default width
-    }
+    while(stagingColumnWidths.length < totalCols) stagingColumnWidths.push(120);
 
     const tableWrapper = document.createElement('div');
     tableWrapper.className = 'spreadsheet-container';
@@ -374,7 +366,6 @@ function renderStagingTable() {
     const thead = document.createElement('thead');
     const trHead = document.createElement('tr');
     
-    // Col 0: Action Header (Now Resizable)
     const thAction = document.createElement('th');
     thAction.className = 'col-action-header';
     thAction.innerText = 'Action';
@@ -385,7 +376,6 @@ function renderStagingTable() {
     thAction.appendChild(resizerAction);
     trHead.appendChild(thAction);
 
-    // Data Columns (starting index 1 in widths array)
     for (let i = 0; i < maxCols; i++) {
         const widthIndex = i + 1;
         const th = document.createElement('th');
@@ -412,21 +402,58 @@ function renderStagingTable() {
     const tbody = document.createElement('tbody');
     stagingData.forEach((rowObj, idx) => {
         const tr = document.createElement('tr');
+        
+        // Logic for Row Tinting based on Question Status
+        if(rowObj.question) {
+            if(rowObj.question.resolved) tr.classList.add('row-resolved');
+            else tr.classList.add('row-unresolved');
+        }
+
         const tdAction = document.createElement('td');
         tdAction.className = 'bg-slate-50 sticky left-0 z-10 border-r';
         
-        const btnDiv = document.createElement('div'); btnDiv.className = 'flex flex-col gap-1';
-        const idBadge = document.createElement('div'); idBadge.className = 'row-id-badge mb-1 text-center'; idBadge.innerText = `Row ${rowObj.rowId}`;
-        btnDiv.appendChild(idBadge);
-
+        // New Action Layout: ID + Dropdown + Question Btn
+        const btnDiv = document.createElement('div'); 
+        btnDiv.className = 'action-container';
+        
+        const idBadge = document.createElement('div'); 
+        idBadge.className = 'row-id-badge'; 
+        idBadge.innerText = `R${rowObj.rowId}`;
+        
+        // Assign Dropdown
+        const dropdownWrapper = document.createElement('div');
+        dropdownWrapper.className = 'action-dropdown-wrapper';
+        dropdownWrapper.innerHTML = `
+            <button class="action-dropdown-btn" onclick="this.parentElement.classList.toggle('open'); event.stopPropagation();">
+                Assign <span>▾</span>
+            </button>
+            <div class="action-dropdown-menu"></div>
+        `;
+        const menu = dropdownWrapper.querySelector('.action-dropdown-menu');
         MODE_CONFIG[currentMode].targets.forEach(t => {
-            const btn = document.createElement('button');
-            // Added action-btn class for wrapping
-            btn.className = `action-btn text-[9px] bg-${t.color}-100 text-${t.color}-700 rounded hover:bg-${t.color}-200 w-full text-center border border-${t.color}-200`;
-            btn.innerText = t.label; // Using Full Name based on new Config
-            btn.onclick = () => assignStagingRow(idx, t.id);
-            btnDiv.appendChild(btn);
+             const item = document.createElement('button');
+             item.innerText = t.label;
+             item.onclick = () => assignStagingRow(idx, t.id);
+             menu.appendChild(item);
         });
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', () => dropdownWrapper.classList.remove('open'));
+
+        // Question Button
+        const qBtn = document.createElement('button');
+        let qClass = 'action-question-btn';
+        if(rowObj.question) {
+            if(rowObj.question.resolved) qClass += ' has-q-resolved';
+            else qClass += ' has-q-unresolved';
+        }
+        qBtn.className = qClass;
+        qBtn.innerText = '?';
+        qBtn.onclick = (e) => { e.stopPropagation(); openRowQuestionModal(idx); };
+
+        btnDiv.appendChild(idBadge);
+        btnDiv.appendChild(dropdownWrapper);
+        btnDiv.appendChild(qBtn);
+        
         tdAction.appendChild(btnDiv);
         tr.appendChild(tdAction);
 
@@ -441,9 +468,90 @@ function renderStagingTable() {
     tableWrapper.appendChild(table);
     container.appendChild(tableWrapper);
 
-    // SCROLL FIX: Restore position
     if (previousScrollTop > 0) tableWrapper.scrollTop = previousScrollTop;
     if (previousScrollLeft > 0) tableWrapper.scrollLeft = previousScrollLeft;
+}
+
+// --- ROW QUESTION MODAL LOGIC ---
+let activeQuestionRowIndex = null;
+
+function openRowQuestionModal(rowIndex) {
+    activeQuestionRowIndex = rowIndex;
+    const modal = document.getElementById('row-question-modal');
+    const container = document.getElementById('row-question-container');
+    container.innerHTML = ''; // Clear previous
+
+    const qData = stagingData[rowIndex].question || { text: '', answer: '', resolved: false };
+    
+    // Create Question Component (reusing styles)
+    const div = document.createElement('div');
+    div.className = `question-row flex flex-col p-3 bg-white rounded border border-slate-200 shadow-sm ${qData.resolved ? 'confirmed' : ''}`;
+    
+    // Check/Title Row
+    const header = document.createElement('div');
+    header.className = 'flex items-start w-full mb-2';
+    
+    const icon = document.createElement('div');
+    icon.className = `flex-shrink-0 pt-0.5 cursor-pointer mr-3 transition ${qData.resolved ? 'text-emerald-600' : 'text-slate-300'} hover:text-emerald-500`;
+    icon.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+    icon.onclick = () => {
+        // Toggle Resolved state locally then save
+        qData.resolved = !qData.resolved;
+        if(qData.resolved) {
+             div.classList.add('confirmed');
+             icon.classList.remove('text-slate-300'); icon.classList.add('text-emerald-600');
+             input.classList.add('text-emerald-700', 'line-through');
+        } else {
+             div.classList.remove('confirmed');
+             icon.classList.add('text-slate-300'); icon.classList.remove('text-emerald-600');
+             input.classList.remove('text-emerald-700', 'line-through');
+        }
+        saveRowQuestion(rowIndex, qData);
+    };
+
+    const input = document.createElement('input');
+    input.className = `q-text w-full text-sm outline-none bg-transparent font-medium text-slate-700 ${qData.resolved ? 'text-emerald-700 line-through' : ''}`;
+    input.placeholder = "Type your question here...";
+    input.value = qData.text;
+    input.oninput = (e) => { qData.text = e.target.value; saveRowQuestion(rowIndex, qData); };
+
+    header.appendChild(icon);
+    header.appendChild(input);
+    div.appendChild(header);
+
+    // Answer Section
+    const ansDiv = document.createElement('div');
+    ansDiv.className = 'pl-8 w-full';
+    const ansArea = document.createElement('textarea');
+    ansArea.className = 'w-full text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none focus:border-blue-300';
+    ansArea.rows = 3;
+    ansArea.placeholder = 'Enter answer...';
+    ansArea.value = qData.answer;
+    ansArea.oninput = (e) => { qData.answer = e.target.value; saveRowQuestion(rowIndex, qData); };
+    
+    ansDiv.appendChild(ansArea);
+    div.appendChild(ansDiv);
+    container.appendChild(div);
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if(!qData.text) input.focus();
+}
+
+function saveRowQuestion(rowIndex, qData) {
+    // If text and answer are empty, remove question object entirely
+    if(!qData.text && !qData.answer) {
+        delete stagingData[rowIndex].question;
+    } else {
+        stagingData[rowIndex].question = qData;
+    }
+    saveState();
+    renderStagingTable(); // Update tints
+}
+
+function closeRowQuestionModal() {
+    document.getElementById('row-question-modal').classList.add('hidden');
+    document.getElementById('row-question-modal').classList.remove('flex');
 }
 
 // --- COLUMN RESIZING LOGIC ---
@@ -462,7 +570,7 @@ function initResize(e, colIndex) {
 
 function doResize(e) {
     const diff = e.clientX - startX;
-    const newWidth = Math.max(40, startWidth + diff); // Min width
+    const newWidth = Math.max(40, startWidth + diff); 
     stagingColumnWidths[resizingColIndex] = newWidth;
     
     const table = document.querySelector('.spreadsheet-table');
@@ -490,7 +598,7 @@ function assignStagingRow(dataIndex, targetId) {
     if(tbody) {
         createTableRow(tbody, { spec: specText, mapping: '', status: 'pending', category: '' });
         stagingData.splice(dataIndex, 1); 
-        renderStagingTable(); // Scroll is preserved inside this function now
+        renderStagingTable(); 
         saveState();
         renderGaps();
         showToast('Assigned row ' + rowObj.rowId, 'success');
@@ -502,10 +610,7 @@ function deleteColumn(colIndex) {
     stagingData.forEach(row => {
         row.cells.splice(colIndex, 1);
     });
-    // width array: Index 0 is Action. Index 1 is DataCol0.
-    // so removing DataCol X means removing Width Index X+1
     stagingColumnWidths.splice(colIndex + 1, 1); 
-    
     if(activeMapColumnIndex >= colIndex && activeMapColumnIndex > 0) activeMapColumnIndex--;
     renderStagingTable();
     saveState();
