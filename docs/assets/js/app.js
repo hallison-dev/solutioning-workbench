@@ -2,7 +2,7 @@
 const masterMappings = {};
 const STORAGE_KEY = 'solutioning-workbench-state-v1';
 let currentMode = 'enrichment'; 
-// Staging Data: { rowId, cells: [], category, question: {}, mapping: { key, status, details } }
+// Staging Data
 let stagingData = [];
 let stagingColumnWidths = []; 
 let activeMapColumnIndex = 0; 
@@ -188,7 +188,7 @@ function renderWorkbench() {
     });
 }
 
-// --- CORE LOGIC ---
+// --- CORE LOGIC (Persistence, Editing) ---
 function loadState() {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -356,18 +356,16 @@ function renderStagingTable() {
     let maxCols = 0;
     stagingData.forEach(row => maxCols = Math.max(maxCols, row.cells.length));
     const totalCols = 1 + maxCols;
-    while(stagingColumnWidths.length < totalCols) stagingColumnWidths.push(120); // Default width
+    while(stagingColumnWidths.length < totalCols) stagingColumnWidths.push(120);
 
     const tableWrapper = document.createElement('div');
     tableWrapper.className = 'spreadsheet-container';
     const table = document.createElement('table');
     table.className = 'spreadsheet-table';
     
-    // Header
     const thead = document.createElement('thead');
     const trHead = document.createElement('tr');
     
-    // Action Column (Fixed index 0)
     const thAction = document.createElement('th');
     thAction.className = 'col-action-header';
     thAction.innerText = 'Action';
@@ -409,20 +407,17 @@ function renderStagingTable() {
             else tr.classList.add('row-unresolved');
         }
 
-        // Action Cell
         const tdAction = document.createElement('td');
         tdAction.className = 'action-cell';
         
         const actionContainer = document.createElement('div');
         actionContainer.className = 'action-container';
 
-        // Row ID
         const idBadge = document.createElement('div');
         idBadge.className = 'row-id-badge';
         idBadge.innerText = `R${rowObj.rowId}`;
         actionContainer.appendChild(idBadge);
 
-        // Assign Dropdown
         const dropdownWrapper = document.createElement('div');
         dropdownWrapper.className = 'action-dropdown-wrapper';
         dropdownWrapper.innerHTML = `
@@ -430,11 +425,9 @@ function renderStagingTable() {
         `;
         actionContainer.appendChild(dropdownWrapper);
 
-        // Button Row (Map + Question)
         const btnRow = document.createElement('div');
         btnRow.className = 'action-buttons-row';
 
-        // Map Button
         const mapBtn = document.createElement('button');
         let mapClass = 'action-map-btn';
         let mapText = 'Map';
@@ -447,7 +440,6 @@ function renderStagingTable() {
         mapBtn.onclick = (e) => { e.stopPropagation(); openMapModal(idx); };
         btnRow.appendChild(mapBtn);
 
-        // Question Button
         const qBtn = document.createElement('button');
         let qClass = 'action-question-btn';
         if(rowObj.question) {
@@ -478,10 +470,8 @@ function renderStagingTable() {
     if (previousScrollLeft > 0) tableWrapper.scrollLeft = previousScrollLeft;
 }
 
-// --- Assign Dropdown Logic (Z-Index Fix) ---
 function openActionDropdown(btn, e) {
     e.stopPropagation();
-    // Close others
     document.querySelectorAll('.action-dropdown-menu').forEach(m => m.remove());
     
     const rect = btn.getBoundingClientRect();
@@ -491,7 +481,6 @@ function openActionDropdown(btn, e) {
     menu.style.left = `${rect.left + window.scrollX}px`;
     menu.style.display = 'block';
 
-    // Find row index
     const tr = btn.closest('tr');
     const rowIndex = Array.from(tr.parentNode.children).indexOf(tr);
 
@@ -518,15 +507,20 @@ function openMapModal(rowIndex) {
     const modal = document.getElementById('map-modal');
     modal.classList.remove('hidden'); modal.classList.add('flex');
     
-    // Reset UI
     const searchInput = document.getElementById('map-search');
     const resultsDiv = document.getElementById('map-results');
     const previewDiv = document.getElementById('map-preview-area');
     searchInput.value = '';
     resultsDiv.innerHTML = '';
     previewDiv.classList.add('hidden');
+    
+    // Initialize Resizer State for modal
+    const leftPane = document.getElementById('map-results');
+    leftPane.style.width = '33%'; // Reset default width
 
-    // Load existing mapping if present
+    // Render all items by default
+    renderMapList(Object.values(masterMappings));
+
     const existing = stagingData[rowIndex].mapping;
     if (existing) {
         renderMapPreview(existing);
@@ -534,33 +528,37 @@ function openMapModal(rowIndex) {
     searchInput.focus();
 }
 
-document.getElementById('map-search').addEventListener('input', (e) => {
-    const val = e.target.value.toLowerCase();
+// Helper to render the list
+function renderMapList(items) {
     const list = document.getElementById('map-results');
     list.innerHTML = '';
-    if (!val) return;
-
-    const matches = Object.values(masterMappings).filter(m => 
-        m.key.toLowerCase().includes(val) || (m.description && m.description.toLowerCase().includes(val))
-    );
-    
-    matches.slice(0, 15).forEach(m => {
+    if (items.length === 0) {
+        list.innerHTML = '<p class="text-xs text-slate-400 p-2">No results.</p>';
+        return;
+    }
+    items.slice(0, 50).forEach(m => { // Limit initial render for performance
         const div = document.createElement('div');
         div.className = 'p-2 border-b border-slate-100 hover:bg-blue-50 cursor-pointer text-xs text-slate-700';
         div.innerText = m.key;
         div.onclick = () => selectMapping(m);
         list.appendChild(div);
     });
+}
+
+document.getElementById('map-search').addEventListener('input', (e) => {
+    const val = e.target.value.toLowerCase();
+    const matches = Object.values(masterMappings).filter(m => 
+        m.key.toLowerCase().includes(val) || (m.description && m.description.toLowerCase().includes(val))
+    );
+    renderMapList(matches);
 });
 
 function selectMapping(mapping) {
     const obj = {
         key: mapping.key,
-        status: 'pending', // Default to pending on selection
+        status: 'pending', 
         details: mapping
     };
-    // Temporarily store in a staging variable or direct to render?
-    // Just render preview, don't save yet until confirm
     renderMapPreview(obj);
 }
 
@@ -569,9 +567,7 @@ function renderMapPreview(mapObj) {
     area.classList.remove('hidden');
     
     document.getElementById('map-key-display').innerText = mapObj.key;
-    // IDE Code Block
     const jsonString = JSON.stringify(mapObj.details || {}, null, 2);
-    // Simple syntax highlight
     const highlighted = jsonString.replace(/"(.*?)":/g, '<span class="ide-key">"$1":</span>')
                                   .replace(/: "(.*?)"/g, ': <span class="ide-string">"$1"</span>')
                                   .replace(/: (true|false|null|[0-9]+)/g, ': <span class="ide-bool">$1</span>');
@@ -586,7 +582,7 @@ function confirmMapping(status) {
     
     stagingData[activeMapRowIndex].mapping = {
         key: keyText,
-        status: status, // 'confirmed' or 'pending'
+        status: status, 
         details: details
     };
     saveState();
@@ -604,6 +600,41 @@ function removeMapping() {
 function closeMapModal() {
     document.getElementById('map-modal').classList.add('hidden');
     document.getElementById('map-modal').classList.remove('flex');
+}
+
+// --- MODAL RESIZING LOGIC (NEW) ---
+let modalStartX, modalStartWidth;
+function initModalResize(e) {
+    e.preventDefault();
+    modalStartX = e.clientX;
+    const leftPane = document.getElementById('map-results');
+    modalStartWidth = leftPane.getBoundingClientRect().width;
+    
+    document.documentElement.addEventListener('mousemove', doModalResize);
+    document.documentElement.addEventListener('mouseup', stopModalResize);
+    document.body.style.cursor = 'col-resize';
+    document.getElementById('modal-resizer').classList.add('modal-resizing');
+}
+
+function doModalResize(e) {
+    const diff = e.clientX - modalStartX;
+    const containerWidth = document.getElementById('map-modal').querySelector('.flex.flex-1').getBoundingClientRect().width;
+    let newWidth = modalStartWidth + diff;
+    
+    // Constraints (min 20%, max 80%)
+    if (newWidth < containerWidth * 0.2) newWidth = containerWidth * 0.2;
+    if (newWidth > containerWidth * 0.8) newWidth = containerWidth * 0.8;
+
+    const leftPane = document.getElementById('map-results');
+    leftPane.style.width = `${newWidth}px`;
+    leftPane.style.flex = 'none'; // Disable flex grow to obey fixed width
+}
+
+function stopModalResize() {
+    document.documentElement.removeEventListener('mousemove', doModalResize);
+    document.documentElement.removeEventListener('mouseup', stopModalResize);
+    document.body.style.cursor = 'default';
+    document.getElementById('modal-resizer').classList.remove('modal-resizing');
 }
 
 
@@ -694,7 +725,6 @@ function doResize(e) {
     const newWidth = Math.max(20, startWidth + diff); // Min width 20px
     stagingColumnWidths[resizingColIndex] = newWidth;
     
-    // Update table layout dynamically
     const table = document.querySelector('.spreadsheet-table');
     if(table) {
         const ths = table.querySelectorAll('th');

@@ -173,6 +173,10 @@ aside.collapsed { width: 0 !important; opacity: 0; padding: 0 !important; }
 .ide-string { color: #86efac; }
 .ide-bool { color: #fca5a5; }
 
+/* Modal Resizer (NEW) */
+.modal-resizer { width: 4px; background: #e2e8f0; cursor: col-resize; transition: background 0.2s; z-index: 10; flex-shrink: 0; }
+.modal-resizer:hover, .modal-resizing { background: #3b82f6; }
+
 .col-delete-btn { margin-left: 6px; color: #94a3b8; cursor: pointer; transition: color 0.2s; font-size: 10px; }
 .spreadsheet-table th:hover .col-delete-btn { color: #ef4444; }
 .map-radio { margin-right: 6px; cursor: pointer; accent-color: #2563eb; vertical-align: middle; width: 10px; height: 10px; }
