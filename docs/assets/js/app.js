@@ -4,16 +4,17 @@ const STORAGE_KEY = 'solutioning-workbench-state-v1';
 let currentMode = 'enrichment'; 
 // Staging Data
 let stagingData = [];
-let stagingColumnWidths = []; // Store widths: [150, 200, 100]
+// stagingColumnWidths: [ActionColWidth, DataCol1Width, DataCol2Width...]
+let stagingColumnWidths = []; 
 let activeMapColumnIndex = 0; 
 
 const MODE_CONFIG = {
     enrichment: {
         label: 'Data Enrichment Story',
         targets: [
-            { id: 'erp-native-body', label: 'ERP', color: 'purple' },
-            { id: 'erp-plugin-body', label: 'PLG', color: 'blue' },
-            { id: 'platform-workbench-body', label: 'PLT', color: 'indigo' }
+            { id: 'erp-native-body', label: 'Native ERP', color: 'purple' },
+            { id: 'erp-plugin-body', label: 'Plugin Input', color: 'blue' },
+            { id: 'platform-workbench-body', label: 'Platform Logic', color: 'indigo' }
         ],
         nav: [
             { href: '#phase-2', icon: '🖥️', label: '2. ERP & Plugin' },
@@ -43,10 +44,10 @@ const MODE_CONFIG = {
     logical: {
         label: 'Logical Isolation Story',
         targets: [
-            { id: 'phase-fc-body', label: 'FC', color: 'slate' },
-            { id: 'phase-ed-body', label: 'ED', color: 'blue' },
-            { id: 'phase-pi-body', label: 'PI', color: 'emerald' },
-            { id: 'phase-rm-body', label: 'RM', color: 'amber' }
+            { id: 'phase-fc-body', label: 'File Control', color: 'slate' },
+            { id: 'phase-ed-body', label: 'Entity Details', color: 'blue' },
+            { id: 'phase-pi-body', label: 'Payment Instr.', color: 'emerald' },
+            { id: 'phase-rm-body', label: 'Remittance', color: 'amber' }
         ],
         nav: [
             { href: '#phase-fc', icon: '📂', label: 'File Control' },
@@ -196,10 +197,7 @@ function loadState() {
         const state = JSON.parse(raw);
         if(state.master) Object.assign(masterMappings, state.master);
         
-        // Load Staging Data
         if(state.stagingData) stagingData = state.stagingData;
-        
-        // Load Column Widths
         if(state.stagingColumnWidths) stagingColumnWidths = state.stagingColumnWidths;
 
         const modeKey = currentMode; 
@@ -233,7 +231,7 @@ function saveState() {
         const state = raw ? JSON.parse(raw) : {};
         state.master = masterMappings;
         state.stagingData = stagingData;
-        state.stagingColumnWidths = stagingColumnWidths; // Save widths
+        state.stagingColumnWidths = stagingColumnWidths; 
         
         const modeKey = currentMode;
         const modeData = { };
@@ -279,6 +277,7 @@ function createTableRow(tbody, data) {
     const tr = document.createElement('tr');
     const catHtml = data.category ? `<span class="tag-badge">${data.category}</span>` : '';
     
+    // Visual Split Logic
     let specDisplay = data.spec;
     const match = data.spec.match(/^Row\s+(\d+)[:\s]+(.*)/i);
     if (match) {
@@ -340,10 +339,16 @@ function setupFispanAutocomplete(input, list) {
     input.addEventListener('focus', (e) => { if(e.target.value) e.target.dispatchEvent(new Event('input')); });
 }
 
-// --- STAGING LOGIC (With Resizing) ---
+// --- STAGING LOGIC (Updated: Scroll Preservation & Action Resizing) ---
 function renderStagingTable() {
     const container = document.getElementById('unassigned-staging');
     if (!container) return;
+    
+    // SCROLL FIX: Capture existing scroll position
+    const existingWrapper = container.querySelector('.spreadsheet-container');
+    const previousScrollTop = existingWrapper ? existingWrapper.scrollTop : 0;
+    const previousScrollLeft = existingWrapper ? existingWrapper.scrollLeft : 0;
+
     container.innerHTML = '';
 
     if (stagingData.length === 0) {
@@ -354,9 +359,11 @@ function renderStagingTable() {
     let maxCols = 0;
     stagingData.forEach(row => maxCols = Math.max(maxCols, row.cells.length));
 
-    // Init widths if empty
-    if(stagingColumnWidths.length < maxCols) {
-        for(let i=stagingColumnWidths.length; i<maxCols; i++) stagingColumnWidths.push(150); // Default 150px
+    // Ensure width array has entry for Action Col (index 0) + Data Cols
+    // Total Resizable columns = 1 (Action) + maxCols
+    const totalCols = 1 + maxCols;
+    while(stagingColumnWidths.length < totalCols) {
+        stagingColumnWidths.push(120); // Default width
     }
 
     const tableWrapper = document.createElement('div');
@@ -367,14 +374,22 @@ function renderStagingTable() {
     const thead = document.createElement('thead');
     const trHead = document.createElement('tr');
     
+    // Col 0: Action Header (Now Resizable)
     const thAction = document.createElement('th');
     thAction.className = 'col-action-header';
     thAction.innerText = 'Action';
+    thAction.style.width = `${stagingColumnWidths[0]}px`;
+    const resizerAction = document.createElement('div');
+    resizerAction.className = 'resizer';
+    resizerAction.addEventListener('mousedown', (e) => initResize(e, 0));
+    thAction.appendChild(resizerAction);
     trHead.appendChild(thAction);
 
+    // Data Columns (starting index 1 in widths array)
     for (let i = 0; i < maxCols; i++) {
+        const widthIndex = i + 1;
         const th = document.createElement('th');
-        th.style.width = `${stagingColumnWidths[i]}px`;
+        th.style.width = `${stagingColumnWidths[widthIndex]}px`;
         
         const radio = document.createElement('input');
         radio.type = 'radio'; radio.name = 'activeMapCol'; radio.className = 'map-radio';
@@ -384,10 +399,9 @@ function renderStagingTable() {
         const label = document.createElement('span'); label.innerText = `Col ${i + 1}`;
         const delBtn = document.createElement('span'); delBtn.className = 'col-delete-btn'; delBtn.innerText = '✕'; delBtn.title = 'Delete Column'; delBtn.onclick = (e) => { e.stopPropagation(); deleteColumn(i); };
         
-        // Resizer handle
         const resizer = document.createElement('div');
         resizer.className = 'resizer';
-        resizer.addEventListener('mousedown', (e) => initResize(e, i));
+        resizer.addEventListener('mousedown', (e) => initResize(e, widthIndex));
 
         th.appendChild(radio); th.appendChild(label); th.appendChild(delBtn); th.appendChild(resizer);
         trHead.appendChild(th);
@@ -407,8 +421,9 @@ function renderStagingTable() {
 
         MODE_CONFIG[currentMode].targets.forEach(t => {
             const btn = document.createElement('button');
-            btn.className = `text-[9px] bg-${t.color}-100 text-${t.color}-700 px-1 py-0.5 rounded hover:bg-${t.color}-200 w-full text-center`;
-            btn.innerText = t.label;
+            // Added action-btn class for wrapping
+            btn.className = `action-btn text-[9px] bg-${t.color}-100 text-${t.color}-700 rounded hover:bg-${t.color}-200 w-full text-center border border-${t.color}-200`;
+            btn.innerText = t.label; // Using Full Name based on new Config
             btn.onclick = () => assignStagingRow(idx, t.id);
             btnDiv.appendChild(btn);
         });
@@ -418,7 +433,6 @@ function renderStagingTable() {
         for(let i=0; i<maxCols; i++) {
             const td = document.createElement('td');
             td.innerText = rowObj.cells[i] || '';
-            // Optional: apply width here too for some browsers, but TH usually controls it
             tr.appendChild(td);
         }
         tbody.appendChild(tr);
@@ -426,17 +440,20 @@ function renderStagingTable() {
     table.appendChild(tbody);
     tableWrapper.appendChild(table);
     container.appendChild(tableWrapper);
+
+    // SCROLL FIX: Restore position
+    if (previousScrollTop > 0) tableWrapper.scrollTop = previousScrollTop;
+    if (previousScrollLeft > 0) tableWrapper.scrollLeft = previousScrollLeft;
 }
 
 // --- COLUMN RESIZING LOGIC ---
 let startX, startWidth, resizingColIndex;
 
 function initResize(e, colIndex) {
-    e.preventDefault(); // Prevent text selection
+    e.preventDefault(); 
     startX = e.clientX;
     resizingColIndex = colIndex;
-    // Get current width
-    startWidth = stagingColumnWidths[colIndex] || 150;
+    startWidth = stagingColumnWidths[colIndex] || 120;
     
     document.documentElement.addEventListener('mousemove', doResize);
     document.documentElement.addEventListener('mouseup', stopResize);
@@ -445,15 +462,14 @@ function initResize(e, colIndex) {
 
 function doResize(e) {
     const diff = e.clientX - startX;
-    const newWidth = Math.max(50, startWidth + diff); // Min width 50px
+    const newWidth = Math.max(40, startWidth + diff); // Min width
     stagingColumnWidths[resizingColIndex] = newWidth;
     
-    // Update DOM directly for performance (avoid full re-render)
     const table = document.querySelector('.spreadsheet-table');
     if(table) {
         const ths = table.querySelectorAll('th');
-        if(ths[resizingColIndex + 1]) { // +1 because of Action column
-            ths[resizingColIndex + 1].style.width = `${newWidth}px`;
+        if(ths[resizingColIndex]) {
+            ths[resizingColIndex].style.width = `${newWidth}px`;
         }
     }
 }
@@ -462,7 +478,7 @@ function stopResize() {
     document.documentElement.removeEventListener('mousemove', doResize);
     document.documentElement.removeEventListener('mouseup', stopResize);
     document.body.style.cursor = 'default';
-    saveState(); // Persist new widths
+    saveState(); 
 }
 
 function assignStagingRow(dataIndex, targetId) {
@@ -474,7 +490,7 @@ function assignStagingRow(dataIndex, targetId) {
     if(tbody) {
         createTableRow(tbody, { spec: specText, mapping: '', status: 'pending', category: '' });
         stagingData.splice(dataIndex, 1); 
-        renderStagingTable();
+        renderStagingTable(); // Scroll is preserved inside this function now
         saveState();
         renderGaps();
         showToast('Assigned row ' + rowObj.rowId, 'success');
@@ -486,7 +502,10 @@ function deleteColumn(colIndex) {
     stagingData.forEach(row => {
         row.cells.splice(colIndex, 1);
     });
-    stagingColumnWidths.splice(colIndex, 1); // Remove width entry
+    // width array: Index 0 is Action. Index 1 is DataCol0.
+    // so removing DataCol X means removing Width Index X+1
+    stagingColumnWidths.splice(colIndex + 1, 1); 
+    
     if(activeMapColumnIndex >= colIndex && activeMapColumnIndex > 0) activeMapColumnIndex--;
     renderStagingTable();
     saveState();
@@ -526,7 +545,7 @@ function saveRowBtn(btn, unassign = false) {
     saveState();
     renderGaps();
 }
-function toggleUnassignMark(btn) {} // Deprecated by immediate unassign
+function toggleUnassignMark(btn) {} 
 
 // --- Deep Linking for Gaps ---
 function scrollToRow(specText) {
